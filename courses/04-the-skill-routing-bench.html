@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 4 of 6. The skill-routing bench: 60 requests routed live across a constructed library of skill descriptions. Count right skill, wrong skill, no skill and false fires, climb the ladder, then watch keyword stuffing and a near-duplicate skill make it worse.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="The skill-routing bench - learn skills library with phoebe">
+<meta property="og:description" content="Session 4 of 6. Sixty requests, a library of descriptions, a router in your browser, and two traps that print worse numbers.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/courses/04-the-skill-routing-bench.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The skill-routing bench - learn skills library with phoebe">
+<meta name="twitter:description" content="Session 4 of 6. Route 60 requests live and watch which description changes help, and which make it worse.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 4 · The skill-routing bench - learn skills library with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=2">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-skills-library-with-phoebe</a> / Session 4 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Your Own Skills Library with Phoebe · Session 4 of 6</div>
+    <h1>The skill-routing <span class="accent">bench</span></h1>
+    <p class="sub">Sessions 1 to 3 wrote skills one at a time. Tonight the library meets its requests. Sixty requests, each labelled with the skill it should reach or with "none", are routed live across Pemberton &amp; Thistle's descriptions, and every outcome is counted: the right skill, the wrong skill, no skill, or a skill firing on a request that needed none. Then two tempting moves make the numbers worse, and the bench says why.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Bench night</span>
+      <span class="chip audience">Builders and knowledge workers with too many saved prompts</span>
+      <span class="chip audience">Runs in the page, nothing to install</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · The router, the outcomes, the traps</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: run the ladder</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">By now Pemberton &amp; Thistle's library (Constructed Pemberton &amp; Thistle example) has grown to eighteen skills, with the descriptions from session 2 and one combined skill, <code>notes-and-interviews</code>, that does two jobs. Tonight the question from session 1 gets a measured answer: for each request, does it reach the right skill? The bench routes all sixty requests in your browser, every time you change the library.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = do it yourself, in the page</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> Pemberton &amp; Thistle's routing scorecard: the library climbs from 14 to 55 of 60 requests reaching the right outcome, and holds 18 of 20 on requests it was never tuned on. You also leave with the two numbers that rise when the library gets worse: wrong-skill routes and false fires.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers what a router reads, and the stand-in</span>
+      <h2>The router reads descriptions, nothing else</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Before a skill fires, the assistant has seen exactly one thing about it: its name and description. Anthropic's overview says the description "is what Claude matches your request against"; the open format's guide says it "carries the entire burden of triggering". Real assistants do that matching with a language model. The bench uses a simpler reader, so you can watch every score.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rung 2 trace for the request translate this email into French. Stop words are dropped, leaving translate, email and French. Each description is scored: invoice-chaser 1.24 because its description mentions reminder emails, every other skill 0.00. The firing line is 1.20, so invoice-chaser fires on a request that should fire no skill.">
+        <defs>
+          <filter id="s4aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="13" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s4aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s4aH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s4aL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s4aS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s4aA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s4aR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s4aV { font: 800 12px Inter, sans-serif; fill: #3F4800; }
+          .s4aC { font: 700 11px ui-monospace, Menlo, monospace; fill: #22260F; }
+          .s4aN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s4aA" x="30" y="28">ONE REQUEST, RUNG 2 (WHAT + WHEN)</text>
+
+        <g filter="url(#s4aSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="46" width="230" height="58" rx="10" transform="rotate(-0.6 145 75)" fill="#FFFFFF"/>
+          <rect x="30" y="140" width="76" height="28" rx="14" transform="rotate(1 68 154)" fill="#F4F6E2"/>
+          <rect x="114" y="140" width="56" height="28" rx="14" transform="rotate(-1 142 154)" fill="#E4B437"/>
+          <rect x="178" y="140" width="62" height="28" rx="14" transform="rotate(1 209 154)" fill="#F4F6E2"/>
+          <path d="M145 106 L145 134" marker-end="url(#s4aAr)"/>
+          <path d="M246 154 L300 154" marker-end="url(#s4aAr)"/>
+          <rect x="420" y="66" width="211" height="26" rx="6" fill="#E4B437"/>
+          <path d="M420 66 L420 250" stroke="#555A40"/>
+          <path d="M624 48 L624 262" stroke="#991B1B" stroke-dasharray="6 4"/>
+          <path d="M760 79 L790 79 L790 196" marker-end="url(#s4aAr)"/>
+          <rect x="690" y="202" width="170" height="60" rx="10" transform="rotate(0.6 775 232)" fill="#FEF2F2" stroke="#991B1B"/>
+        </g>
+
+        <text class="s4aL" x="44" y="70">"translate this email</text>
+        <text class="s4aL" x="44" y="88">into French"</text>
+        <text class="s4aS" x="156" y="126">this, into: stop words, dropped</text>
+        <text class="s4aC" x="38" y="158">translate</text>
+        <text class="s4aC" x="124" y="158">email</text>
+        <text class="s4aC" x="186" y="158">french</text>
+
+        <text class="s4aH" x="310" y="58">Description scored</text>
+        <text class="s4aC" x="410" y="84" text-anchor="end">invoice-chaser</text>
+        <text class="s4aV" x="640" y="84">1.24</text>
+        <text class="s4aS" x="410" y="110" text-anchor="end">"reminder emails"</text>
+        <text class="s4aC" x="410" y="140" text-anchor="end">client-brief</text>
+        <text class="s4aV" x="432" y="140">0.00</text>
+        <text class="s4aC" x="410" y="166" text-anchor="end">market-scan</text>
+        <text class="s4aV" x="432" y="166">0.00</text>
+        <text class="s4aS" x="410" y="192" text-anchor="end">15 more skills</text>
+        <text class="s4aV" x="432" y="192">0.00</text>
+        <text class="s4aR" x="560" y="280">firing line 1.20</text>
+
+        <text class="s4aR" x="704" y="226">Fires invoice-chaser</text>
+        <text class="s4aS" x="704" y="244" style="fill:#991B1B">should fire nothing</text>
+
+        <text class="s4aN" x="30" y="314">One shared word clears the line. A language model would read "translate"; the stand-in only counts matching words.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the router never sees what a skill does, only the words its description uses; one shared word can be enough to fire</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>What the stand-in is, and what it is not<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>It is</strong> BM25, a keyword scorer from information retrieval (Robertson and Zaragoza, 2009). For each request it scores every description: words the two share count for more when they are rare across the library, repeated words add less and less, and long descriptions are scored down a little. The highest score fires if it reaches a firing line of 1.20; below that, no skill fires. Words after "Do not use for" count against the skill. Ties go to the skill listed first.</p>
+        <p><strong>It is not</strong> how any assistant routes. Claude, Codex and Copilot pick a skill with a language model reading the same names and descriptions, and none of them publishes the method. A model understands "translate" and negation; BM25 only counts words. What the stand-in shares with them is the input and the pressures: vague text, two skills claiming one request, near-identical twins, and descriptions that grow. Read the bench's numbers as directions, never as a forecast for your assistant.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Try one request yourself<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Type a request the way a colleague would and pick a rung. The router shows which skill fires and the three highest scores.</p>
+        <div class="skl-bench" data-mode="try" data-rung="what" data-q="translate this email into French"></div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The scoring, written out<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>For each word the request shares with a description: weight = idf x tf' / (k1 + tf'), where tf' = tf / ((1 - b) + b x length / average length). The review by Robertson and Zaragoza notes that experiments tend to favour k1 below 2 and b above 0.5; the bench uses k1 = 1.2 and b = 0.75. The idf is ln(1 + (N - n + 0.5) / (n + 0.5)), where N is the number of skills and n the number whose description contains the word, so a word in every description is worth almost nothing.</p>
+        <p>That last property matters in Part 3: adding a common word to every description does nothing for routing, while adding a <em>neighbour's</em> distinctive word does a lot of damage. A Python twin in the repository re-implements the router and must print the same numbers as the browser before any page quotes one.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Vendors say it the same way.</strong> Claude Code's troubleshooting for a skill that does not trigger starts with "Check the description includes keywords users would naturally say", and for one that triggers too often, "Make the description more specific". Codex's guide asks for descriptions with clear scope and boundaries, with the main use case and trigger words first. Whatever reads the description, it can only use the words you gave it.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers the four outcomes and the ladder</span>
+      <h2>Four outcomes, one ladder</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Accuracy alone hides how a library fails. A request can reach the right skill; reach the wrong skill (a misroute); reach no skill though one exists (a miss); or fire a skill when it should fire none (a false fire). Each points at a different fix, and the ladder below moves them differently.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sixty requests split into four outcomes on each rung, as the bench prints them. Vague one-liners: 14 right, 3 wrong skill, 42 no skill fired, 1 fired on a none. What plus when: 52, 1, 1, 6. Plus do not use for: 54, 1, 2, 3. Split the overlap: 55, 1, 1, 3.">
+        <defs>
+          <filter id="s4bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="29" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="s4bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#5E6B00" stroke-width="1" opacity=".5"/></pattern>
+        </defs>
+        <style>
+          .s4bH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s4bL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s4bS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s4bW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .s4bV { font: 800 12px Inter, sans-serif; fill: #3F4800; }
+          .s4bN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <g filter="url(#s4bSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="250" y="30" width="16" height="12" rx="3" fill="#5E6B00"/>
+          <rect x="340" y="30" width="16" height="12" rx="3" fill="#FCA5A5"/>
+          <rect x="450" y="30" width="16" height="12" rx="3" fill="url(#s4bHc)"/>
+          <rect x="580" y="30" width="16" height="12" rx="3" fill="#FEF2F2" stroke="#991B1B"/>
+
+          <rect x="250" y="70" width="112" height="30" rx="4" fill="#5E6B00"/>
+          <rect x="362" y="70" width="24" height="30" rx="2" fill="#FCA5A5"/>
+          <rect x="386" y="70" width="336" height="30" rx="2" fill="url(#s4bHc)"/>
+          <rect x="722" y="70" width="8" height="30" rx="2" fill="#FEF2F2" stroke="#991B1B"/>
+
+          <rect x="250" y="122" width="416" height="30" rx="4" fill="#5E6B00"/>
+          <rect x="666" y="122" width="8" height="30" rx="2" fill="#FCA5A5"/>
+          <rect x="674" y="122" width="8" height="30" rx="2" fill="url(#s4bHc)"/>
+          <rect x="682" y="122" width="48" height="30" rx="2" fill="#FEF2F2" stroke="#991B1B"/>
+
+          <rect x="250" y="174" width="432" height="30" rx="4" fill="#5E6B00"/>
+          <rect x="682" y="174" width="8" height="30" rx="2" fill="#FCA5A5"/>
+          <rect x="690" y="174" width="16" height="30" rx="2" fill="url(#s4bHc)"/>
+          <rect x="706" y="174" width="24" height="30" rx="2" fill="#FEF2F2" stroke="#991B1B"/>
+
+          <rect x="250" y="226" width="440" height="30" rx="4" fill="#5E6B00"/>
+          <rect x="690" y="226" width="8" height="30" rx="2" fill="#FCA5A5"/>
+          <rect x="698" y="226" width="8" height="30" rx="2" fill="url(#s4bHc)"/>
+          <rect x="706" y="226" width="24" height="30" rx="2" fill="#FEF2F2" stroke="#991B1B"/>
+        </g>
+
+        <text class="s4bS" x="272" y="41">right</text>
+        <text class="s4bS" x="362" y="41">wrong skill</text>
+        <text class="s4bS" x="472" y="41">no skill fired</text>
+        <text class="s4bS" x="602" y="41">fired on a none</text>
+
+        <text class="s4bL" x="240" y="90" text-anchor="end">1 · Vague one-liners</text>
+        <text class="s4bL" x="240" y="142" text-anchor="end">2 · What + when</text>
+        <text class="s4bL" x="240" y="194" text-anchor="end">3 · + Do not use for</text>
+        <text class="s4bL" x="240" y="246" text-anchor="end">4 · Split the overlap</text>
+
+        <text class="s4bW" x="262" y="90">14</text>
+        <text class="s4bW" x="262" y="142">52</text>
+        <text class="s4bW" x="262" y="194">54</text>
+        <text class="s4bW" x="262" y="246">55</text>
+
+        <text class="s4bV" x="744" y="90">3 · 42 · 1</text>
+        <text class="s4bV" x="744" y="142">1 · 1 · 6</text>
+        <text class="s4bV" x="744" y="194">1 · 2 · 3</text>
+        <text class="s4bV" x="744" y="246">1 · 1 · 3</text>
+
+        <text class="s4bN" x="30" y="296">Bars are 60 requests each. Right column: wrong skill · no skill fired · fired on a none, as the bench prints them.</text>
+        <text class="s4bN" x="30" y="316">Constructed library and requests; the routing is computed live.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - vague descriptions fail by silence; specific ones fail by firing on the wrong request, and each rung moves a different count</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Each outcome points at a different fix<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Outcome</th><th>What happened</th><th>Usual fix</th></tr>
+          <tr><td>No skill fired</td><td>No description shared enough words with the request</td><td>Say when to use it, in the words people type (session 2)</td></tr>
+          <tr><td>Wrong skill</td><td>A neighbour's description matched better</td><td>A "do not use for" line, or split a skill doing two jobs</td></tr>
+          <tr><td>Fired on a none</td><td>A description matched a request no skill should take</td><td>Make the description more specific; remove stray words</td></tr>
+          <tr><td>Right skill</td><td>The description carried the request home</td><td>Keep it that way: test after every edit (session 5)</td></tr>
+        </table>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Reading the ladder<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Rung 1</strong> fails by silence: 42 of 60 requests fire no skill, because one-liners such as "Surveys." and "Research helper." share almost no words with what people type. Its only collision is telling: "Surveys." is the one description containing the word survey, so all three survey-analysis requests go to <code>survey-design</code>. <strong>Rung 2</strong> fixes the silence and exposes the opposite failure: six requests that should fire nothing now fire something. <strong>Rung 3</strong> halves those false fires. <strong>Rung 4</strong> splits <code>notes-and-interviews</code> into <code>meeting-minutes</code> and <code>interview-synthesis</code>, and "who agreed to do what on yesterday's call?" finally reaches a skill.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Why one change moves rows you did not touch<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>On rung 3, "what's the time in Singapore right now?" starts firing <code>newsletter</code> at 1.23. Nobody edited the newsletter's "Use when it is time to write" sentence. What changed is everything else: the "do not use for" lines made the library's descriptions longer on average, which shifts every length-normalised score a little, and "time" crossed the line. Real routers are not BM25, but the lesson transfers: any edit to a library is an edit to every request's odds, which is why session 5 re-runs the whole test set after each change.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>The vendors' advice, in bench terms.</strong> Anthropic's authoring guide calls "Helps with documents" a description to avoid and asks for both what the skill does and when to use it: rung 1 against rung 2. The open format's guide adds that when a skill false-triggers, the description "may be too broad. Add specificity about what the skill does not do": rung 3.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers keyword stuffing and near-duplicate skills</span>
+      <h2>Two moves that make it worse</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Two moves look like progress and are not. Keyword stuffing ("also use for reports, decks, notes...") does make misses fall. A near-duplicate, a skill copied with a small edit, looks like harmless redundancy. The bench prints the bill for both.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two panels against rung 4. Left, keyword stuffing: onboarding-guide's description gains workshops, offsites and training, and the request build me a half-day workshop now scores onboarding-guide 2.37 against workshop-pack 1.66, so it misroutes. Totals: no skill fired 1 to 0, wrong skill 1 to 2, fired on a none 3 to 5, characters 5,391 to 6,900. Right, a near-duplicate: sector-scan is market-scan copied with one sentence edited and listed first. The request how big is the market for heat pumps scores sector-scan 4.37 against market-scan 3.28. Wrong skill rises from 1 to 3.">
+        <defs>
+          <filter id="s4cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="31" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s4cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s4cH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s4cL { font: 600 11px Inter, sans-serif; fill: #22260F; }
+          .s4cS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s4cR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s4cV { font: 800 12px Inter, sans-serif; fill: #3F4800; }
+          .s4cC { font: 700 11px ui-monospace, Menlo, monospace; fill: #22260F; }
+          .s4cN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <g filter="url(#s4cSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="20" width="400" height="270" rx="12" transform="rotate(-0.3 230 155)" fill="#FFFFFF"/>
+          <rect x="450" y="20" width="400" height="270" rx="12" transform="rotate(0.3 650 155)" fill="#FFFFFF"/>
+          <rect x="48" y="72" width="364" height="40" rx="8" transform="rotate(0.5 230 92)" fill="#E4B437"/>
+          <rect x="48" y="150" width="174" height="44" rx="8" transform="rotate(-0.8 135 172)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="238" y="150" width="174" height="44" rx="8" transform="rotate(0.8 325 172)" fill="#F4F6E2"/>
+          <rect x="468" y="72" width="174" height="56" rx="8" transform="rotate(-0.8 555 100)" fill="#E4B437"/>
+          <rect x="658" y="72" width="174" height="56" rx="8" transform="rotate(0.8 745 100)" fill="#F4F6E2"/>
+          <rect x="468" y="160" width="364" height="34" rx="8" transform="rotate(0.4 650 177)" fill="#FEF2F2" stroke="#991B1B"/>
+        </g>
+
+        <text class="s4cH" x="48" y="46">Keyword-stuff every description</text>
+        <text class="s4cC" x="58" y="90">onboarding-guide + "Also use for</text>
+        <text class="s4cC" x="58" y="105">workshops, offsites, training..."</text>
+        <text class="s4cS" x="48" y="136">"build me a half-day workshop..."</text>
+        <text class="s4cL" x="58" y="168">onboarding-guide</text>
+        <text class="s4cR" x="58" y="184">2.37 fires</text>
+        <text class="s4cL" x="248" y="168">workshop-pack</text>
+        <text class="s4cV" x="248" y="184">1.66</text>
+        <text class="s4cL" x="48" y="222">against rung 4</text>
+        <text class="s4cS" x="48" y="240">no skill fired 1 to 0 (the one gain)</text>
+        <text class="s4cR" x="48" y="258">wrong skill 1 to 2 · fired on a none 3 to 5</text>
+        <text class="s4cR" x="48" y="276">characters 5,391 to 6,900</text>
+
+        <text class="s4cH" x="468" y="46">Add a near-duplicate skill</text>
+        <text class="s4cC" x="478" y="92">sector-scan</text>
+        <text class="s4cS" x="478" y="108" style="fill:#22260F">copy, listed first</text>
+        <text class="s4cV" x="478" y="122">4.37 fires</text>
+        <text class="s4cC" x="668" y="92">market-scan</text>
+        <text class="s4cS" x="668" y="108">the original</text>
+        <text class="s4cV" x="668" y="122">3.28</text>
+        <text class="s4cS" x="468" y="150">"how big is the market for heat pumps..."</text>
+        <text class="s4cR" x="478" y="182">The twins split market-scan's requests</text>
+        <text class="s4cL" x="468" y="222">against rung 4</text>
+        <text class="s4cR" x="468" y="240">wrong skill 1 to 3</text>
+        <text class="s4cS" x="468" y="258">worst pair: market-scan + sector-scan (2)</text>
+        <text class="s4cS" x="468" y="276">characters 5,391 to 5,685</text>
+
+        <text class="s4cN" x="30" y="320">Both traps score below rung 4: 53 of 60 each, against 55. Constructed library; routing computed live.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - stuffing trades one miss for more wrong fires and a longer bill; a copied skill splits its original's requests</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Keyword stuffing: the honest nuance<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Stuffing is not useless, and pretending it is would be a lie in the other direction. On the bench it does fix the one remaining miss: "can you fix the spelling and tone of this paragraph" reaches <code>house-style</code> once its description says "tone". The trouble is where the other new words came from. Each stuffed description borrowed its neighbours' trigger words, so <code>onboarding-guide</code> now claims workshops and <code>survey-design</code> claims "survey tool" questions that needed no skill. Net: 53 of 60, two below rung 4, and 1,509 more characters loaded in every session.</p>
+        <p>The open format's guide says to "err on the side of being pushy" and, in the same guide, warns against adding specific keywords from failed queries. Both are right: be generous about the situations your skill covers, never about your neighbours' vocabulary.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Near-duplicates: why the copy wins<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><code>sector-scan</code> is <code>market-scan</code> with one sentence edited to "how big a sector is, for a sector scan, a market map". Two things follow. Every word the twins share is now in two descriptions, so it counts for less in both. And the edited sentence happens to match "how big is the market", so the copy outscores its original, 4.37 to 3.28. The bench names the pair because that is what an overlap audit needs: not "accuracy fell" but "these two are fighting".</p>
+        <p>Codex's docs note that skills with the same name are not merged and both can appear; Claude Code resolves same-name skills by location. Neither protects you from two different names with the same job.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>How big can a library get? Contested<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>There is no published threshold for skills, and two kinds of evidence point different ways. Vendors design for large libraries: Anthropic's guide speaks of the assistant choosing "from potentially 100+ available Skills", and Claude Code and Codex both budget the listing (about 1% and 2% of the context window) and shorten or drop descriptions when it overflows. Against that, a 2025 study of a different but related problem, picking one tool from a large catalogue of MCP tools, found selection accuracy of 13.62% with the whole catalogue in the prompt and 43.13% when a retrieval step narrowed it first (Gan and Sun, RAG-MCP). That is tools, not skills, on a stress benchmark. What both sides agree on: the more candidates and the more alike they are, the more the descriptions have to carry.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>When the listing overflows.</strong> Claude Code's docs describe what happens when a library outgrows its budget: it keeps every skill name but drops descriptions, starting with the skills you invoke least, "which removes the keywords Claude needs to match your request". A long, stuffed description does not only misroute on its own; it spends budget that a neighbour's description needed.</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Run the ladder on the bench</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">The bench below holds Pemberton &amp; Thistle's library (Constructed Pemberton &amp; Thistle example) at every rung, and routes all sixty requests each time you press a button. Every number in the steps is one the widget prints; your clicks will show the same.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Characters of description loaded in every session, by rung, as the bench prints them: vague one-liners 247, what plus when 3,605, plus do not use for 5,186, split the overlap 5,391, keyword-stuffed 6,900. Better routing costs characters; stuffing costs the most and routes worse.">
+        <defs>
+          <filter id="s4dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="43" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+        </defs>
+        <style>
+          .s4dL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s4dS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s4dV { font: 800 12px Inter, sans-serif; fill: #3F4800; }
+          .s4dW { font: 800 12px Inter, sans-serif; fill: #FFFFFF; }
+          .s4dA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s4dN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s4dA" x="30" y="34">CHARACTERS OF DESCRIPTION IN CONTEXT, EVERY SESSION</text>
+
+        <g filter="url(#s4dSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="260" y="60" width="17" height="30" rx="4" fill="#5E6B00"/>
+          <rect x="260" y="112" width="251" height="30" rx="4" fill="#5E6B00"/>
+          <rect x="260" y="164" width="361" height="30" rx="4" fill="#5E6B00"/>
+          <rect x="260" y="216" width="375" height="30" rx="4" fill="#5E6B00"/>
+          <rect x="260" y="268" width="480" height="30" rx="4" fill="#E4B437"/>
+        </g>
+
+        <text class="s4dL" x="240" y="80" text-anchor="end">1 · Vague (14 right)</text>
+        <text class="s4dL" x="240" y="132" text-anchor="end">2 · What + when (52)</text>
+        <text class="s4dL" x="240" y="184" text-anchor="end">3 · + Do not use for (54)</text>
+        <text class="s4dL" x="240" y="236" text-anchor="end">4 · Split (55)</text>
+        <text class="s4dL" x="240" y="288" text-anchor="end">Keyword-stuffed (53)</text>
+
+        <text class="s4dV" x="287" y="80">247</text>
+        <text class="s4dW" x="272" y="132">3,605</text>
+        <text class="s4dW" x="272" y="184">5,186</text>
+        <text class="s4dW" x="272" y="236">5,391</text>
+        <text class="s4dL" x="272" y="288">6,900</text>
+
+        <text class="s4dN" x="30" y="330">Right outcomes of 60 in brackets. Each rung that routed better also loaded more text; stuffing loaded the most.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - better descriptions cost characters in every session, so each added word has to earn its place in the routing</figcaption>
+    </figure>
+
+    <div class="skl-bench" data-mode="full" data-rung="vague"></div>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Start at "1 · Vague one-liners".</strong> The headline reads 14 of 60; below it, 3 wrong skill, 42 no skill fired, 1 fired on a none, and 247 characters. Scroll the table: almost every row says "no skill fired". Find the worst-colliding pair the widget names.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · the rung, as the bench prints it</span>1 · Vague one-liners    14 of 60   18 skills
+3 wrong skill   42 no skill fired   1 fired on a none   247 characters
+Worst-colliding pair: survey-analysis + survey-design (3 misroutes)</div>
+      </div>
+      <div class="step">
+        <p><strong>Press "2 · What + when".</strong> 52 of 60. The misses collapse to 1, and false fires jump to 6. Read the six rows marked "fired on a none" and write down the word in each request that the firing skill's description shares. Then type one of them into the "Try one request" box in Part 1 and watch its score.</p>
+      </div>
+      <div class="step">
+        <p><strong>Press "3 · + Do not use for", then "4 · Split the overlap".</strong> Record both: 54 of 60 with 3 false fires, then 55 of 60 with 19 skills. On rung 4, find request 15 ("who agreed to do what on yesterday's call?") and see which skill it reaches now.</p>
+      </div>
+      <div class="step">
+        <p><strong>Press "5 · Scorecard".</strong> The headline changes to the 20 held-out requests: 18 of 20, with 37 of 40 on the tuning set. The table shows only the held-out rows. This is the number to quote for the library, because the descriptions were written while looking at the other 40.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · Pemberton &amp; Thistle's routing scorecard (constructed)</span>RUNG                    RIGHT   WRONG   NONE FIRED   FALSE FIRE   CHARS
+1 Vague one-liners        14       3        42           1          247
+2 What + when             52       1         1           6        3,605
+3 + Do not use for        54       1         2           3        5,186
+4 Split the overlap       55       1         1           3        5,391
+5 Scorecard, held out     18 of 20 (tuning set 37 of 40)</div>
+      </div>
+      <div class="step">
+        <p><strong>Press the dashed "Keyword-stuff every description".</strong> 53 of 60: no skill fired drops to 0, wrong skill rises to 2, fired on a none to 5, characters to 6,900. Read the paragraph under the stats: the bench explains why the numbers got worse.</p>
+      </div>
+      <div class="step">
+        <p><strong>Press the dashed "Add a near-duplicate skill".</strong> 53 of 60 with 20 skills, wrong skill 3, and the worst-colliding pair is now market-scan + sector-scan (2). Find requests 5 and 6 in the table: both went to the copy.</p>
+        <div class="prompt-box good"><span class="label">★ Step 6 · the two traps against rung 4</span>TRAP                     RIGHT   WRONG   NONE FIRED   FALSE FIRE   CHARS
+Keyword-stuffed            53       2         0           5        6,900
+Near-duplicate added       53       3         1           3        5,685
+Rung 4, for comparison     55       1         1           3        5,391</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Quote the held-out number.</strong> A library tuned on its own requests always looks better on them. The open format's guide splits trigger queries roughly 60/40 into a set you tune on and a set you only check, and picks the best description by the second. The bench does the same with 40 and 20.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 5</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Explain three rows.</strong> On rung 4, pick the misroute and two of the false fires and write, for each, the shared word that fired it and the description edit that would stop it.</li>
+      <li><strong>Find a fix that breaks something else.</strong> Using the "Try one request" box, find a request where rung 2 and rung 3 fire different skills, and say which is right.</li>
+      <li><strong>Write ten requests for your own library</strong>, the way your colleagues would type them, each labelled with the skill it should reach or "none". Include at least two near-misses.</li>
+      <li><strong>Look for twins in your own library.</strong> List any two skills whose descriptions share most of their words. Session 6 decides whether to merge them.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 4 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Rung 1 scores 14 of 60 with 42 requests firing no skill. Rung 2 scores 52 with 6 false fires. What changed in kind, not just in number?</p>
+      <button class="qopt" type="button">A · Nothing; rung 2 is simply better at everything</button>
+      <button class="qopt" type="button">B · The library stopped failing by silence and started failing by firing on requests that needed no skill, which calls for a different fix: more specific descriptions, not more words</button>
+      <button class="qopt" type="button">C · The firing line moved</button>
+      <button class="qopt" type="button">D · Rung 2 added more skills</button>
+      <p class="qwhy">Both rungs have 18 skills and the same firing line of 1.20. Specific words let requests find their skills, and also let stray words in requests find skills they should not.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · Keyword stuffing takes "no skill fired" from 1 to 0. Why does the bench still call it a trap?</p>
+      <button class="qopt" type="button">A · The bench penalises long descriptions by rule</button>
+      <button class="qopt" type="button">B · It does not; 0 misses is the goal</button>
+      <button class="qopt" type="button">C · Stuffed words are ignored by the router</button>
+      <button class="qopt" type="button">D · The borrowed words pull requests from neighbours: wrong skill rises from 1 to 2, false fires from 3 to 5, the total falls from 55 to 53, and 1,509 more characters load in every session</button>
+      <p class="qwhy">Count all four outcomes, not one. A move that fixes one miss by creating three wrong fires is a loss, and it costs context too.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · After adding <code>sector-scan</code>, a copy of <code>market-scan</code> with one sentence edited, what does the bench report?</p>
+      <button class="qopt" type="button">A · Wrong skill rises from 1 to 3, and the worst-colliding pair is market-scan + sector-scan: the copy takes two of its original's requests</button>
+      <button class="qopt" type="button">B · Nothing changes, because both skills do the same job</button>
+      <button class="qopt" type="button">C · Every market request fires no skill</button>
+      <button class="qopt" type="button">D · The router refuses to load two similar skills</button>
+      <p class="qwhy">Requests meant for market-scan now split between the twins. Same job, two names: the assistant has to guess, and the guess is decided by small word differences and list order.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Robertson and Zaragoza, BM25 and Beyond (2009)</span><span class="note">Foundations and Trends in Information Retrieval 3(4): the BM25 scoring and its parameters; read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic Agent Skills docs and Claude Code skills docs</span><span class="note">The description as what requests are matched against; troubleshooting for skills that do not trigger or trigger too often; listing budget and dropped descriptions; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">agentskills.io: Optimizing skill descriptions</span><span class="note">Description carries the burden of triggering; pushy but specific; 60/40 train and validation split; read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">OpenAI Codex skills docs</span><span class="note">Scope and boundaries in descriptions; listing budget; same-name skills not merged; read at source</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Gan and Sun, RAG-MCP (arXiv 2505.03275, 2025)</span><span class="note">Abstract read at source: 13.62% against 43.13% tool selection accuracy. About MCP tools, not skills; taught as one side of a contested question</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">The routing bench</span><span class="note">Constructed library and requests; BM25 is a modelled stand-in for a language-model router; every number is computed live and matched by a Python twin</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 4 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Four outcomes</b><span>Right skill, wrong skill, no skill fired, fired on a none. Count all four.</span></div>
+      <div class="cheat-item"><b>Silence vs noise</b><span>Vague descriptions miss; specific ones can false-fire. Each needs a different fix.</span></div>
+      <div class="cheat-item"><b>Do not use for</b><span>Names the neighbour that owns those requests. On the bench it halved false fires, 6 to 3.</span></div>
+      <div class="cheat-item"><b>One job per skill</b><span>A skill doing two jobs pulls both jobs' neighbours. Splitting it gained a request.</span></div>
+      <div class="cheat-item"><b>Two traps</b><span>Stuffing borrows neighbours' words; a near-duplicate splits its original's requests. Both scored 53, below 55.</span></div>
+      <div class="cheat-item"><b>Quote held-out</b><span>Tune on some requests, report on the others: 18 of 20 here.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>The bench measured a whole library at once. Session 5 tests one skill the way you would test code: a set of requests that should fire it and near-misses that should not, a held-out set, checks on what the skill produces, and a regression run after every edit.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 4 of 6 · learn-skills-library-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="03-one-job-clear-inputs.html">← Prev: One job, clear inputs, a built-in check</a> &nbsp;·&nbsp; <a href="05-testing-a-skill-like-code.html">Next: Testing a skill like code →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/skl-sample.js?v=1"></script>
+<script src="../assets/skl-live.js?v=2"></script>
+<script src="../assets/app.js?v=2"></script>
+</body>
+</html>

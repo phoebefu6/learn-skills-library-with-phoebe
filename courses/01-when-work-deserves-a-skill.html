@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 1 of 6. When repeated work deserves a skill: the three-times rule and what a skill costs, skill against template, automation or just asking, what a skill is made of, and why only names and descriptions load up front.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="When repeated work deserves a skill - learn skills library with phoebe">
+<meta property="og:description" content="Session 1 of 6. The three-times rule, its cost side, the anatomy of a skill and progressive disclosure, with a week of repeated work sorted into skills.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/courses/01-when-work-deserves-a-skill.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="When repeated work deserves a skill - learn skills library with phoebe">
+<meta name="twitter:description" content="Session 1 of 6. Three times, then count the cost: what deserves a skill and what it is made of.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 1 · When repeated work deserves a skill - learn skills library with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=2">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-skills-library-with-phoebe</a> / Session 1 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Your Own Skills Library with Phoebe · Session 1 of 6</div>
+    <h1>When repeated work deserves a <span class="accent">skill</span></h1>
+    <p class="sub">Everyone who uses an AI assistant every day ends up typing the same paragraph of context again and again: the house style, the sections a brief needs, the checks before anything goes to a client. A skill packages that paragraph so the assistant loads it when a request matches. Tonight we decide which repeated work deserves one, which does not, and what a skill is made of.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Foundations</span>
+      <span class="chip audience">Builders and knowledge workers with too many saved prompts</span>
+      <span class="chip audience">Any assistant that loads skills</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · The rule, the choice, the anatomy</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: a week of repeated work</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">One question runs through all six sessions: for each request you send, does it reach the right skill, and what does keeping that true cost? We carry one running case the whole way, the Constructed Pemberton &amp; Thistle example: a four-person research consultancy that writes client briefs, market scans and workshop packs, and whose skills library grows one piece per session. The firm, its clients and its library are invented. The skill format and the loading rules are real, read from the open specification and from the Anthropic, OpenAI and GitHub docs.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = do it yourself, in the page</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> Pemberton &amp; Thistle's repeated-work inventory: eight things the firm does every month, each sorted into skill, template, automation or just asking, and the first three skills they will write. It is page one of their library, and session 4 measures how well the library routes.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers the three-times rule and its cost side</span>
+      <h2>Three times, then count the cost</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">The signal that work deserves a skill is not "this is important". It is "I have explained this context before". Anthropic's skill authoring guide puts the habit plainly: work through a task with the assistant, notice what information you repeatedly provide, and package that. A working rule of thumb is three times: once is a request, twice is a coincidence, the third time you are re-typing a procedure. The rule is a habit, not a published threshold, and it has a cost side that most people skip.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two lanes over the same three requests for a client brief. Without a skill, each request carries a re-explained block of house style, sections and checks, and the output varies. With a skill, the name and description sit in context for every session, the skill is written and tested once, and each matching request loads the same body. Upkeep after edits sits under the one-time cost.">
+        <defs>
+          <filter id="s1aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="s1aHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#5E6B00" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="s1aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s1aH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s1aL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s1aS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s1aA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s1aR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s1aN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s1aA" x="30" y="28">THE SAME CLIENT BRIEF, ASKED FOR THREE TIMES</text>
+
+        <g filter="url(#s1aSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="200" y="50" width="200" height="72" rx="10" transform="rotate(-0.6 300 86)" fill="url(#s1aHc)"/>
+          <rect x="420" y="50" width="200" height="72" rx="10" transform="rotate(0.5 520 86)" fill="url(#s1aHc)"/>
+          <rect x="640" y="50" width="200" height="72" rx="10" transform="rotate(-0.4 740 86)" fill="url(#s1aHc)"/>
+          <rect x="200" y="160" width="640" height="30" rx="8" transform="rotate(0.2 520 175)" fill="#F4F6E2"/>
+          <rect x="30" y="208" width="150" height="62" rx="10" transform="rotate(-0.8 105 239)" fill="#FFFFFF"/>
+          <rect x="200" y="208" width="200" height="62" rx="10" transform="rotate(0.5 300 239)" fill="#E4B437"/>
+          <rect x="420" y="208" width="200" height="62" rx="10" transform="rotate(-0.5 520 239)" fill="#E4B437"/>
+          <rect x="640" y="208" width="200" height="62" rx="10" transform="rotate(0.4 740 239)" fill="#E4B437"/>
+          <path d="M182 239 L196 239" marker-end="url(#s1aAr)"/>
+        </g>
+
+        <text class="s1aH" x="30" y="78">Without a skill</text>
+        <text class="s1aS" x="30" y="96">you are the skill</text>
+
+        <rect x="212" y="62" width="176" height="48" rx="6" fill="#FFFFFF"/>
+        <text class="s1aL" x="220" y="80">You re-explain:</text>
+        <text class="s1aS" x="220" y="98">style, sections, checks</text>
+        <rect x="432" y="62" width="176" height="48" rx="6" fill="#FFFFFF"/>
+        <text class="s1aL" x="440" y="80">You re-explain again</text>
+        <text class="s1aS" x="440" y="98">and forget one check</text>
+        <rect x="652" y="62" width="176" height="48" rx="6" fill="#FFFFFF"/>
+        <text class="s1aL" x="660" y="80">Third time</text>
+        <text class="s1aR" x="660" y="98">the output varies</text>
+
+        <text class="s1aH" x="30" y="170">With a skill</text>
+        <text class="s1aS" x="214" y="180">Name + description sit in context in every session, matched or not (about 100 tokens)</text>
+
+        <text class="s1aL" x="40" y="232">Write + test once</text>
+        <text class="s1aS" x="40" y="250">then upkeep after</text>
+        <text class="s1aS" x="40" y="264">every edit</text>
+
+        <text class="s1aL" x="214" y="234">Request matches</text>
+        <text class="s1aS" x="214" y="252" style="fill:#22260F">body loads, same steps</text>
+        <text class="s1aL" x="434" y="234">Request matches</text>
+        <text class="s1aS" x="434" y="252" style="fill:#22260F">body loads, same steps</text>
+        <text class="s1aL" x="654" y="234">Request matches</text>
+        <text class="s1aS" x="654" y="252" style="fill:#22260F">body loads, same steps</text>
+
+        <text class="s1aN" x="30" y="300">The saving is the re-explaining. The cost is writing, testing, upkeep and a description always in context.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - a skill trades three rounds of re-explaining for one round of writing, plus a small description that is always loaded</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>What the third repeat tells you<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>The first time</strong> you ask for a client brief, the context you type is the brief: who the client is, what they want. <strong>The second time</strong>, you notice you typed the same three paragraphs about structure and tone. <strong>The third time</strong>, you are maintaining a procedure in your head and pasting it by hand, and each paste is slightly different.</p>
+        <p>That third paste is the signal. What you keep re-typing is not the task but the <em>way you do the task</em>: the sections a brief always has, the questions you always ask the client, the check you always run before it goes out. That is exactly what a skill holds.</p>
+        <p>Count honestly. A request that recurs but needs new context every time ("summarise this article") is not a skill, however often you send it: there is nothing stable to package.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The cost side: four lines on the bill<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Cost</th><th>When you pay it</th></tr>
+          <tr><td>Writing and testing the skill</td><td>Once, then again after every edit (session 5)</td></tr>
+          <tr><td>The description in context</td><td>Every session, whether or not the skill fires. The open specification budgets about 100 tokens per skill for name and description</td></tr>
+          <tr><td>Routing risk</td><td>Every new skill is one more candidate for every request; it can steal requests from a neighbour (session 4)</td></tr>
+          <tr><td>Upkeep</td><td>Whenever the way you work changes and the skill does not (session 6)</td></tr>
+        </table>
+        <p>The first two are small for one skill. They stop being small at forty. Claude Code caps the whole listing of skill descriptions at about 1% of the model's context window and starts dropping descriptions when it overflows; Codex caps its list at 2% of the window (8,000 characters when the window size is unknown) and shortens descriptions first. A library has a budget whether you plan one or not.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Start with evaluation, not with writing<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Anthropic's guidance for skill authors says to build evaluations before writing extensive documentation: run the assistant on representative tasks without a skill, write down where it fails, then write just enough to fix those failures. If the assistant already produces a good brief from a one-line request, the skill has nothing to add, and the three-times rule should not overrule that evidence. Session 5 turns this into a habit.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Why the format exists at all.</strong> Anthropic's engineering team introduced Agent Skills in October 2025 as "organized folders of instructions, scripts, and resources that agents can discover and load dynamically", then published the format as an open standard. The open specification now says it was "originally developed by Anthropic" and adopted by a growing number of agent products; OpenAI's Codex and GitHub Copilot both document the same <code>SKILL.md</code> folder shape. The problem they all solve is the one above: context people kept pasting by hand.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers skill against template, automation and just asking</span>
+      <h2>Skill, template, automation, or just ask</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Repeated work has four homes, and a skill is only one of them. The question that separates them is where the judgment lives. If nothing needs judging, a machine can run it without you: that is an automation. If only the shape repeats and you fill it in yourself, it is a template. If it is a one-off, say it in chat. A skill earns its place when the steps repeat but each run still needs the assistant's judgment on new material.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A decision tree with three questions. Same steps every time with no judgment needed: yes leads to automation. No leads to: repeated three or more times with the same context re-explained? No leads to just ask. Yes leads to: is the output a fixed form you fill in by hand? Yes leads to template; no leads to skill, filled gold.">
+        <defs>
+          <filter id="s1bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s1bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s1bH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s1bL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s1bS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s1bE { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s1bN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <g filter="url(#s1bSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="40" y="60" width="240" height="64" rx="12" transform="rotate(-0.5 160 92)" fill="#F4F6E2"/>
+          <rect x="340" y="150" width="240" height="64" rx="12" transform="rotate(0.5 460 182)" fill="#F4F6E2"/>
+          <rect x="340" y="260" width="240" height="64" rx="12" transform="rotate(-0.4 460 292)" fill="#F4F6E2"/>
+          <rect x="640" y="30" width="200" height="56" rx="12" transform="rotate(0.6 740 58)" fill="#FFFFFF"/>
+          <rect x="640" y="120" width="200" height="56" rx="12" transform="rotate(-0.6 740 148)" fill="#FFFFFF"/>
+          <rect x="640" y="220" width="200" height="56" rx="12" transform="rotate(0.5 740 248)" fill="#FFFFFF"/>
+          <rect x="640" y="300" width="200" height="56" rx="12" transform="rotate(-0.5 740 328)" fill="#E4B437"/>
+          <path d="M282 86 L636 60" marker-end="url(#s1bAr)"/>
+          <path d="M160 126 L160 182 L336 182" marker-end="url(#s1bAr)"/>
+          <path d="M582 178 L636 150" marker-end="url(#s1bAr)"/>
+          <path d="M460 216 L460 256" marker-end="url(#s1bAr)"/>
+          <path d="M582 286 L636 250" marker-end="url(#s1bAr)"/>
+          <path d="M582 300 L636 326" marker-end="url(#s1bAr)"/>
+        </g>
+
+        <text class="s1bL" x="56" y="88">Same steps every time,</text>
+        <text class="s1bL" x="56" y="106">no judgment needed?</text>
+        <text class="s1bL" x="356" y="178">Repeated 3+ times, same</text>
+        <text class="s1bL" x="356" y="196">context re-explained?</text>
+        <text class="s1bL" x="356" y="288">Output is a fixed form</text>
+        <text class="s1bL" x="356" y="306">you fill in by hand?</text>
+
+        <text class="s1bH" x="656" y="54">Automation</text>
+        <text class="s1bS" x="656" y="72">runs without you</text>
+        <text class="s1bH" x="656" y="144">Just ask</text>
+        <text class="s1bS" x="656" y="162">a one-off, say it in chat</text>
+        <text class="s1bH" x="656" y="244">Template</text>
+        <text class="s1bS" x="656" y="262">a document to fill in</text>
+        <text class="s1bH" x="656" y="324">Skill</text>
+        <text class="s1bS" x="656" y="342" style="fill:#22260F">loaded when a request matches</text>
+
+        <text class="s1bE" x="440" y="62">yes</text>
+        <text class="s1bE" x="170" y="160">no</text>
+        <text class="s1bE" x="600" y="152">no</text>
+        <text class="s1bE" x="470" y="242">yes</text>
+        <text class="s1bE" x="596" y="258">yes</text>
+        <text class="s1bE" x="596" y="330">no</text>
+
+        <text class="s1bN" x="40" y="384">Where the judgment lives decides the home. A skill is for repeated steps that still need judging each time.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - a skill is the last answer in the tree, not the first: most repeated work is cheaper as an automation or a template</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Four homes, one test each<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Home</th><th>The test</th><th>Pemberton &amp; Thistle example (constructed)</th></tr>
+          <tr><td>Automation</td><td>The steps never need judging: a trigger and an action</td><td>Totalling weekly timesheets into hours per client</td></tr>
+          <tr><td>Template</td><td>Only the shape repeats; a person fills it in</td><td>The onboarding checklist for a new associate</td></tr>
+          <tr><td>Just ask</td><td>No stable context to package</td><td>"What does this acronym mean?"</td></tr>
+          <tr><td>Skill</td><td>Same steps and standards, new material, judgment every run</td><td>Turning intake notes into a two-page client brief</td></tr>
+        </table>
+        <p>Automations and no-code tools have their own course: <a href="https://phoebefu6.github.io/learn-automation-with-phoebe/">Learn Automation</a>. Personal routines such as triage and follow-ups are in <a href="https://phoebefu6.github.io/learn-ai-productivity-with-phoebe/">Learn AI Productivity</a>.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Skills that call automations, and the reverse<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The homes combine. A skill can bundle a script for the deterministic part, and the official docs encourage it: Anthropic's overview notes that when a skill runs a script, only the script's output enters the context, never its code. The split to aim for is judgment in the instructions, determinism in the script. Session 3 builds one.</p>
+        <p>The reverse also happens: something that started as a skill turns out to need no judgment at all. That is a retirement candidate (session 6), not a skill to polish.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Not every match needs a skill.</strong> The open format's own guide on descriptions notes that agents usually consult skills only for work beyond what they can do alone: a simple one-step request like "read this PDF" may not trigger a PDF skill even when the description matches perfectly. A skill that packages something the assistant already does well is a description you pay for in every session and rarely use.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers the anatomy of a skill and progressive disclosure</span>
+      <h2>A folder, a description, and three levels of loading</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Across vendors the shape is the same. A skill is a folder whose required file, <code>SKILL.md</code>, starts with two fields, a <code>name</code> and a <code>description</code>, followed by instructions; it may carry <code>scripts/</code>, <code>references/</code> and <code>assets/</code>. What makes a library possible is that these parts load at different times. The open specification calls it progressive disclosure.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Left, a skill folder named client-brief: SKILL.md with a name and description at the top and the instruction body below, a references folder with house-style.md and a scripts folder with check_brief.py. Right, the assistant's context in three levels. Level 1, always: every skill's name and description, about 100 tokens each. Level 2, when the skill fires: the SKILL.md body, under 5,000 tokens recommended. Level 3, only when read: a reference file, or a script's output but not its code.">
+        <defs>
+          <filter id="s1cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="37" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="s1cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#5E6B00" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="s1cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s1cH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s1cL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s1cS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s1cA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s1cC { font: 700 11px ui-monospace, Menlo, monospace; fill: #22260F; }
+          .s1cN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s1cA" x="30" y="28">ON DISK</text>
+        <text class="s1cA" x="520" y="28">IN THE ASSISTANT'S CONTEXT</text>
+
+        <g filter="url(#s1cSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="44" width="380" height="250" rx="12" transform="rotate(-0.3 220 169)" fill="#FFFFFF"/>
+          <rect x="50" y="78" width="340" height="56" rx="8" transform="rotate(0.4 220 106)" fill="#E4B437"/>
+          <rect x="50" y="142" width="340" height="56" rx="8" transform="rotate(-0.4 220 170)" fill="#F4F6E2"/>
+          <rect x="50" y="216" width="160" height="58" rx="8" transform="rotate(0.8 130 245)" fill="url(#s1cHc)"/>
+          <rect x="230" y="216" width="160" height="58" rx="8" transform="rotate(-0.8 310 245)" fill="url(#s1cHc)"/>
+          <rect x="520" y="44" width="330" height="66" rx="10" transform="rotate(0.3 685 77)" fill="#E4B437"/>
+          <rect x="520" y="130" width="330" height="66" rx="10" transform="rotate(-0.3 685 163)" fill="#F4F6E2"/>
+          <rect x="520" y="216" width="330" height="66" rx="10" transform="rotate(0.3 685 249)" fill="#FFFFFF"/>
+          <path d="M394 104 L514 80" marker-end="url(#s1cAr)"/>
+          <path d="M394 170 L514 164" marker-end="url(#s1cAr)"/>
+          <path d="M394 248 L514 250" marker-end="url(#s1cAr)"/>
+        </g>
+
+        <text class="s1cC" x="46" y="64">client-brief/</text>
+        <text class="s1cC" x="62" y="100">SKILL.md  name + description</text>
+        <text class="s1cS" x="62" y="120" style="fill:#22260F">what it does and when to use it</text>
+        <text class="s1cC" x="62" y="164">SKILL.md  body</text>
+        <text class="s1cS" x="62" y="184">inputs, steps, output, self-check</text>
+        <rect x="58" y="226" width="144" height="40" rx="6" fill="#FFFFFF"/>
+        <text class="s1cC" x="64" y="242">references/</text>
+        <text class="s1cS" x="64" y="259">house-style.md</text>
+        <rect x="238" y="226" width="144" height="40" rx="6" fill="#FFFFFF"/>
+        <text class="s1cC" x="244" y="242">scripts/</text>
+        <text class="s1cS" x="244" y="259">check_brief.py</text>
+
+        <text class="s1cH" x="536" y="70">Level 1 · always</text>
+        <text class="s1cS" x="536" y="90" style="fill:#22260F">every skill's name + description, ~100 tokens</text>
+        <text class="s1cH" x="536" y="156">Level 2 · when it fires</text>
+        <text class="s1cS" x="536" y="176">the body, under 5,000 tokens recommended</text>
+        <text class="s1cH" x="536" y="242">Level 3 · only when read</text>
+        <text class="s1cS" x="536" y="262">a reference, or a script's output (not its code)</text>
+
+        <text class="s1cN" x="30" y="322">Only Level 1 is paid by every skill in every session. That is why the description is the part to get right.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - only the name and description load for every skill; the body and files load when a request matches and a step needs them</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The two required fields<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The open Agent Skills specification requires exactly two frontmatter fields. <strong><code>name</code></strong>: 1 to 64 characters, lowercase letters, numbers and hyphens, no leading, trailing or double hyphen, and it must match the folder's name. <strong><code>description</code></strong>: 1 to 1,024 characters, saying what the skill does and when to use it. Anthropic adds that neither may contain XML tags and the name may not contain the reserved words "anthropic" or "claude".</p>
+        <div class="prompt-box good"><span class="label">★ A minimal SKILL.md (constructed Pemberton &amp; Thistle example)</span>---
+name: client-brief
+description: Drafts a two-page client project brief from intake notes: objectives, scope, deliverables, timeline and open questions. Use when a new engagement starts and someone asks for a project brief, a scoping brief or a brief for the client.
+---
+
+# Client brief
+1. Ask for the intake notes and the client's name if they are missing.
+2. ...</div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Progressive disclosure, three levels<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Anthropic's overview gives the numbers: Level 1 metadata loads at startup, about 100 tokens per skill; Level 2, the body, loads when the skill is triggered and should stay under 5,000 tokens; Level 3 files cost nothing until read, and a script's code never enters the context, only its output. Codex works the same way: it starts with each skill's name, description and file path, and reads the full <code>SKILL.md</code> only when it decides to use the skill. The consequence for a library is direct: twenty skills cost twenty descriptions in every session, and nothing else until they fire.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Where skills live on each assistant<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Assistant</th><th>Where a skill folder goes (as documented, read 2026-11-25)</th></tr>
+          <tr><td>Claude Code</td><td><code>~/.claude/skills/</code> (personal), <code>.claude/skills/</code> (project); same name: enterprise overrides personal, personal overrides project</td></tr>
+          <tr><td>claude.ai and the Claude API</td><td>Uploaded separately per surface; custom skills do not sync between them</td></tr>
+          <tr><td>OpenAI Codex</td><td><code>.agents/skills</code> in the folder, its parent or the repo root; <code>$HOME/.agents/skills</code>; <code>/etc/codex/skills</code>; bundled system skills</td></tr>
+          <tr><td>GitHub Copilot</td><td><code>.github/skills</code>, <code>.claude/skills</code> or <code>.agents/skills</code> in a repo; <code>~/.copilot/skills</code> or <code>~/.agents/skills</code> for personal skills</td></tr>
+        </table>
+        <p>Locations move between releases; check the vendor's page before you copy a path. A tour of one vendor's ready-made skills is in <a href="https://phoebefu6.github.io/learn-claude-skills-with-phoebe/">Learn Claude Skills</a>, and turning one SOP into one skill in Claude is <a href="https://phoebefu6.github.io/learn-claude-with-phoebe/courses/03-sop-to-skill.html">Learn Claude, session 3</a>.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>A skill is software you install.</strong> Anthropic's overview warns to use skills only from trusted sources, because a skill can direct the assistant to call tools or run code that does not match its stated purpose, and recommends auditing every bundled file before use. A library you build yourself is the safe default; a skill copied from a stranger's repository deserves the same review as any script you would run.</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Sort a week of repeated work</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">Pemberton &amp; Thistle (Constructed Pemberton &amp; Thistle example) kept a log of everything they asked their assistant for in one week. Below is what repeated. You will place each item on two axes, how often it comes back and how much judgment each run needs, then choose the first three skills. Your own week will look different; the method is the point.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed quadrant of eight repeated tasks. Horizontal axis: times per month the same context comes back. Vertical axis: judgment needed each run. Top right, skill: meeting minutes, client brief, market scan and workshop pack, with the first three filled gold. Bottom right, automation: invoice reminders and timesheet totals. Top left, just ask: ad hoc questions. Bottom left, template: monthly newsletter and onboarding plan.">
+        <defs>
+          <filter id="s1dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+        </defs>
+        <style>
+          .s1dH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s1dL { font: 600 11px Inter, sans-serif; fill: #22260F; }
+          .s1dA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s1dN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <g filter="url(#s1dSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="90" y="40" width="730" height="300" rx="10" transform="rotate(0.2 455 190)" fill="#FFFFFF"/>
+          <rect x="460" y="44" width="356" height="142" rx="8" transform="rotate(-0.2 638 115)" fill="#F4F6E2" stroke="none"/>
+          <path d="M455 40 L455 340" stroke-dasharray="6 5" stroke="#555A40"/>
+          <path d="M90 190 L820 190" stroke-dasharray="6 5" stroke="#555A40"/>
+          <circle cx="700" cy="130" r="7" fill="#E4B437"/>
+          <circle cx="620" cy="70" r="7" fill="#E4B437"/>
+          <circle cx="520" cy="110" r="7" fill="#E4B437"/>
+          <circle cx="470" cy="160" r="7" fill="#FFFFFF"/>
+          <circle cx="700" cy="260" r="7" fill="#FFFFFF"/>
+          <circle cx="560" cy="300" r="7" fill="#FFFFFF"/>
+          <circle cx="160" cy="110" r="7" fill="#FFFFFF"/>
+          <circle cx="300" cy="245" r="7" fill="#FFFFFF"/>
+          <circle cx="250" cy="300" r="7" fill="#FFFFFF"/>
+        </g>
+
+        <text class="s1dH" x="104" y="62">Just ask</text>
+        <text class="s1dH" x="806" y="62" text-anchor="end">Skill</text>
+        <text class="s1dH" x="104" y="328">Template</text>
+        <text class="s1dH" x="806" y="328" text-anchor="end">Automation</text>
+
+        <text class="s1dL" x="710" y="134">Meeting minutes</text>
+        <text class="s1dL" x="630" y="74">Client brief</text>
+        <text class="s1dL" x="530" y="114">Market scan</text>
+        <text class="s1dL" x="480" y="164">Workshop pack</text>
+        <text class="s1dL" x="710" y="264">Invoice reminders</text>
+        <text class="s1dL" x="570" y="304">Timesheet totals</text>
+        <text class="s1dL" x="170" y="114">Ad hoc questions</text>
+        <text class="s1dL" x="310" y="249">Monthly newsletter</text>
+        <text class="s1dL" x="260" y="304">Onboarding plan</text>
+
+        <text class="s1dA" x="455" y="366" text-anchor="middle">Same context, times per month (constructed) →</text>
+        <text class="s1dA" x="40" y="300" transform="rotate(-90 40 300)">Judgment each run →</text>
+
+        <text class="s1dN" x="90" y="396">Gold = the first three skills. Constructed Pemberton &amp; Thistle example; your week will differ.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - frequency alone does not make a skill: the timesheet comes back as often as the brief, and it needs no judgment</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Read the week's log.</strong> These are the repeated requests from one week at the firm (constructed). Next to each, write two things: how many times a month it comes back, and what you would have to re-explain each time.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · Pemberton &amp; Thistle, one week of repeated asks (constructed)</span>client brief from intake notes        4 / month   re-explain: sections, tone, open questions
+market scan of a sector               3 / month   re-explain: sources we trust, sizing method
+meeting minutes with actions         12 / month   re-explain: owner + date on every action
+workshop pack for a client team       2 / month   re-explain: timing grid, facilitator notes
+invoice reminder emails               6 / month   re-explain: nothing, same three wordings
+weekly timesheet totals               4 / month   re-explain: nothing, same sums
+monthly newsletter                    1 / month   re-explain: the section order
+onboarding plan for a new associate   rare        re-explain: the checklist
+ad hoc questions                      varied      re-explain: nothing, never the same twice</div>
+      </div>
+      <div class="step">
+        <p><strong>Run each item through the tree in Part 2.</strong> Ask the first question honestly: does any run need judgment? Invoice reminders and timesheet totals do not; they are automations. The newsletter and the onboarding plan repeat as a shape; they are templates for now.</p>
+      </div>
+      <div class="step">
+        <p><strong>Rank what is left.</strong> Four candidates sit in the skill corner. Multiply times per month by minutes of re-explaining saved per run, then subtract what you know about the cost side: a skill that will collide with a neighbour, or one the assistant already does well without help, ranks lower.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · the ranking, in the firm's own words</span>CANDIDATE          PER MONTH   SAVED EACH RUN   NOTE
+meeting minutes        12        5 min           high volume, clear output
+client brief            4       15 min           the firm's signature document
+market scan             3       15 min           sources and method vary by analyst
+workshop pack           2       20 min           rare; wait for the third client
+(minutes are constructed estimates; your numbers will differ)</div>
+      </div>
+      <div class="step">
+        <p><strong>Choose the first three and name them.</strong> Pemberton &amp; Thistle choose <code>client-brief</code>, <code>market-scan</code> and <code>meeting-minutes</code>. Names follow one scheme (noun-phrase, lowercase, hyphens), because the spec requires the characters and a library needs the consistency. The workshop pack waits until it has come back a third time.</p>
+      </div>
+      <div class="step">
+        <p><strong>Write the inventory page.</strong> One line per item: its home, the reason, and for the three skills a one-sentence purpose. Session 2 turns those sentences into descriptions the assistant can find.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · Pemberton &amp; Thistle's library, page one (constructed)</span>SKILLS (3)      client-brief, market-scan, meeting-minutes
+AUTOMATIONS     invoice reminders, timesheet totals
+TEMPLATES       monthly newsletter, onboarding plan
+JUST ASK        ad hoc questions
+WAITING         workshop-pack (2 uses so far; revisit at the third)
+Budget note: 3 descriptions in every session; each one must earn it.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Keep the waiting list.</strong> The items you did not turn into skills are as useful as the ones you did. When one of them comes back a third time with the same context, it graduates, and the decision is quick because the reasoning is already written down.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 2</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Log one week of your own repeated asks.</strong> Every time you paste the same context into an assistant, write down the task and what you pasted.</li>
+      <li><strong>Run each through the four homes.</strong> Automation, template, just ask or skill, with the one-line reason.</li>
+      <li><strong>Pick at most three skills and name them</strong> with one consistent scheme that passes the spec: lowercase, numbers and hyphens, 64 characters at most.</li>
+      <li><strong>Count your description budget.</strong> How many skills do you already have installed? Multiply by about 100 tokens: that is what loads in every session before you type anything.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 1 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · Pemberton &amp; Thistle total their timesheets four times a month, the same sums every time. Why is that not a skill?</p>
+      <button class="qopt" type="button">A · Four times a month is under the three-times rule</button>
+      <button class="qopt" type="button">B · Skills cannot read spreadsheets</button>
+      <button class="qopt" type="button">C · No run needs judgment, so an automation does it without anyone asking, and a skill would add a description to every session for nothing</button>
+      <button class="qopt" type="button">D · Timesheets are confidential</button>
+      <p class="qwhy">Frequency is necessary, not sufficient. Where the steps need no judgment, a trigger and an action are cheaper than an assistant reading instructions.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · A library has 30 skills installed and you send one request that matches one of them. What has loaded into the assistant's context?</p>
+      <button class="qopt" type="button">A · All 30 names and descriptions, plus the body of the one skill that fired; its reference files only if a step reads them</button>
+      <button class="qopt" type="button">B · All 30 skills in full</button>
+      <button class="qopt" type="button">C · Only the one skill that matched, nothing else</button>
+      <button class="qopt" type="button">D · Nothing until you type the skill's name</button>
+      <p class="qwhy">Progressive disclosure: Level 1 for every skill always, Level 2 for the one that fires, Level 3 only on demand. That is why every description is a standing cost.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">3 · Which of these names is valid under the open Agent Skills specification?</p>
+      <button class="qopt" type="button">A · <code>Client-Brief</code></button>
+      <button class="qopt" type="button">B · <code>-client-brief</code></button>
+      <button class="qopt" type="button">C · <code>client--brief</code></button>
+      <button class="qopt" type="button">D · <code>client-brief</code>, in a folder also called <code>client-brief</code></button>
+      <p class="qwhy">Lowercase letters, numbers and single hyphens, not at either end, and the name must match the parent folder.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Agent Skills specification</span><span class="note">agentskills.io: folder shape, required name and description and their limits, optional directories, progressive disclosure (about 100 tokens, under 5,000 tokens, as needed); read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic Agent Skills docs and engineering post</span><span class="note">Overview (three levels, field rules, security), authoring best practices (repeated context, evaluations first), engineering post of 16 Oct 2025; read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Claude Code, Codex and GitHub Copilot skills docs</span><span class="note">Locations, listing budgets (about 1% of context; 2% or 8,000 characters), what loads first; read at source 2026-11-25, re-check before relying on a number</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">The three-times rule</span><span class="note">A working habit, not a published threshold; the docs' wording is "notice what information you repeatedly provide"</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Automations and personal routines</span><span class="note">Named for the decision only; taught in Learn Automation and Learn AI Productivity</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Pemberton &amp; Thistle</span><span class="note">Constructed example; its week, its estimates and its library are invented for teaching</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 1 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>The signal</b><span>You have re-explained the same context about three times. Package the way you do the task, not the task.</span></div>
+      <div class="cheat-item"><b>The cost</b><span>Writing, testing, upkeep, routing risk and a description in context in every session.</span></div>
+      <div class="cheat-item"><b>Four homes</b><span>No judgment: automation. Only the shape repeats: template. One-off: just ask. Repeated steps with judgment: skill.</span></div>
+      <div class="cheat-item"><b>Two fields</b><span>name (64 chars, lowercase, hyphens, matches the folder) and description (1,024 chars, what + when).</span></div>
+      <div class="cheat-item"><b>Three levels</b><span>Descriptions always, body when it fires, files only when read. Scripts send output, not code.</span></div>
+      <div class="cheat-item"><b>Trust</b><span>A skill can run code. Write your own or audit every file before installing someone else's.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>The assistant decides whether to load a skill from its description and nothing else. Session 2 rewrites Pemberton &amp; Thistle's first descriptions so they say what the skill does and when to use it, in the words people actually type, and tests them live against a router.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 1 of 6 · learn-skills-library-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="../index.html">← Course home</a> &nbsp;·&nbsp; <a href="02-a-description-it-can-find.html">Next: A description the assistant can find →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=2"></script>
+</body>
+</html>

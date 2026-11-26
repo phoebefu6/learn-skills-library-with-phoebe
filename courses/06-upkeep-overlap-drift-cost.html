@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 6 of 6. Upkeep for a skills library: overlap audits, description drift, an owner per skill, the standing context cost of a growing library, and retiring a skill with a pointer left behind. Capstone: a quarterly library review scored on the bench.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Upkeep: overlap, drift, token cost, retirement - learn skills library with phoebe">
+<meta property="og:description" content="Session 6 of 6. Find the pairs that fight, catch descriptions that stopped telling the truth, count what the library costs, and retire a skill without losing the trail.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/courses/06-upkeep-overlap-drift-cost.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Upkeep: overlap, drift, token cost, retirement - learn skills library with phoebe">
+<meta name="twitter:description" content="Session 6 of 6. Overlap, drift, standing cost and retirement, closed with a quarterly library review on the bench.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 6 · Upkeep: overlap, drift, token cost, retirement - learn skills library with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=2">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-skills-library-with-phoebe</a> / Session 6 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Your Own Skills Library with Phoebe · Session 6 of 6</div>
+    <h1>Upkeep: overlap, drift, <span class="accent">token cost</span>, retirement</h1>
+    <p class="sub">A library that routed well in March can route badly by June without anyone touching a description. Someone adds a skill that copies a neighbour, someone edits a body and forgets the description, the list of skills grows until the assistant starts cutting it short. Tonight we run the four checks that keep a library honest, then hold Pemberton &amp; Thistle's quarterly review on the bench and put numbers on every decision.</p>
+    <div class="chip-row">
+      <span class="chip level">🔴 Capstone</span>
+      <span class="chip audience">Builders and knowledge workers with too many saved prompts</span>
+      <span class="chip audience">Anyone who owns a shared library</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Overlap, drift, cost, retirement</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: the quarterly library review</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">Sessions 1 to 5 built a library and tested it. This one keeps it working. The question has not changed: for each request you send, does it reach the right skill, and what does keeping that true cost? What changes is time. Skills get copied, bodies get edited, new ones arrive, old jobs move elsewhere. We follow the Constructed Pemberton &amp; Thistle example one last time: the firm, its 19 skills, its 60 requests and every bench number are invented; the loading rules, budgets and security advice are read from the vendor docs and the open specification.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = do it yourself, in the page</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> Pemberton &amp; Thistle's quarterly library review (constructed), scored on the bench: from the library as found, with a near-duplicate added, back to 55 of 60 and 18 of 20 held out, with an upkeep log, an owner per skill and one retirement with a pointer left behind. The same review works on your own library with a test set from session 5.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers overlap audits, merging and splitting</span>
+      <h2>Find the pairs that fight</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Two skills overlap when a request could reasonably go to either. The router does not see your intentions, only the words in two descriptions, so when those words are mostly the same, the choice between them is decided by small differences in phrasing or by which one is listed first. An overlap audit finds those pairs before your colleagues do: put the descriptions side by side, then send a shared test set through and count which pair collides most.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed overlap audit. Top: the text market-scan and sector-scan share word for word, covering what the skill does, the end of the when clause and the Do not use for line. Middle: the only differing phrases, market-scan says for a market scan, market sizing, a sector overview; sector-scan says how big a sector is, for a sector scan, a market map. Bottom: three requests aimed at market-scan. Request 4 reaches market-scan, 2.48 against 2.38. Request 5 goes to sector-scan, 4.37 against 3.28. Request 6 ties at 1.61 and sector-scan wins because it is listed first. Worst-colliding pair: market-scan plus sector-scan, 2 misroutes.">
+        <defs>
+          <filter id="s6aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="61" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s6aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s6aH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s6aL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s6aS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s6aA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s6aR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s6aN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s6aA" x="30" y="28">OVERLAP AUDIT · MARKET-SCAN AGAINST ITS COPY, SECTOR-SCAN (CONSTRUCTED)</text>
+
+        <g filter="url(#s6aSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="824" cy="20" r="8"/>
+          <path d="M830 26 L840 36"/>
+          <rect x="30" y="44" width="820" height="94" rx="10" transform="rotate(-0.2 440 91)" fill="#E4B437"/>
+          <rect x="30" y="156" width="400" height="64" rx="10" transform="rotate(0.5 230 188)" fill="#FFFFFF"/>
+          <rect x="450" y="156" width="400" height="64" rx="10" transform="rotate(-0.5 650 188)" fill="#FFFFFF"/>
+          <rect x="30" y="258" width="480" height="48" rx="8" transform="rotate(-0.3 270 282)" fill="#F4F6E2"/>
+          <rect x="30" y="318" width="480" height="48" rx="8" transform="rotate(0.3 270 342)" fill="#F4F6E2"/>
+          <rect x="30" y="378" width="480" height="48" rx="8" transform="rotate(-0.3 270 402)" fill="#F4F6E2"/>
+          <rect x="560" y="258" width="290" height="48" rx="8" transform="rotate(0.4 705 282)" fill="#FFFFFF"/>
+          <rect x="560" y="318" width="290" height="48" rx="8" transform="rotate(-0.4 705 342)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="560" y="378" width="290" height="48" rx="8" transform="rotate(0.4 705 402)" fill="#FEF2F2" stroke="#991B1B"/>
+          <path d="M514 282 L554 282" marker-end="url(#s6aAr)"/>
+          <path d="M514 342 L554 342" marker-end="url(#s6aAr)"/>
+          <path d="M514 402 L554 402" marker-end="url(#s6aAr)"/>
+        </g>
+
+        <text class="s6aH" x="46" y="66">Shared word for word: the what, the end of the when, the Do not use for line</text>
+        <text class="s6aS" x="46" y="86" style="fill:#22260F">Runs a desk research scan of a market or sector: market size, main players, growth trends and sources.</text>
+        <text class="s6aS" x="46" y="104" style="fill:#22260F">Use when asked ... or the landscape of an industry.</text>
+        <text class="s6aS" x="46" y="122" style="fill:#22260F">Do not use for one named company (competitor-profile) or for academic papers (lit-review).</text>
+
+        <text class="s6aH" x="46" y="180">Only in market-scan</text>
+        <text class="s6aS" x="46" y="202">"for a market scan, market sizing, a sector overview"</text>
+        <text class="s6aH" x="466" y="180">Only in sector-scan (listed first)</text>
+        <text class="s6aS" x="466" y="202">"how big a sector is, for a sector scan, a market map"</text>
+
+        <text class="s6aA" x="30" y="246">THREE REQUESTS AIMED AT MARKET-SCAN · TOP TWO STAND-IN SCORES</text>
+
+        <text class="s6aL" x="44" y="278">Request 4</text>
+        <text class="s6aS" x="44" y="296">"Can you do a market scan of plant-based dairy in the UK?"</text>
+        <text class="s6aL" x="44" y="338">Request 5</text>
+        <text class="s6aS" x="44" y="356">"how big is the market for heat pumps in Ireland and who are ..."</text>
+        <text class="s6aL" x="44" y="398">Request 6</text>
+        <text class="s6aS" x="44" y="416">"give me the landscape of the cybersecurity training industry"</text>
+
+        <text class="s6aL" x="574" y="278">market-scan 2.48, sector-scan 2.38</text>
+        <text class="s6aA" x="574" y="296">right skill: "market scan" still wins</text>
+        <text class="s6aL" x="574" y="338">sector-scan 4.37, market-scan 3.28</text>
+        <text class="s6aR" x="574" y="356">wrong skill: copy's "how big" wins</text>
+        <text class="s6aL" x="574" y="398">sector-scan 1.61, market-scan 1.61</text>
+        <text class="s6aR" x="574" y="416">wrong skill: tie, list order decides</text>
+
+        <text class="s6aN" x="30" y="448">Modelled stand-in scores, not a real assistant's. Worst-colliding pair: market-scan + sector-scan (2).</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - a copy with one phrase edited shares almost every word with the original, so the requests split between them on tiny differences and list order</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>An overlap audit<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Step one, by eye.</strong> List every pair of skills whose descriptions share most of their words. Read the pairs side by side, as in the figure. If you cannot say in one sentence which requests belong to which, neither can the router.</p>
+        <p><strong>Step two, by count.</strong> Send one shared test set through the whole library (the session 5 set works) and count misroutes for each pair of "should reach" and "fired". The pair with the highest count is the worst-colliding pair: the two skills that most often take each other's work.</p>
+        <p>On the bench, someone at Pemberton &amp; Thistle copied <code>market-scan</code> as <code>sector-scan</code> and edited one phrase (constructed). The copy takes requests 5 and 6 from <code>market-scan</code>, wrong-skill outcomes rise from 1 to 3, and the bench names the worst pair: market-scan + sector-scan (2). Request 6 is the uncomfortable one: both scored 1.61, and the copy won only because it sits higher in the list. The bench router is a modelled stand-in (a BM25 keyword scorer); a real assistant reads with a language model, so take the direction, not the numbers.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Merge or split<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>What the audit shows</th><th>The fix</th><th>On the bench (constructed)</th></tr>
+          <tr><td>Two names, one job</td><td>Merge: keep the better-named skill, fold in any step the other had, retire the other with a pointer (Part 3)</td><td>Merging <code>sector-scan</code> back into <code>market-scan</code> returns the library to rung 4: 55 of 60</td></tr>
+          <tr><td>One name, two jobs</td><td>Split: one skill per job, each description naming the other in its "Do not use for" line</td><td>Session 4 split <code>notes-and-interviews</code> into <code>meeting-minutes</code> and <code>interview-synthesis</code>: 54 of 60 became 55</td></tr>
+        </table>
+        <p>Both moves make the same promise: one job per skill, one skill per job. Codex's guidance says the same in its own words: one job per skill, with clear scope and boundaries in the description.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Same names across locations<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Overlap also happens by name, when the same skill sits in two places. The products handle it differently, as documented on 2026-11-25:</p>
+        <table class="clean">
+          <tr><th>Assistant</th><th>Two skills with the same name</th></tr>
+          <tr><td>Claude Code</td><td>One wins by location: enterprise overrides personal, personal overrides project</td></tr>
+          <tr><td>OpenAI Codex</td><td>Not merged; both can appear in the list</td></tr>
+        </table>
+        <p>So the same accident has two different symptoms. In Claude Code, your project's fix can be silently shadowed by an older personal copy. In Codex, two near-identical entries compete exactly like market-scan and sector-scan above. The audit habit covers both: list every skill the assistant can actually see, not just the folder you are editing.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>The docs expect duplicates.</strong> OpenAI's "Build skills" page states plainly that Codex does not merge skills that share a name, so both can appear when the same skill exists in two locations. Its advice for descriptions, clear scope and boundaries with the main use case first, is the preventive half of an overlap audit.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers description drift and an owner per skill</span>
+      <h2>When the description stops telling the truth</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">The router reads only the description. The work happens in the body. When someone improves the body and leaves the description alone, the two drift apart: requests keep going to a skill that no longer does that job, or keep missing a skill that now does. Nothing breaks loudly. The skill works perfectly when it fires; it just stops firing for the right things.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed timeline of market-scan over nine months. Body lane: written in January for sector and market scans only; in April a step is added to profile one named company; in September a sizing spreadsheet is attached. Description lane: written in January saying not for one named company, then unchanged in April and September. Routing lane: in January a company request goes to competitor-profile, true to both; from April company requests are still sent away from the skill that now does the job, because routing follows the January description.">
+        <defs>
+          <filter id="s6bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="67" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+        </defs>
+        <style>
+          .s6bH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s6bL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s6bS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s6bA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s6bR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s6bN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s6bA" x="30" y="28">MARKET-SCAN OVER NINE MONTHS · THE BODY MOVES, THE DESCRIPTION DOES NOT</text>
+
+        <g filter="url(#s6bSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="840" cy="22" r="10"/>
+          <path d="M840 22 L840 15 M840 22 L846 25"/>
+          <rect x="190" y="64" width="200" height="70" rx="10" transform="rotate(-0.6 290 99)" fill="#FFFFFF"/>
+          <rect x="410" y="64" width="200" height="70" rx="10" transform="rotate(0.6 510 99)" fill="#E4B437"/>
+          <rect x="630" y="64" width="200" height="70" rx="10" transform="rotate(-0.5 730 99)" fill="#FFFFFF"/>
+          <rect x="190" y="152" width="200" height="70" rx="10" transform="rotate(0.5 290 187)" fill="#F4F6E2"/>
+          <rect x="410" y="152" width="200" height="70" rx="10" transform="rotate(-0.4 510 187)" fill="#FFFFFF" stroke-dasharray="6 5"/>
+          <rect x="630" y="152" width="200" height="70" rx="10" transform="rotate(0.4 730 187)" fill="#FFFFFF" stroke-dasharray="6 5"/>
+          <rect x="190" y="240" width="200" height="70" rx="10" transform="rotate(-0.4 290 275)" fill="#FFFFFF"/>
+          <rect x="410" y="240" width="200" height="70" rx="10" transform="rotate(0.5 510 275)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="630" y="240" width="200" height="70" rx="10" transform="rotate(-0.5 730 275)" fill="#FEF2F2" stroke="#991B1B"/>
+        </g>
+
+        <text class="s6bA" x="200" y="54">JANUARY</text>
+        <text class="s6bA" x="420" y="54">APRIL</text>
+        <text class="s6bA" x="640" y="54">SEPTEMBER</text>
+
+        <text class="s6bH" x="30" y="94">Body</text>
+        <text class="s6bS" x="30" y="112">SKILL.md steps</text>
+        <text class="s6bH" x="30" y="182">Description</text>
+        <text class="s6bS" x="30" y="200">what the router reads</text>
+        <text class="s6bH" x="30" y="270">Routing</text>
+        <text class="s6bS" x="30" y="288">a one-company request</text>
+
+        <text class="s6bL" x="204" y="86">Written</text>
+        <text class="s6bS" x="204" y="104">sector and market scans</text>
+        <text class="s6bS" x="204" y="120">only</text>
+        <text class="s6bL" x="424" y="86">Step added</text>
+        <text class="s6bS" x="424" y="104" style="fill:#22260F">also profiles one named</text>
+        <text class="s6bS" x="424" y="120" style="fill:#22260F">company when asked</text>
+        <text class="s6bL" x="644" y="86">Step added</text>
+        <text class="s6bS" x="644" y="104">sizing spreadsheet</text>
+        <text class="s6bS" x="644" y="120">attached to every scan</text>
+
+        <text class="s6bL" x="204" y="174">Written</text>
+        <text class="s6bS" x="204" y="192">not for one named company</text>
+        <text class="s6bS" x="204" y="208">(competitor-profile)</text>
+        <text class="s6bL" x="424" y="174">Unchanged</text>
+        <text class="s6bS" x="424" y="192">still: not for one</text>
+        <text class="s6bS" x="424" y="208">named company</text>
+        <text class="s6bL" x="644" y="174">Unchanged</text>
+        <text class="s6bS" x="644" y="192">nobody re-read it</text>
+        <text class="s6bS" x="644" y="208">after the edits</text>
+
+        <text class="s6bL" x="204" y="262">Competitor-profile</text>
+        <text class="s6bS" x="204" y="280">true to the body and</text>
+        <text class="s6bS" x="204" y="296">to the description</text>
+        <text class="s6bR" x="424" y="262">Sent away</text>
+        <text class="s6bS" x="424" y="280">from the skill that now</text>
+        <text class="s6bS" x="424" y="296">does the job</text>
+        <text class="s6bR" x="644" y="262">Still diverged</text>
+        <text class="s6bS" x="644" y="280">routing follows the</text>
+        <text class="s6bS" x="644" y="296">January description</text>
+
+        <text class="s6bN" x="30" y="340">Constructed Pemberton &amp; Thistle example, constructed dates. Routing reads the description, never the body.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - drift starts the day the body changes and the description does not; routing keeps obeying the old description</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Drift<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>In the Constructed Pemberton &amp; Thistle example, Priya adds a step to <code>market-scan</code> in April: when a scan names one company, profile it too. Useful. But the description still ends with the line from session 2, quoted from the bench library:</p>
+        <div class="prompt-box good"><span class="label">★ market-scan, the line that did not move</span>Do not use for one named company (competitor-profile) or for academic papers (lit-review).</div>
+        <p>So a request to profile one company still goes to <code>competitor-profile</code>, and the new step in <code>market-scan</code> only runs when someone happens to mention a company inside a sector scan. Drift has two shapes: a request reaches a skill that no longer does that job (the body dropped it), or a request misses a skill that now does (the body gained it). Either way, the fix is the same habit: <strong>every edit to a body ends with re-reading the description</strong>, and then re-running the trigger tests from session 5.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>An owner and a review date per skill<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Drift happens to skills nobody owns. The open specification gives you a place to record who does: the optional <code>metadata</code> field, an arbitrary key-value map. The specification's own example uses <code>author</code> and <code>version</code>; nothing stops you adding the two keys that matter for upkeep.</p>
+        <div class="prompt-box good"><span class="label">★ Frontmatter with an owner (constructed Pemberton &amp; Thistle example)</span>---
+name: market-scan
+description: Runs a desk research scan of a market or sector: ...
+metadata:
+  owner: priya
+  last-reviewed: "2027-01-12"
+  version: "1.3"
+---</div>
+        <p>The owner re-reads the description after every body edit and answers for the skill at the quarterly review. A skill with no owner at the review is a retirement candidate by default. The dates and version above are constructed; your keys can be any you will actually maintain.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Security review on every update<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Upkeep is also a security habit. Anthropic's Agent Skills overview advises using skills only from trusted sources and auditing every bundled file, not just <code>SKILL.md</code>: scripts, references and assets. It singles out skills that fetch data from external URLs as risky, because what they fetch can carry instructions, and notes that even a trustworthy skill can be compromised if its external dependencies change.</p>
+        <p>The practical rule for a library: a review is not done once. Any update to a skill you did not write, and any change in what a skill fetches, gets the same audit as the first install. Put the date of the last audit next to the owner.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Trusted today is not trusted forever.</strong> Anthropic's security considerations for Agent Skills warn that a malicious skill can direct tool use or run code that does not match its stated purpose, and that a skill pulling from external sources can change behaviour without its own files changing. That is drift with consequences: the description says one thing, the behaviour does another, and only a review catches it.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers context cost and retirement</span>
+      <h2>What the library costs, and how to retire a skill</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Every installed skill pays rent. Its name and description sit in the assistant's context in every session, whether or not it ever fires. A library is cheap at five skills and noticeably expensive at fifty, and both Claude Code and Codex respond to the expense the same way: when the list outgrows its budget, descriptions get shortened or dropped. The cheapest skill to keep is the one you retire on purpose.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed bench library, characters of description loaded in every session. Rung 4 split library, 19 skills, 55 of 60 right: 5,391 characters. Near-duplicate added, 20 skills, 53 of 60 right: 5,685 characters. Keyword-stuffed, 19 skills, 53 of 60 right: 6,900 characters. A dashed reference line at 8,000 characters marks Codex's whole-list cap when the context window size is unknown; that cap also counts names and paths, so the bars are a lower bound.">
+        <defs>
+          <filter id="s6cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="s6cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#5E6B00" stroke-width="1" opacity=".5"/></pattern>
+        </defs>
+        <style>
+          .s6cL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s6cS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s6cA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s6cV { font: 800 14px Inter, sans-serif; fill: #3F4800; }
+          .s6cN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s6cA" x="30" y="28">CHARACTERS OF DESCRIPTION LOADED IN EVERY SESSION · BENCH LIBRARY (CONSTRUCTED)</text>
+
+        <g filter="url(#s6cSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M760 12 L808 12 M766 12 L766 20 M778 12 L778 18 M790 12 L790 20 M802 12 L802 18"/>
+          <rect x="220" y="56" width="404" height="36" rx="6" transform="rotate(-0.3 422 74)" fill="#E4B437"/>
+          <rect x="220" y="116" width="426" height="36" rx="6" transform="rotate(0.3 433 134)" fill="url(#s6cHc)"/>
+          <rect x="220" y="176" width="518" height="36" rx="6" transform="rotate(-0.3 479 194)" fill="url(#s6cHc)"/>
+          <path d="M820 46 L820 230" stroke-dasharray="6 5" stroke="#555A40"/>
+          <path d="M220 46 L220 230" stroke="#555A40"/>
+        </g>
+
+        <text class="s6cL" x="30" y="72">Rung 4 · split</text>
+        <text class="s6cS" x="30" y="88">55 of 60 right · 19 skills</text>
+        <text class="s6cL" x="30" y="132">Near-duplicate added</text>
+        <text class="s6cS" x="30" y="148">53 of 60 right · 20 skills</text>
+        <text class="s6cL" x="30" y="192">Keyword-stuffed</text>
+        <text class="s6cS" x="30" y="208">53 of 60 right · 19 skills</text>
+
+        <text class="s6cV" x="634" y="79">5,391</text>
+        <text class="s6cV" x="656" y="139">5,685</text>
+        <text class="s6cV" x="748" y="199">6,900</text>
+
+        <text class="s6cA" x="816" y="252" text-anchor="end">8,000 characters: Codex's list cap (names and paths count too)</text>
+
+        <text class="s6cN" x="30" y="284">The cheapest library routed best. Stuffing paid 1,509 more characters for two fewer right outcomes.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - every description is paid for in every session; stuffing and duplicating both raised the bill and lowered the routing</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The standing cost<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Anthropic's overview puts Level 1, the name and description, at about 100 tokens per skill, always loaded. The two coding assistants cap the total and say what happens when you exceed it:</p>
+        <table class="clean">
+          <tr><th>Assistant</th><th>Listing budget</th><th>When it overflows</th></tr>
+          <tr><td>Claude Code</td><td>About 1% of the model's context window; each description plus its when-to-use text is cut at 1,536 characters in the listing</td><td>Descriptions are dropped, starting with the least-invoked skills; <code>/doctor</code> estimates what the listing costs</td></tr>
+          <tr><td>OpenAI Codex</td><td>At most 2% of the context window, or 8,000 characters when the window size is unknown; <code>skills.max_context_tokens</code> raises it up to 10,000 tokens</td><td>Descriptions are shortened first; some skills may be left out, with a warning</td></tr>
+        </table>
+        <p>On the bench (constructed), the rung 4 library loads 5,391 characters of description; adding the near-duplicate raises it to 5,685; stuffing every description raises it to 6,900. Note what the drop rule means for upkeep: a skill that rarely fires is the first to lose its description in Claude Code, so a large library can make your rarely used skills invisible without telling you.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Retire with a pointer<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Deleting a skill is fast and leaves people stuck: a colleague types the old name, nothing happens, nobody knows where the job went. Retire in three moves instead.</p>
+        <ol>
+          <li><strong>Disable first.</strong> Stop the assistant choosing it while the files still exist. Claude Code: <code>disable-model-invocation: true</code> in the frontmatter (only a person can invoke it). Codex: a <code>[[skills.config]]</code> entry with <code>enabled = false</code>.</li>
+          <li><strong>Leave a tombstone.</strong> A short note at the old location saying where the job went, when, and why.</li>
+          <li><strong>Delete after one review cycle</strong>, once nobody has reached for it.</li>
+        </ol>
+        <div class="prompt-box good"><span class="label">★ newsletter/RETIRED.md (constructed Pemberton &amp; Thistle example)</span>Retired 2027-01-12 by priya.
+The monthly newsletter is now a template, not a skill:
+the section order never changed and no run needed judgment.
+Use: templates/newsletter.docx
+Disabled since the Q1 review; delete at the Q2 review if unused.</div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>How many skills is too many? Contested<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>One side.</strong> The vendors design for large libraries. Anthropic's best practices describe the description being used to choose the right skill "from potentially 100+ available Skills", and both Claude Code and Codex manage growth with a budget rather than a limit on count.</p>
+        <p><strong>The other side.</strong> Gan and Sun's RAG-MCP paper (arXiv 2505.03275, May 2025; abstract read at source) put a large catalogue of MCP tools into the prompt and measured tool selection accuracy at 13.62%; retrieving a relevant subset first raised it to 43.13% and cut prompt tokens by over half. That is MCP tools on a stress benchmark, not skills, and its setup is not a skills library.</p>
+        <p><strong>What nobody has published</strong> is a threshold for skills. Treat any number you see quoted as a claim to check. What you can measure is your own library: run the audit each quarter and watch whether the held-out score falls as the count rises.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>"Skill descriptions are cut short."</strong> The Claude Code skills docs carry a troubleshooting section for exactly this: when many skills are installed, the listing budget of about 1% of the context window overflows and descriptions are dropped, least-invoked first, and <code>/doctor</code> shows the estimate. Codex documents the parallel case: put the main use case and trigger words first, so matching survives when descriptions are shortened.</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>The quarterly library review</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">It is Pemberton &amp; Thistle's first quarterly review (constructed). Since session 5 someone added <code>sector-scan</code>, and a colleague has proposed bolting extra keywords onto every description "so nothing gets missed". You will score the library as found, test the proposal, fix the overlap, quote the honest number and write it all down. Every number below is one the bench prints; the bench router is a modelled stand-in (BM25 keyword scoring), so your own assistant's numbers will differ.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed before and after scorecard of the quarterly review. As found, near-duplicate added: 53 of 60 right, 3 wrong skill, 20 skills, 5,685 characters, held-out not scored. After the review, merged back to the rung 4 library: 55 of 60 right, 1 wrong skill, 19 skills, 5,391 characters, 18 of 20 held out.">
+        <defs>
+          <filter id="s6dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="73" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s6dAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s6dH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s6dL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s6dS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s6dA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s6dV { font: 800 14px Inter, sans-serif; fill: #3F4800; }
+          .s6dR { font: 800 14px Inter, sans-serif; fill: #991B1B; }
+          .s6dN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s6dA" x="30" y="28">THE QUARTERLY REVIEW, SCORED ON THE BENCH (CONSTRUCTED LIBRARY)</text>
+
+        <g filter="url(#s6dSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="816" y="10" width="28" height="22" rx="3"/>
+          <path d="M816 17 L844 17 M823 6 L823 12 M837 6 L837 12"/>
+          <rect x="290" y="40" width="230" height="44" rx="8" transform="rotate(-0.5 405 62)" fill="#FFFFFF"/>
+          <rect x="600" y="40" width="250" height="44" rx="8" transform="rotate(0.5 725 62)" fill="#E4B437"/>
+          <rect x="290" y="96" width="230" height="34" rx="6" transform="rotate(0.4 405 113)" fill="#F4F6E2"/>
+          <rect x="290" y="136" width="230" height="34" rx="6" transform="rotate(-0.4 405 153)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="290" y="176" width="230" height="34" rx="6" transform="rotate(0.4 405 193)" fill="#F4F6E2"/>
+          <rect x="290" y="216" width="230" height="34" rx="6" transform="rotate(-0.4 405 233)" fill="#F4F6E2"/>
+          <rect x="290" y="256" width="230" height="34" rx="6" transform="rotate(0.4 405 273)" fill="#FFFFFF" stroke-dasharray="6 5"/>
+          <rect x="600" y="96" width="250" height="34" rx="6" transform="rotate(-0.4 725 113)" fill="#FFFFFF"/>
+          <rect x="600" y="136" width="250" height="34" rx="6" transform="rotate(0.4 725 153)" fill="#FFFFFF"/>
+          <rect x="600" y="176" width="250" height="34" rx="6" transform="rotate(-0.4 725 193)" fill="#FFFFFF"/>
+          <rect x="600" y="216" width="250" height="34" rx="6" transform="rotate(0.4 725 233)" fill="#FFFFFF"/>
+          <rect x="600" y="256" width="250" height="34" rx="6" transform="rotate(-0.4 725 273)" fill="#FFFFFF"/>
+          <path d="M526 113 L594 113" marker-end="url(#s6dAr)"/>
+          <path d="M526 153 L594 153" marker-end="url(#s6dAr)"/>
+          <path d="M526 193 L594 193" marker-end="url(#s6dAr)"/>
+          <path d="M526 233 L594 233" marker-end="url(#s6dAr)"/>
+          <path d="M526 273 L594 273" marker-end="url(#s6dAr)"/>
+        </g>
+
+        <text class="s6dH" x="306" y="60">As found</text>
+        <text class="s6dS" x="306" y="76">near-duplicate added</text>
+        <text class="s6dH" x="616" y="60">After the review</text>
+        <text class="s6dS" x="616" y="76" style="fill:#22260F">sector-scan merged back, rung 4</text>
+
+        <text class="s6dL" x="30" y="118">Right outcomes of 60</text>
+        <text class="s6dL" x="30" y="158">Wrong skill</text>
+        <text class="s6dL" x="30" y="198">Skills in the library</text>
+        <text class="s6dL" x="30" y="238">Characters loaded up front</text>
+        <text class="s6dL" x="30" y="278">Held-out requests</text>
+
+        <text class="s6dV" x="405" y="118" text-anchor="middle">53</text>
+        <text class="s6dR" x="405" y="158" text-anchor="middle">3</text>
+        <text class="s6dV" x="405" y="198" text-anchor="middle">20</text>
+        <text class="s6dV" x="405" y="238" text-anchor="middle">5,685</text>
+        <text class="s6dS" x="405" y="277" text-anchor="middle">not scored at intake</text>
+
+        <text class="s6dV" x="725" y="118" text-anchor="middle">55</text>
+        <text class="s6dV" x="725" y="158" text-anchor="middle">1</text>
+        <text class="s6dV" x="725" y="198" text-anchor="middle">19</text>
+        <text class="s6dV" x="725" y="238" text-anchor="middle">5,391</text>
+        <text class="s6dV" x="725" y="278" text-anchor="middle">18 of 20</text>
+
+        <text class="s6dN" x="30" y="322">Numbers as the bench prints them. Constructed Pemberton &amp; Thistle example; your numbers will differ.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - one merge took the library from 53 to 55 right outcomes and cut 294 characters from every session</figcaption>
+    </figure>
+
+    <div class="skl-bench" data-mode="full" data-rung="twin"></div>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Score the library as found.</strong> The bench opens on the dashed "Add a near-duplicate skill" button: this is the library the review inherits, with <code>sector-scan</code> in it. Record the headline and the four stats, and the worst-colliding pair the bench names. Then find requests 5 and 6 in the table and read who took them.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · the library as found, as the bench prints it</span>Add a near-duplicate skill    53 of 60   20 skills
+3 wrong skill   1 no skill fired   3 fired on a none   5,685 characters
+Worst-colliding pair: market-scan + sector-scan (2 misroutes)</div>
+      </div>
+      <div class="step">
+        <p><strong>Test the colleague's proposal before rejecting it.</strong> Press the dashed "Keyword-stuff every description". No skill fired drops to 0, which is why the idea is tempting. But wrong skill is 2, fired on a none rises to 5, and every session now loads 6,900 characters. The review rejects the proposal with these numbers in the log, not with an opinion.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · the proposal, scored</span>Keyword-stuff every description    53 of 60   19 skills
+2 wrong skill   0 no skill fired   5 fired on a none   6,900 characters
+Verdict: rejected. Same right count as today, more false fires, 1,215 more
+characters than the library as found.</div>
+      </div>
+      <div class="step">
+        <p><strong>Merge sector-scan back into market-scan.</strong> The audit in Part 1 showed one job under two names. Press "4 · Split the overlap": that rung is exactly the 19-skill library without the copy, so it is what the merge produces. Read the new numbers and check that requests 5 and 6 now reach <code>market-scan</code>.</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · after the merge</span>4 · Split the overlap    55 of 60   19 skills
+1 wrong skill   1 no skill fired   3 fired on a none   5,391 characters</div>
+      </div>
+      <div class="step">
+        <p><strong>Quote the held-out number.</strong> Press "5 · Scorecard". The headline switches to the 20 requests nobody tuned descriptions against: 18 of 20, with 37 of 40 on the tuning set. The review reports 18 of 20, because the other 40 were in view while the descriptions were written.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · the number to quote</span>5 · Scorecard    held out 18 of 20   (tuning set 37 of 40)</div>
+      </div>
+      <div class="step">
+        <p><strong>Write the upkeep log.</strong> One entry per change: date, what changed, why, who owns it, the numbers before and after, and the pointer left behind. Fill in your own dates; the ones here are constructed.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · Pemberton &amp; Thistle upkeep log, Q1 review (constructed)</span>DATE        CHANGE                          REASON                         OWNER
+2027-01-12  merged sector-scan into         one job, two names; worst      priya
+            market-scan                     pair market-scan + sector-scan
+            before: 53 of 60, 3 wrong skill, 5,685 characters
+            after:  55 of 60, 1 wrong skill, 5,391 characters; held out 18 of 20
+            pointer: sector-scan/RETIRED.md says "merged into market-scan
+            on 2027-01-12; see market-scan"
+2027-01-12  rejected keyword-stuffing       53 of 60, 5 fired on a none,   partner
+                                            6,900 characters
+2027-01-12  newsletter retired to template  no run needs judgment          priya
+            pointer: newsletter/RETIRED.md -&gt; templates/newsletter.docx
+2027-01-12  market-scan description         body profiles one company      priya
+            flagged for drift               since April; see Part 2</div>
+      </div>
+      <div class="step">
+        <p><strong>Set owners and the next review.</strong> Every skill gets a name next to it and a date it was last read. Skills with no volunteer go on the retirement list for the next review. Book the date now, and decide which test set the next review will run.</p>
+        <div class="prompt-box good"><span class="label">★ Step 6 · owners and the next review (constructed)</span>NEXT REVIEW   2027-04-13   test set: the 60 bench requests + 5 new from Q1
+OWNERS        client-brief, proposal-writer, exec-summary .......... partner
+              market-scan, competitor-profile, lit-review ............. priya
+              meeting-minutes, interview-synthesis, workshop-pack ..... associate
+              (every other skill named the same way; none left blank)
+WATCH LIST    market-scan description (drift); any skill with no fires this quarter
+RULE          every body edit ends with: re-read the description, re-run triggers</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Score before you argue.</strong> Every decision in the log above carries a before and an after. The stuffing proposal sounded reasonable until it had numbers next to it. A library review without a test set is a meeting about opinions; with one, it is twenty minutes and a log entry.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>After the last session</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Run your own overlap audit.</strong> List every skill your assistant can actually see, in every location, and read the pairs whose descriptions share most of their words. Send your session 5 test set through and name your worst-colliding pair.</li>
+      <li><strong>Write your first upkeep log entry.</strong> Date, change, reason, owner, the numbers before and after, and any pointer left behind. One entry is enough to start the habit.</li>
+      <li><strong>Set an owner and a last-reviewed date for every skill</strong>, in the <code>metadata</code> field or in a library index. Any skill nobody claims goes on the retirement list.</li>
+      <li><strong>Retire one skill with a pointer.</strong> Disable it first, leave a tombstone saying where the job went and when, and put the delete date on your next review.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 6 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · The bench reports "Worst-colliding pair: market-scan + sector-scan (2)". What does that tell you?</p>
+      <button class="qopt" type="button">A · Both skills scored under the firing line on two requests</button>
+      <button class="qopt" type="button">B · Of all pairs, these two most often took each other's requests: two requests meant for one were routed to the other</button>
+      <button class="qopt" type="button">C · The two skills have identical bodies</button>
+      <button class="qopt" type="button">D · Two requests fired both skills at once</button>
+      <p class="qwhy">The pair count is misroutes between the "should reach" skill and the one that fired. The highest count marks the overlap to fix first, usually by merging or by sharpening one description.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · Why disable a skill and leave a tombstone, rather than delete it straight away?</p>
+      <button class="qopt" type="button">A · Deleted skills keep loading their descriptions</button>
+      <button class="qopt" type="button">B · The specification forbids deleting a skill folder</button>
+      <button class="qopt" type="button">C · Disabling makes the skill run faster</button>
+      <button class="qopt" type="button">D · Disabling stops the assistant choosing it at once, the tombstone tells people where the job went and when, and the delete waits one review cycle in case someone still needs it</button>
+      <p class="qwhy">Silent disappearance leaves people typing a name that does nothing. A pointer turns a dead end into a redirect, and the review cycle catches anything that still depended on the old skill.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Why does keyword-stuffing every description raise the library's standing cost?</p>
+      <button class="qopt" type="button">A · Every description loads in every session, fired or not, so extra words are paid for on every request; on the bench the total rose from 5,391 to 6,900 characters</button>
+      <button class="qopt" type="button">B · Stuffed skills load their whole body up front</button>
+      <button class="qopt" type="button">C · It only costs more when the stuffed skill fires</button>
+      <button class="qopt" type="button">D · It does not; stuffing is free because descriptions are cached</button>
+      <p class="qwhy">Level 1 is always loaded. Longer descriptions also hit the listing budgets sooner, at which point Claude Code drops and Codex shortens descriptions.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic Agent Skills overview</span><span class="note">Level 1 about 100 tokens per skill, always loaded; security considerations: trusted sources, audit every bundled file, external URLs, changing dependencies; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Claude Code skills docs</span><span class="note">Listing budget about 1% of context, least-invoked descriptions dropped first, 1,536-character cut, /doctor estimate, location precedence, disable-model-invocation; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">OpenAI "Build skills" (Codex)</span><span class="note">List budget 2% or 8,000 characters, shortens descriptions first, same-name skills not merged, disabling with [[skills.config]] enabled = false; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Agent Skills specification</span><span class="note">agentskills.io: optional metadata field as a key-value map for owner and review keys; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">RAG-MCP (Gan and Sun, 2025)</span><span class="note">Contested: MCP tool selection 13.62% against 43.13% on a stress benchmark; abstract read at source; not about skills; no published threshold for skills</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">The skill-routing bench and Pemberton &amp; Thistle</span><span class="note">Constructed: library, requests, near-duplicate, upkeep log and dates; BM25 stand-in router, numbers computed live</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 6 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Overlap audit</b><span>Read look-alike descriptions side by side, then run one test set and name the worst-colliding pair.</span></div>
+      <div class="cheat-item"><b>Merge or split</b><span>Two names, one job: merge. One name, two jobs: split. One job per skill, one skill per job.</span></div>
+      <div class="cheat-item"><b>Drift</b><span>Every body edit ends with re-reading the description and re-running the trigger tests.</span></div>
+      <div class="cheat-item"><b>Owner</b><span>A name and a last-reviewed date on every skill. No owner at the review: retirement candidate.</span></div>
+      <div class="cheat-item"><b>Standing cost</b><span>Descriptions load every session. Claude Code about 1% of context, Codex 2% or 8,000 characters; overflow drops or shortens them.</span></div>
+      <div class="cheat-item"><b>Retire</b><span>Disable, leave a tombstone saying where the job went, delete after one review cycle.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Where next</span>
+    <p>You can now build, test and keep a skills library. To go deeper on measuring any AI system, not just routing, take <a href="https://phoebefu6.github.io/learn-ai-evals-with-phoebe/">Learn AI Evals</a>. To sharpen the instructions inside each skill, take <a href="https://phoebefu6.github.io/learn-prompt-engineering-with-phoebe/">Learn Prompt Engineering</a>. For a tour of one vendor's ready-made skills, see <a href="https://phoebefu6.github.io/learn-claude-skills-with-phoebe/">Learn Claude Skills</a>.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 6 of 6 · learn-skills-library-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="05-testing-a-skill-like-code.html">← Prev: Testing a skill like code</a> &nbsp;·&nbsp; <a href="../index.html">Course home</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/skl-sample.js?v=1"></script>
+<script src="../assets/skl-live.js?v=2"></script>
+<script src="../assets/app.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Six sessions on running your own skills library for an AI assistant: when repeated work deserves a skill, descriptions the assistant can find, one well-built skill, a routing bench in your browser, testing skills like code, and the upkeep a growing library needs. Free, by Phoebe Fu.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Learn Your Own Skills Library with Phoebe">
+<meta property="og:description" content="One skill is a prompt; twenty skills are a library. Make every request reach the right skill, and know what keeping that true costs.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learn Your Own Skills Library with Phoebe">
+<meta name="twitter:description" content="A routing bench in your browser: 19 skills, 60 requests, two traps, and the numbers that move when a description changes.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Learn Your Own Skills Library with Phoebe</title>
+<link rel="stylesheet" href="assets/style.css?v=2">
+<style>
+
+  .stats-row { display: flex; gap: 2.4rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 2.1rem; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: .72rem; opacity: 1; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .course-card {
+    border: 1px solid var(--hairline);
+    border-top: 4px solid var(--diff, var(--indigo));
+    border-radius: var(--radius);
+    padding: 1.2rem 1.3rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+    transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease;
+    position: relative;
+  }
+  .course-card:hover { border-color: var(--indigo-soft); border-top-color: var(--diff, var(--indigo)); box-shadow: 0 8px 28px rgba(var(--shadow-rgb),.16); transform: translateY(-3px); }
+  .course-card .cicon { font-size: 1.7rem; line-height: 1; }
+  .course-card .cnum { font-size: .72rem; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: .1em; }
+  .course-card h3 { font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+  .course-card p { font-size: .85rem; color: var(--muted); flex: 1; }
+  .course-card .meta { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+  .diff-legend { display: flex; gap: 1rem; margin-top: 1.6rem; font-size: .74rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .diff-legend i { display: inline-block; width: .85rem; height: .35rem; border-radius: 999px; margin-right: .35rem; vertical-align: middle; }
+
+  .paths { margin-top: 2.6rem; }
+  .paths h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .3rem; }
+  .paths .plede { color: var(--muted); font-size: .92rem; margin-bottom: .8rem; }
+  .path { display: flex; gap: .55rem; align-items: center; padding: .75rem 0; border-bottom: .5px solid var(--hairline); flex-wrap: wrap; }
+  .path:last-child { border-bottom: none; }
+  .path b { min-width: 15.5rem; font-size: .9rem; }
+  .path .pstep { background: var(--indigo-50); color: var(--indigo-deep); border-radius: 999px; padding: .16rem .68rem; font-weight: 700; font-size: .8rem; text-decoration: none; transition: all .12s ease; }
+  .path .pstep:hover { background: var(--indigo); color: #fff; }
+  .path .parr { color: var(--muted); font-weight: 700; }
+
+  .mm-section { margin-top: 1.6rem; }
+  .mm-section h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .2rem; }
+  .mm-section .mm-lede { color: var(--muted); font-size: .92rem; margin-bottom: .4rem; }
+  .mm-wrap { border: 1px solid var(--hairline); border-radius: var(--radius); background: linear-gradient(180deg,#fff,var(--indigo-50)); padding: .6rem; overflow-x: auto; }
+  .mm-svg { width: 100%; height: auto; display: block; max-width: 60rem; margin: 0 auto; min-width: 34rem; }
+  .mm-link { cursor: pointer; text-decoration: none; }
+  .mm-node rect { transition: opacity .15s ease, filter .15s ease; }
+  .mm-node text { pointer-events: none; }
+  .mm-link:hover .mm-node rect { filter: brightness(1.06); }
+  .mm-edge { transition: opacity .15s ease; }
+
+  .not-this { border: 1px solid var(--hairline); border-left: 4px solid var(--amber); border-radius: var(--radius); background: #fff; padding: 1.1rem 1.3rem; margin-top: 1.2rem; }
+  .not-this h3 { font-size: .95rem; font-weight: 800; margin-bottom: .5rem; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn with Phoebe · AI at work</div>
+    <h1>Learn <span class="accent">Your Own Skills Library</span> with Phoebe</h1>
+    <p class="sub">A skill is a reusable instruction your AI assistant loads when a request matches it. One skill is a prompt. Twenty skills are a library, and a library has library problems: the assistant has to find the right one, two skills fight over one request, descriptions drift away from what the skill does, and every skill costs context. Six sessions around one question: for each request you send, does it reach the right skill, and what does keeping that true cost?</p>
+    <div class="stats-row">
+      <div class="stat"><b data-count="6">6</b><span>sessions</span></div>
+      <div class="stat"><b data-count="19">19</b><span>skills in the bench library</span></div>
+      <div class="stat"><b data-count="60">60</b><span>requests routed live</span></div>
+      <div class="stat"><b data-count="2">2</b><span>traps that score worse</span></div>
+      <div class="stat"><b data-count="45">45</b><span>min per session</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>The six sessions 🎯 <span style="font-size:.85rem;font-weight:600;color:var(--muted)">· from a pile of prompts to a library someone keeps</span></h2>
+      <p class="plede">The running case is <strong>Pemberton &amp; Thistle</strong> (constructed), a four-person research consultancy that writes client briefs, market scans and workshop packs. The firm is invented, and so is its skills library; it grows one piece per session, from a list of repeated work to a quarterly library review. The patterns are vendor-neutral: the shared skill format, then where Anthropic, OpenAI and GitHub implement it, read from their own docs.</p>
+    </div>
+
+    <div class="course-grid">
+      <a class="course-card" href="courses/01-when-work-deserves-a-skill.html" style="--diff:#34D399">
+        <span class="cicon">🗂️</span>
+        <span class="cnum">Session 1 · foundations</span>
+        <h3>When repeated work deserves a skill</h3>
+        <p>The three-times rule and its cost side; skill, template, automation or just asking; what a skill is made of; why only names and descriptions load up front. Build-along: inventory a week of repeated work and pick the first three skills.</p>
+        <span class="meta"><span class="pill amber">▶ Start here</span></span>
+      </a>
+      <a class="course-card" href="courses/02-a-description-it-can-find.html" style="--diff:#34D399">
+        <span class="cicon">🔎</span>
+        <span class="cnum">Session 2 · foundations</span>
+        <h3>A description the assistant can find</h3>
+        <p>The description is the router's only evidence: what the skill does and when to use it, the phrases people really type, "do not use for" lines, a naming scheme. Build-along: rewrite four vague descriptions and test them live.</p>
+        <span class="meta"><span class="pill">findable</span></span>
+      </a>
+      <a class="course-card" href="courses/03-one-job-clear-inputs.html" style="--diff:#FBBF24">
+        <span class="cicon">🧱</span>
+        <span class="cnum">Session 3 · core</span>
+        <h3>One job, clear inputs, a built-in check</h3>
+        <p>The body of a skill: purpose, the inputs to ask for, steps, an output format, a self-check before returning, and references kept out of the main file until needed. Build-along: split one bloated skill into a main file and a reference.</p>
+        <span class="meta"><span class="pill">well built</span></span>
+      </a>
+      <a class="course-card" href="courses/04-the-skill-routing-bench.html" style="--diff:#FB923C">
+        <span class="cicon">🧭</span>
+        <span class="cnum">Session 4 · bench night</span>
+        <h3>The skill-routing bench</h3>
+        <p>Sixty requests routed live across a library of descriptions: right skill, wrong skill, no skill, fired when nothing should. Climb the ladder, try keyword stuffing, then add a near-duplicate skill and watch the twins fight.</p>
+        <span class="meta"><span class="pill amber">★ the bench</span></span>
+      </a>
+      <a class="course-card" href="courses/05-testing-a-skill-like-code.html" style="--diff:#FB923C">
+        <span class="cicon">🧪</span>
+        <span class="cnum">Session 5 · stretch</span>
+        <h3>Testing a skill like code</h3>
+        <p>Trigger tests that should and should not fire, near-misses, a held-out set, golden-output checks, and a regression run after every edit. Build-along: a twelve-case trigger test set for one skill.</p>
+        <span class="meta"><span class="pill">tested</span></span>
+      </a>
+      <a class="course-card" href="courses/06-upkeep-overlap-drift-cost.html" style="--diff:#F87171">
+        <span class="cicon">🧹</span>
+        <span class="cnum">Session 6 · capstone</span>
+        <h3>Upkeep: overlap, drift, token cost, retirement</h3>
+        <p>Overlap audits, description drift, what a growing library costs in context, merging, retiring with a pointer left behind, and an owner per skill. Capstone: Pemberton &amp; Thistle's quarterly library review, scored on the bench.</p>
+        <span class="meta"><span class="pill amber">🔒 final scorecard</span></span>
+      </a>
+    </div>
+
+    <div class="diff-legend">
+      <span><i style="background:#34D399"></i>foundations</span>
+      <span><i style="background:#FBBF24"></i>core</span>
+      <span><i style="background:#FB923C"></i>stretch and bench</span>
+      <span><i style="background:#F87171"></i>capstone</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>Your passport 🎫</h2>
+      <p class="plede">Clear all three quiz questions in a session and it gets stamped. Six stamps means you can decide what deserves a skill, write a description an assistant can find, structure a skill around one job, read a routing scorecard, test a skill's triggers and outputs, and keep a library healthy as it grows. Stamps live in this browser only.</p>
+    </div>
+    <div class="pp-strip"></div>
+  </section>
+
+  <section class="section">
+    <div class="not-this">
+      <h3>What this is not, so you land in the right place 🧭</h3>
+      <table class="clean">
+        <tr><th>If your question is</th><th>Go here instead</th></tr>
+        <tr><td>Which ready-made Claude skills exist, and which should I install?</td><td><a href="https://phoebefu6.github.io/learn-claude-skills-with-phoebe/">Claude Skills ↗</a></td></tr>
+        <tr><td>How do I turn one standard procedure into one skill in Claude?</td><td><a href="https://phoebefu6.github.io/learn-claude-with-phoebe/courses/03-sop-to-skill.html">Learn Claude, session 3 ↗</a></td></tr>
+        <tr><td>How do I write clear prompts with examples and structure?</td><td><a href="https://phoebefu6.github.io/learn-prompt-engineering-with-phoebe/">Prompt Engineering ↗</a></td></tr>
+        <tr><td>How do I evaluate an LLM application in general?</td><td><a href="https://phoebefu6.github.io/learn-ai-evals-with-phoebe/">AI Evals ↗</a></td></tr>
+        <tr><td>Should this be a no-code automation instead?</td><td><a href="https://phoebefu6.github.io/learn-automation-with-phoebe/">Automation ↗</a></td></tr>
+        <tr><td><strong>I have more reusable prompts and skills than I can keep straight, and I want each request to reach the right one.</strong></td><td><strong>you are in the right place</strong></td></tr>
+      </table>
+      <p style="margin-top:.7rem;font-size:.86rem;color:var(--muted)"><strong>Many skills living together.</strong> Routing, overlap, testing and upkeep, on any assistant that follows the shared skill format. One vendor's catalogue, one product's setup and general prompt craft are taught once, in the courses above, and linked rather than repeated.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths">
+      <h2>Choose your path 🗺️</h2>
+      <p class="plede">Three doors into the same habit: write the description for the router, then test that it routes.</p>
+      <div class="path"><b>✍️ I write my first few skills</b>
+        <a class="pstep" href="courses/01-when-work-deserves-a-skill.html">1</a><span class="parr">→</span>
+        <a class="pstep" href="courses/02-a-description-it-can-find.html">2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/03-one-job-clear-inputs.html">3</a>
+        <span style="font-size:.82rem;color:var(--muted)">what deserves a skill, a findable description, one well-built body</span>
+      </div>
+      <div class="path"><b>📚 My library is getting crowded</b>
+        <a class="pstep" href="courses/02-a-description-it-can-find.html">2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/04-the-skill-routing-bench.html">4</a><span class="parr">→</span>
+        <a class="pstep" href="courses/06-upkeep-overlap-drift-cost.html">6</a>
+        <span style="font-size:.82rem;color:var(--muted)">collisions, near-duplicates and the cost of every description</span>
+      </div>
+      <div class="path"><b>🛠️ I maintain skills for a team</b>
+        <a class="pstep" href="courses/04-the-skill-routing-bench.html">4</a><span class="parr">→</span>
+        <a class="pstep" href="courses/05-testing-a-skill-like-code.html">5</a><span class="parr">→</span>
+        <a class="pstep" href="courses/06-upkeep-overlap-drift-cost.html">6</a>
+        <span style="font-size:.82rem;color:var(--muted)">trigger tests, regression after edits, owners and retirement</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="paths" style="margin-top:0">
+      <h2>What is honest here 🧾</h2>
+      <p class="plede">The bench computes for real; the router is a labelled stand-in for a language model; the running case is constructed; the docs are read at their source.</p>
+    </div>
+    <table class="clean">
+      <tr><th>Claim</th><th>Status</th></tr>
+      <tr><td>Every right skill, wrong skill, no skill and false fire on the bench</td><td><strong>Really computed</strong> in your browser from the descriptions and the requests; a Python twin produces the same numbers</td></tr>
+      <tr><td>The router</td><td><strong>Modelled stand-in:</strong> a BM25 keyword scorer (Robertson and Zaragoza, 2009) reading only the descriptions. Real assistants route with a language model; the bench shows the same pressures, not the same numbers</td></tr>
+      <tr><td>Pemberton &amp; Thistle, its library and its 60 requests</td><td><strong>Constructed</strong> for teaching and labelled on every page; no real firm, client or person</td></tr>
+      <tr><td>The skill format, loading limits and invocation rules</td><td><strong>Read at source:</strong> the open Agent Skills specification and the Anthropic, OpenAI and GitHub docs, dated; these move monthly, so re-check before you rely on a number</td></tr>
+      <tr><td>How many skills a real assistant can hold before routing degrades</td><td><strong>Unsettled:</strong> no published threshold for skills; the evidence and the disagreement are taught as they stand</td></tr>
+    </table>
+  </section>
+
+  <section class="section mm-section">
+    <h2>The knowledge map 🧠</h2>
+    <p class="mm-lede">The whole library at a glance - hover a session to spotlight its concepts, click any node to jump in.</p>
+    <div class="mm-wrap"><div id="mindmap"></div></div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>learn-skills-library-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span>Neighbours on the shelf: <a href="https://phoebefu6.github.io/learn-claude-skills-with-phoebe/">Claude Skills ↗</a> &nbsp;·&nbsp; <a href="https://phoebefu6.github.io/learn-prompt-engineering-with-phoebe/">Prompt Engineering ↗</a> &nbsp;·&nbsp; <a href="https://phoebefu6.github.io/learn-ai-evals-with-phoebe/">AI Evals ↗</a></span>
+  </footer>
+
+</main>
+
+<script>
+window.MINDMAP_DATA = {
+ "title": "Your Own\nSkills Library",
+ "centerColor": "#3F4800",
+ "sessions": [
+  {
+   "label": "When work\ndeserves a skill",
+   "href": "courses/01-when-work-deserves-a-skill.html",
+   "color": "#34D399",
+   "concepts": [
+    {
+     "label": "The three-times rule",
+     "href": "courses/01-when-work-deserves-a-skill.html"
+    },
+    {
+     "label": "Skill, template, automation",
+     "href": "courses/01-when-work-deserves-a-skill.html"
+    },
+    {
+     "label": "Progressive disclosure",
+     "href": "courses/01-when-work-deserves-a-skill.html"
+    }
+   ]
+  },
+  {
+   "label": "A description\nit can find",
+   "href": "courses/02-a-description-it-can-find.html",
+   "color": "#34D399",
+   "concepts": [
+    {
+     "label": "What + when",
+     "href": "courses/02-a-description-it-can-find.html"
+    },
+    {
+     "label": "Trigger phrases",
+     "href": "courses/02-a-description-it-can-find.html"
+    },
+    {
+     "label": "Do not use for",
+     "href": "courses/02-a-description-it-can-find.html"
+    }
+   ]
+  },
+  {
+   "label": "One job, clear\ninputs, a check",
+   "href": "courses/03-one-job-clear-inputs.html",
+   "color": "#FBBF24",
+   "concepts": [
+    {
+     "label": "Inputs and steps",
+     "href": "courses/03-one-job-clear-inputs.html"
+    },
+    {
+     "label": "A built-in self-check",
+     "href": "courses/03-one-job-clear-inputs.html"
+    },
+    {
+     "label": "References on demand",
+     "href": "courses/03-one-job-clear-inputs.html"
+    }
+   ]
+  },
+  {
+   "label": "The routing\nbench",
+   "href": "courses/04-the-skill-routing-bench.html",
+   "color": "#FB923C",
+   "concepts": [
+    {
+     "label": "Misroutes and misses",
+     "href": "courses/04-the-skill-routing-bench.html"
+    },
+    {
+     "label": "Keyword stuffing",
+     "href": "courses/04-the-skill-routing-bench.html"
+    },
+    {
+     "label": "Near-duplicate twins",
+     "href": "courses/04-the-skill-routing-bench.html"
+    }
+   ]
+  },
+  {
+   "label": "Testing a skill\nlike code",
+   "href": "courses/05-testing-a-skill-like-code.html",
+   "color": "#FB923C",
+   "concepts": [
+    {
+     "label": "Should and should not fire",
+     "href": "courses/05-testing-a-skill-like-code.html"
+    },
+    {
+     "label": "Held-out requests",
+     "href": "courses/05-testing-a-skill-like-code.html"
+    },
+    {
+     "label": "Regression after edits",
+     "href": "courses/05-testing-a-skill-like-code.html"
+    }
+   ]
+  },
+  {
+   "label": "Upkeep",
+   "href": "courses/06-upkeep-overlap-drift-cost.html",
+   "color": "#F87171",
+   "concepts": [
+    {
+     "label": "Overlap and drift",
+     "href": "courses/06-upkeep-overlap-drift-cost.html"
+    },
+    {
+     "label": "Context cost",
+     "href": "courses/06-upkeep-overlap-drift-cost.html"
+    },
+    {
+     "label": "Retire with a pointer",
+     "href": "courses/06-upkeep-overlap-drift-cost.html"
+    }
+   ]
+  }
+ ]
+};
+</script>
+<script src="assets/mindmap.js?v=1"></script>
+<script src="assets/app.js?v=2"></script>
+</body>
+</html>

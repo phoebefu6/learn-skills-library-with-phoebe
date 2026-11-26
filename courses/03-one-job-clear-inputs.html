@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 3 of 6. One job, clear inputs, a built-in check: the five sections of a skill body, inputs to ask for, a self-check the assistant can run, and references and scripts kept out of the main file until a step needs them.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="One job, clear inputs, a built-in check - learn skills library with phoebe">
+<meta property="og:description" content="Session 3 of 6. One job per skill, five sections in the body, a self-check before it returns, and a bloated skill split into a lean SKILL.md plus reference files.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/courses/03-one-job-clear-inputs.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="One job, clear inputs, a built-in check - learn skills library with phoebe">
+<meta name="twitter:description" content="Session 3 of 6. One job, five sections, a self-check, and only the file a step needs.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 3 · One job, clear inputs, a built-in check - learn skills library with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=2">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-skills-library-with-phoebe</a> / Session 3 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Your Own Skills Library with Phoebe · Session 3 of 6</div>
+    <h1>One job, clear inputs, a <span class="accent">built-in check</span></h1>
+    <p class="sub">The description decides whether a skill fires. The body decides what happens next. A good body reads like a short procedure a sharp new colleague could follow: what this is for, what to ask for first, the steps, the shape of the answer, and a check before anything goes back. Tonight we write that body, and move everything else out of the main file until a step needs it.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Core</span>
+      <span class="chip audience">Builders and knowledge workers with too many saved prompts</span>
+      <span class="chip audience">Anyone who has written one skill and watched it grow</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Sections, inputs and checks, references</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: split one bloated skill</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">Session 2 gave Pemberton &amp; Thistle's skills descriptions the assistant can find. Now open one of them. In the Constructed Pemberton &amp; Thistle example, the <code>client-brief</code> skill has grown the way skills do: every time a brief went out wrong, someone pasted another rule, another example, another note about what happened last time. It still fires on the right requests. It just loads far more than any one brief needs, and nothing in it checks the brief before it goes to the client. The structure we fix it with is shared across vendors, read from the open specification and from the Anthropic and OpenAI docs.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = do it yourself, in the page</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> One well-structured skill, Pemberton &amp; Thistle's <code>client-brief</code> (constructed): restructured into a lean <code>SKILL.md</code> under 60 lines plus two reference files and a check script, with a self-check the assistant runs before it returns the brief. It is the template for every other skill in their library.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers one job per skill and the body's sections</span>
+      <h2>One job, five sections</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">A skill body that works tends to have the same five parts, whoever wrote it: a purpose, the inputs to ask for, numbered steps, an output format, and a self-check before returning. None of the vendors mandates these headings; the specification only requires the frontmatter. But each part answers a question the assistant would otherwise guess at, and every guess is a place where two runs of the same skill come out different.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 316" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The path one request takes through a skill body. Request matches the skill, then an inputs check: if an input is missing, ask the user, do not guess. Then numbered steps, then the output format. Then the self-check, filled gold: if it passes, return to the user; if it fails, loop back to the steps, fix and re-run.">
+        <defs>
+          <filter id="s3aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s3aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s3aH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s3aL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s3aS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s3aA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s3aR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s3aN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s3aA" x="30" y="40">WHAT ONE SKILL BODY MAKES THE ASSISTANT DO, IN ORDER</text>
+
+        <g filter="url(#s3aSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="90" width="120" height="70" rx="10" transform="rotate(-1 90 125)" fill="#FFFFFF"/>
+          <rect x="175" y="90" width="140" height="70" rx="10" transform="rotate(0.8 245 125)" fill="#F4F6E2"/>
+          <rect x="340" y="90" width="120" height="70" rx="10" transform="rotate(-0.6 400 125)" fill="#F4F6E2"/>
+          <rect x="485" y="90" width="130" height="70" rx="10" transform="rotate(0.7 550 125)" fill="#F4F6E2"/>
+          <rect x="640" y="90" width="110" height="70" rx="10" transform="rotate(-0.8 695 125)" fill="#E4B437"/>
+          <rect x="775" y="90" width="80" height="70" rx="10" transform="rotate(1 815 125)" fill="#FFFFFF"/>
+          <rect x="175" y="210" width="140" height="50" rx="10" transform="rotate(-0.8 245 235)" fill="#FFFFFF"/>
+          <path d="M152 125 L171 125" marker-end="url(#s3aAr)"/>
+          <path d="M317 125 L336 125" marker-end="url(#s3aAr)"/>
+          <path d="M462 125 L481 125" marker-end="url(#s3aAr)"/>
+          <path d="M617 125 L636 125" marker-end="url(#s3aAr)"/>
+          <path d="M752 125 L771 125" marker-end="url(#s3aAr)"/>
+          <path d="M245 163 L245 206" marker-end="url(#s3aAr)"/>
+          <path d="M695 163 L695 236 L400 236 L400 167" marker-end="url(#s3aAr)"/>
+          <circle cx="808" cy="214" r="11" fill="#FFFFFF"/>
+          <path d="M816 222 L830 236"/>
+        </g>
+
+        <text class="s3aL" x="42" y="120">Request</text>
+        <text class="s3aS" x="42" y="138">matches skill</text>
+        <text class="s3aL" x="187" y="120">Inputs check</text>
+        <text class="s3aS" x="187" y="138">all present?</text>
+        <text class="s3aL" x="352" y="120">Steps</text>
+        <text class="s3aS" x="352" y="138">numbered</text>
+        <text class="s3aL" x="497" y="120">Output format</text>
+        <text class="s3aS" x="497" y="138">the template</text>
+        <text class="s3aL" x="652" y="120">Self-check</text>
+        <text class="s3aS" x="652" y="138" style="fill:#22260F">run checklist</text>
+        <text class="s3aL" x="787" y="120">Return</text>
+        <text class="s3aS" x="787" y="138">to user</text>
+
+        <text class="s3aA" x="754" y="80">pass</text>
+        <text class="s3aR" x="254" y="190">missing</text>
+        <text class="s3aL" x="187" y="232">Ask the user</text>
+        <text class="s3aS" x="187" y="249">do not guess</text>
+        <text class="s3aR" x="470" y="256">fails: fix the step, re-run the check</text>
+
+        <text class="s3aN" x="30" y="294">Anthropic's feedback-loop pattern: run the validator, fix, repeat. Here the loop lives inside the skill.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the body is a procedure with two gates: ask before starting when an input is missing, check before returning</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Five sections<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <tr><th>Section</th><th>The question it answers</th><th>The Anthropic pattern behind it</th></tr>
+          <tr><td>Purpose</td><td>What this is for, in two sentences, and what it is not for</td><td>Concise context; the assistant is already smart</td></tr>
+          <tr><td>Inputs to ask for</td><td>What must be in hand before step 1, and what to do if it is not</td><td>Workflows with clear steps</td></tr>
+          <tr><td>Steps</td><td>The order of work, numbered</td><td>Workflows with checklists the assistant can copy and tick</td></tr>
+          <tr><td>Output format</td><td>The exact shape of what comes back</td><td>The template pattern</td></tr>
+          <tr><td>Self-check</td><td>What must be true before it returns</td><td>Feedback loops: validate, fix, repeat</td></tr>
+        </table>
+        <p>Anthropic's authoring guide also describes an examples pattern: show one input and the output you want, because a single concrete pair often teaches the style faster than a paragraph of adjectives. Keep one short example in the body if it earns its lines; keep a gallery of full examples in a reference file (Part 3).</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>One job<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A skill that does two jobs needs a description that names both, and that description now shares words with both jobs' neighbours. OpenAI's Codex guide states the norm directly: keep each skill focused on one job. The reason is routing, not tidiness.</p>
+        <p>The session 4 bench shows the direction. Its constructed library starts with one combined skill, <code>notes-and-interviews</code>, which writes meeting minutes and synthesises research interviews. Splitting it into <code>meeting-minutes</code> and <code>interview-synthesis</code> took right outcomes from 54 to 55 of 60 requests, and request 15, "who agreed to do what on yesterday's call?", found its skill for the first time. The bench router is a modelled stand-in, a BM25 keyword scorer, not the language model a real assistant uses: read it for the direction, not the size.</p>
+        <p><strong>A quick test for two jobs:</strong> if the output format section needs an "if it is X, return this; if it is Y, return that" switch, you have two skills sharing a folder.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Degrees of freedom<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Anthropic's guide asks how much freedom each step should leave the assistant. <strong>High freedom</strong>: plain-language guidance, for work where many approaches are fine and judgment carries it (framing a client's objectives). <strong>Medium</strong>: a preferred pattern or pseudocode with some parameters (the section order of a brief). <strong>Low</strong>: an exact script or command, for steps where one slip breaks something (a fixed file name, a check that must run).</p>
+        <p>The guide's picture, paraphrased: on a narrow bridge with a drop on both sides, give exact guardrails; in an open field with no hazards, give a direction and let the assistant find the path. Most skills mix both. Pemberton &amp; Thistle's brief (constructed) leaves the analysis open and locks down the sections and the check.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Validate, fix, repeat.</strong> Anthropic's skill authoring best practices describe feedback loops as one of the patterns that most improves output: run a validator, fix what it reports, and run it again until it passes. The pattern is old (it is how a compiler and a test suite work); what is new is writing the loop into the skill itself, so the assistant runs it every time instead of only when someone remembers to ask.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers inputs to ask for and the built-in check</span>
+      <h2>Ask first, check before returning</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">The two gates in the body are where most skills are weakest. Without an inputs section, the assistant fills a missing client name or deadline with something plausible, and a plausible invention in a client brief is worse than a question. Without a self-check, the only test of the output is the person who reads it, often the client. Both gates are a few lines each.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 372" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed Pemberton and Thistle example, before and after. Left, a body without a self-check: read the intake notes, draft the sections, return the brief. The brief that went out has objectives, scope, deliverables and timeline, but the open questions section is missing, and nobody noticed until the client asked. Right, a body with a checklist and a script: run scripts/check_brief.py, tick the checklist, fix any fail and re-run, then return. The script's code never loads; only its output enters the context, filled gold: one line per missing section, or OK.">
+        <defs>
+          <filter id="s3bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="67" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s3bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s3bH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s3bL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s3bS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s3bA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s3bR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s3bC { font: 700 11px ui-monospace, Menlo, monospace; fill: #22260F; }
+          .s3bN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s3bA" x="30" y="30">BEFORE</text>
+        <text class="s3bA" x="450" y="30">AFTER</text>
+
+        <g filter="url(#s3bSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="44" width="400" height="276" rx="12" transform="rotate(-0.3 230 182)" fill="#FFFFFF"/>
+          <rect x="450" y="44" width="400" height="276" rx="12" transform="rotate(0.3 650 182)" fill="#FFFFFF"/>
+          <rect x="50" y="88" width="360" height="82" rx="8" transform="rotate(0.4 230 129)" fill="#F4F6E2"/>
+          <rect x="50" y="190" width="360" height="112" rx="8" transform="rotate(-0.4 230 246)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="470" y="88" width="360" height="82" rx="8" transform="rotate(-0.4 650 129)" fill="#F4F6E2"/>
+          <rect x="470" y="190" width="170" height="112" rx="8" transform="rotate(0.8 555 246)" fill="#FFFFFF"/>
+          <rect x="660" y="190" width="170" height="112" rx="8" transform="rotate(-0.8 745 246)" fill="#E4B437"/>
+          <path d="M230 172 L230 186" marker-end="url(#s3bAr)"/>
+          <path d="M555 172 L555 186" marker-end="url(#s3bAr)"/>
+          <path d="M642 246 L656 246" marker-end="url(#s3bAr)"/>
+          <rect x="806" y="54" width="20" height="24" rx="3" fill="#FFFFFF"/>
+          <path d="M811 54 L811 50 L821 50 L821 54"/>
+          <path d="M810 66 L822 66"/>
+        </g>
+
+        <text class="s3bH" x="46" y="72">Body without a self-check</text>
+        <text class="s3bC" x="64" y="112">1. Read the intake notes</text>
+        <text class="s3bC" x="64" y="132">2. Draft the sections</text>
+        <text class="s3bC" x="64" y="152">3. Return the brief</text>
+        <text class="s3bL" x="64" y="214">The brief that went out (constructed)</text>
+        <text class="s3bS" x="64" y="236">Objectives, scope, deliverables, timeline</text>
+        <text class="s3bR" x="64" y="258">Open questions: missing</text>
+        <text class="s3bS" x="64" y="280">nobody noticed until the client asked</text>
+
+        <text class="s3bH" x="466" y="72">Body with a checklist and a script</text>
+        <text class="s3bC" x="484" y="112">4. Run scripts/check_brief.py</text>
+        <text class="s3bC" x="484" y="132">5. Tick the checklist</text>
+        <text class="s3bC" x="484" y="152">6. Fix any fail, re-run, return</text>
+        <text class="s3bC" x="484" y="214">check_brief.py</text>
+        <text class="s3bS" x="484" y="236">its code never loads</text>
+        <text class="s3bS" x="484" y="256">reads the draft,</text>
+        <text class="s3bS" x="484" y="274">prints a result</text>
+        <text class="s3bH" x="674" y="214">Enters context</text>
+        <text class="s3bS" x="674" y="236" style="fill:#22260F">one line per missing</text>
+        <text class="s3bS" x="674" y="254" style="fill:#22260F">section, or OK</text>
+        <text class="s3bS" x="674" y="274" style="fill:#22260F">(contract, not a run)</text>
+
+        <text class="s3bN" x="30" y="352">Constructed Pemberton &amp; Thistle example. Written into the skill, the check runs on every brief.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the check sits between the draft and the return, and a script keeps it cheap: only its one-line result enters the context</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Inputs: ask, do not guess<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>List every input the steps depend on, and say what to do when one is missing. Most skills need three kinds:</p>
+        <ul>
+          <li><strong>Material</strong>: the intake notes, the transcript, the data file.</li>
+          <li><strong>Facts the material may not carry</strong>: the client's name, the deadline, the budget band.</li>
+          <li><strong>Choices only the requester can make</strong>: two pages or one, internal or client-facing.</li>
+        </ul>
+        <p>Then one rule per input: ask, use a stated default, or stop. "If the deadline is not in the notes, ask; do not estimate one" is a line that prevents a whole class of confident errors. Defaults are fine when they are written down and visible in the output ("Length: two pages, the default").</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>A self-check the assistant can run<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A self-check is a short checklist the assistant works through before returning. Anthropic's guide suggests writing it as a list the assistant can copy into its answer and tick, so progress is visible. Each item must be <strong>verifiable</strong>: "all five sections present" can be checked; "the brief is high quality" cannot.</p>
+        <p>Where a check is deterministic, move it into a script. Anthropic's overview notes that when a skill runs a script, the script's code does not enter the context, only its output does. A 40-line checker costs one line of context per run. For high-stakes work the guide goes one step further: have the assistant write a plan to a file, validate the plan with a script, and only then execute it. Plan, validate, execute.</p>
+        <div class="prompt-box good"><span class="label">★ A self-check section (constructed Pemberton &amp; Thistle example)</span>## Before you return
+Copy this list into your answer and tick each item:
+- [ ] Ran scripts/check_brief.py on the draft and it printed OK
+- [ ] Every objective is one the client stated in the notes
+- [ ] Every open question names who must answer it
+- [ ] No fee, rate or price appears anywhere
+If any item fails, fix that section and run the check again.</div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Explain the why<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The open format's authoring guidance favours instructions that carry their reason over rigid ALWAYS and NEVER rules: an assistant that knows <em>why</em> fees stay out of a brief ("pricing is agreed separately, and a number in the brief becomes a commitment") handles the edge case the rule never named. Anthropic's guide makes the matching point about length: be concise and assume the model is already smart, because "the context window is a public good". Every sentence in the body competes with the conversation, the other skills' descriptions and the work itself.</p>
+        <p>Together these suggest a simple edit test: for each line, would a capable colleague get this wrong without it? If not, cut it. If yes, keep it and add the reason.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Scripts that solve, not scripts that shrug.</strong> Anthropic's best practices ask skill authors to make bundled scripts handle their own errors rather than defer the problem back to the assistant, and to explain every constant in them instead of leaving unexplained magic numbers (the guide's phrase is "voodoo constants"). A check script that prints a clear "missing: open questions" is something the assistant can act on; a stack trace is something it has to guess about.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers references and scripts kept out of the main file</span>
+      <h2>Load it only when a step needs it</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Everything in <code>SKILL.md</code> loads the moment the skill fires. Everything in a separate file loads only when a step reads it. That difference, Level 2 against Level 3 in session 1's picture, is the reason to split. House style rules, a gallery of example outputs and lookup tables are all things some runs need and most do not.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 362" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed Pemberton and Thistle example. Before: one SKILL.md of about 600 lines mixing house style, three full example briefs, history notes and the steps; when the skill fires, all of it loads. After: a lean SKILL.md under 60 lines, filled gold, holding purpose, inputs, steps and check, which is all that loads at Level 2. Dashed arrows point from it to three files one level deep: references/house-style.md, references/brief-examples.md and scripts/check_brief.py. At Level 3 a reference loads only when a step reads it, and the script's output enters context, never its code.">
+        <defs>
+          <filter id="s3cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="79" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="s3cHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#5E6B00" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="s3cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s3cH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s3cL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s3cS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s3cA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s3cC { font: 700 11px ui-monospace, Menlo, monospace; fill: #22260F; }
+          .s3cN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <g filter="url(#s3cSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="300" height="266" rx="12" transform="rotate(-0.4 180 183)" fill="#FFFFFF"/>
+          <rect x="50" y="88" width="260" height="210" rx="8" transform="rotate(0.5 180 193)" fill="url(#s3cHc)"/>
+          <rect x="350" y="50" width="500" height="266" rx="12" transform="rotate(0.3 600 183)" fill="#FFFFFF"/>
+          <path d="M354 50 L362 38 L412 38 L420 50"/>
+          <rect x="370" y="104" width="250" height="56" rx="8" transform="rotate(-0.6 495 132)" fill="#E4B437"/>
+          <rect x="370" y="196" width="150" height="56" rx="8" transform="rotate(0.8 445 224)" fill="#FFFFFF"/>
+          <rect x="535" y="196" width="150" height="56" rx="8" transform="rotate(-0.7 610 224)" fill="#FFFFFF"/>
+          <rect x="700" y="196" width="145" height="56" rx="8" transform="rotate(0.6 772 224)" fill="#FFFFFF"/>
+          <path d="M470 162 L448 190" stroke-dasharray="5 4" marker-end="url(#s3cAr)"/>
+          <path d="M520 162 L600 190" stroke-dasharray="5 4" marker-end="url(#s3cAr)"/>
+          <path d="M600 160 L752 190" stroke-dasharray="5 4" marker-end="url(#s3cAr)"/>
+        </g>
+
+        <text class="s3cH" x="46" y="74">Before: one file</text>
+        <rect x="62" y="150" width="236" height="88" rx="6" fill="#FFFFFF"/>
+        <text class="s3cC" x="72" y="172">SKILL.md, ~600 lines</text>
+        <text class="s3cS" x="72" y="192">house style, three full</text>
+        <text class="s3cS" x="72" y="210">example briefs, history notes</text>
+        <text class="s3cS" x="72" y="228">and the steps, all mixed</text>
+
+        <text class="s3cH" x="432" y="74">After: a lean file, one level of files</text>
+        <text class="s3cC" x="382" y="128">SKILL.md, under 60 lines</text>
+        <text class="s3cS" x="382" y="148" style="fill:#22260F">purpose, inputs, steps, check</text>
+        <text class="s3cH" x="640" y="124">Level 2 · when it fires</text>
+        <text class="s3cS" x="640" y="142">only this lean body loads</text>
+
+        <text class="s3cC" x="382" y="220">references/</text>
+        <text class="s3cS" x="382" y="240">house-style.md</text>
+        <text class="s3cC" x="547" y="220">references/</text>
+        <text class="s3cS" x="547" y="240">brief-examples.md</text>
+        <text class="s3cC" x="712" y="220">scripts/</text>
+        <text class="s3cS" x="712" y="240">check_brief.py</text>
+
+        <text class="s3cA" x="370" y="278">LEVEL 3 · ONLY WHEN A STEP READS IT</text>
+        <text class="s3cS" x="370" y="298">a reference loads when read; a script sends its output, never its code</text>
+
+        <text class="s3cN" x="30" y="346">Constructed line counts. Before, firing loads all of it. After, firing loads the lean body only.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the split moves material from Level 2, paid on every run, to Level 3, paid only when a step reads it</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Under 500 lines, references one level deep<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The open specification and Anthropic's authoring guide agree on the limits:</p>
+        <ul>
+          <li><strong>Keep the main <code>SKILL.md</code> under 500 lines.</strong> The spec recommends the body stay under 5,000 tokens.</li>
+          <li><strong>Reference files one level deep from <code>SKILL.md</code>.</strong> <code>SKILL.md</code> points to <code>references/house-style.md</code>; that file does not point on to a third. A chain of references is one the assistant may only partly read.</li>
+          <li><strong>A table of contents for any reference file over 100 lines</strong>, so a partial read still shows what the file holds.</li>
+          <li><strong>Descriptive file names</strong> (<code>brief-examples.md</code>, not <code>doc2.md</code>), and forward slashes in paths, which work on every system.</li>
+        </ul>
+        <p>The pointer in the body says when to read the file, not only that it exists: "Before step 4, read references/house-style.md" loads it at the step that needs it.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Skills, project instructions and prompt craft<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Not everything belongs in a skill. <strong>Project instructions</strong> load every time, for every request in that project: the open <code>AGENTS.md</code> format is a plain Markdown "README for agents", stewarded by the Agentic AI Foundation under the Linux Foundation, where the nearest file in the directory tree takes precedence and an explicit prompt from you overrides it. A skill loads only when a request matches. So: a rule that applies to everything in a repository goes in project instructions; a procedure for one kind of task goes in a skill. One product's take on the pair is in <a href="https://phoebefu6.github.io/learn-codex-with-phoebe/courses/03-agents-and-skills.html">Learn Codex, session 3</a>.</p>
+        <p>How to phrase an instruction well (roles, examples, structure) is prompt technique, and it has its own course: <a href="https://phoebefu6.github.io/learn-prompt-engineering-with-phoebe/">Learn Prompt Engineering</a>. Turning one written SOP into one skill in Claude, step by step, is <a href="https://phoebefu6.github.io/learn-claude-with-phoebe/courses/03-sop-to-skill.html">Learn Claude, session 3</a>.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Avoid time-sensitive text and keep terms consistent<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Time-sensitive text rots.</strong> "Until March, use the old template" is wrong the day after March and nobody edits it. Anthropic's guide suggests stating the current method plainly and, if the old way still matters, moving it under a clearly labelled old-patterns section, ideally in a reference file, so it does not compete with the current steps.</p>
+        <p><strong>One term, everywhere.</strong> If step 2 says "brief", step 5 says "proposal" and the checklist says "document", the assistant has to decide whether these are three things. Pick one word for each thing and use it throughout the body, the reference files and the script's output.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Only the file the question needs.</strong> Anthropic's authoring guide illustrates the split with a data-analysis skill for BigQuery that keeps each business domain's table definitions in its own reference file, for finance, sales and so on. A question about sales reads the sales file; the other files stay on disk and cost no tokens. The same move works for any skill with domain-specific detail: one file per domain, one pointer per file.</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>Split one bloated skill</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">Pemberton &amp; Thistle's <code>client-brief</code> skill (Constructed Pemberton &amp; Thistle example) has grown to about 600 lines over a year of fixes. You will mark every block in it, keep the job in a lean <code>SKILL.md</code>, move the reference material out, delete the history, and specify a check script. Your own bloated skill will have different blocks in different proportions; the marking method is the point.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 410" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed line counts for one skill, before and after the split. Steps, inputs, output format and check: 120 lines before, 51 after, in the lean SKILL.md. House style rules: 140 before, 130 after, moved to references/house-style.md. Three example briefs: 260 before and after, moved to references/brief-examples.md. History notes: 80 before, 0 after, deleted. Pointers to files: 0 before, 4 after, in SKILL.md. SKILL.md goes from about 600 lines to 55.">
+        <defs>
+          <filter id="s3dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="83" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="s3dHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#5E6B00" stroke-width="1" opacity=".5"/></pattern>
+        </defs>
+        <style>
+          .s3dL { font: 600 12px Inter, sans-serif; fill: #22260F; }
+          .s3dS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s3dA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s3dV { font: 800 12px Inter, sans-serif; fill: #3F4800; }
+          .s3dN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <g filter="url(#s3dSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="30" width="14" height="12" rx="2" fill="url(#s3dHc)"/>
+          <rect x="330" y="30" width="14" height="12" rx="2" fill="#E4B437"/>
+          <rect x="545" y="30" width="14" height="12" rx="2" fill="#FFFFFF"/>
+          <circle cx="826" cy="44" r="5" fill="#FFFFFF"/>
+          <circle cx="842" cy="44" r="5" fill="#FFFFFF"/>
+          <path d="M829 40 L848 24"/>
+          <path d="M839 40 L820 24"/>
+
+          <rect x="300" y="70" width="132" height="16" rx="3" fill="url(#s3dHc)"/>
+          <rect x="300" y="92" width="56" height="16" rx="3" fill="#E4B437"/>
+          <rect x="300" y="130" width="154" height="16" rx="3" fill="url(#s3dHc)"/>
+          <rect x="300" y="152" width="143" height="16" rx="3" fill="#FFFFFF"/>
+          <rect x="300" y="190" width="286" height="16" rx="3" fill="url(#s3dHc)"/>
+          <rect x="300" y="212" width="286" height="16" rx="3" fill="#FFFFFF"/>
+          <rect x="300" y="250" width="88" height="16" rx="3" fill="url(#s3dHc)"/>
+          <rect x="300" y="332" width="6" height="16" rx="2" fill="#E4B437"/>
+          <path d="M296 62 L296 352" stroke="#555A40"/>
+        </g>
+
+        <text class="s3dS" x="50" y="41">Before, inside one ~600-line SKILL.md</text>
+        <text class="s3dS" x="350" y="41">After, in the lean SKILL.md</text>
+        <text class="s3dS" x="565" y="41">After, moved to its own file</text>
+
+        <text class="s3dL" x="30" y="84">Steps, inputs, output, check</text>
+        <text class="s3dS" x="30" y="102">the job itself, rewritten tighter</text>
+        <text class="s3dV" x="440" y="83">120</text>
+        <text class="s3dV" x="365" y="105">51 · SKILL.md</text>
+
+        <text class="s3dL" x="30" y="144">House style rules</text>
+        <text class="s3dS" x="30" y="162">needed at one step only</text>
+        <text class="s3dV" x="462" y="143">140</text>
+        <text class="s3dV" x="451" y="165">130 · references/house-style.md</text>
+
+        <text class="s3dL" x="30" y="204">Three example briefs</text>
+        <text class="s3dS" x="30" y="222">read only for tone</text>
+        <text class="s3dV" x="594" y="203">260</text>
+        <text class="s3dV" x="594" y="225">260 · references/brief-examples.md</text>
+
+        <text class="s3dL" x="30" y="264">History notes</text>
+        <text class="s3dS" x="30" y="282">what went wrong in 2025</text>
+        <text class="s3dV" x="396" y="263">80</text>
+        <text class="s3dV" x="308" y="285">0 · deleted</text>
+
+        <text class="s3dL" x="30" y="324">Pointers to files</text>
+        <text class="s3dS" x="30" y="342">"Before step 4, read ..."</text>
+        <text class="s3dV" x="308" y="323">0</text>
+        <text class="s3dV" x="314" y="345">4 · SKILL.md</text>
+
+        <text class="s3dA" x="30" y="374">SKILL.MD: ABOUT 600 LINES BEFORE, 55 AFTER (51 + 4)</text>
+        <text class="s3dN" x="30" y="396">Constructed line counts for one skill; your numbers will differ.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - most of the 600 lines were never the job: they were reference material and history, and only the job needs to load when the skill fires</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Open the skill as you found it.</strong> The frontmatter is the one session 2 wrote and the session 4 bench routes on. Below it, a year of additions. The excerpt shows the shape; the whole file runs to about 600 lines (constructed).</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · client-brief/SKILL.md as found (constructed excerpt, about 600 lines in all)</span>---
+name: client-brief
+description: Drafts a two-page client project brief from intake notes: objectives, scope, deliverables, timeline and open questions. Use when a new engagement starts and someone asks for a project brief, a scoping brief or a brief for the client.
+---
+
+# Client brief
+
+We write briefs in British English. Headings in sentence case. Never use
+"leverage". Dates as 3 March 2026. Numbers under ten in words...
+[... 140 lines of house style rules ...]
+
+Read the intake notes and write the brief. Objectives first. Remember the
+Norbury Council brief where the timeline was missing!! Always add a timeline.
+[... steps, inputs and output rules scattered across 120 lines ...]
+
+## Example 1: Halden Water (full brief)
+[... three complete example briefs, 260 lines ...]
+
+## Notes
+In 2025 we tried a one-page version; the partners did not like it...
+[... 80 lines of history ...]</div>
+      </div>
+      <div class="step">
+        <p><strong>Mark every block with one of six labels.</strong> Go through the file top to bottom and tag each paragraph. Be strict: a block that is half step and half history gets split, not tagged twice.</p>
+        <div class="prompt-box good"><span class="label">★ Step 2 · the six labels and where each one goes</span>JOB STEP           -&gt; SKILL.md, numbered steps
+INPUT              -&gt; SKILL.md, inputs to ask for
+OUTPUT FORMAT      -&gt; SKILL.md, the template
+CHECK              -&gt; SKILL.md checklist, or scripts/ if deterministic
+REFERENCE MATERIAL -&gt; references/, one file per kind
+HISTORY            -&gt; delete (the reason may survive as one "why" clause)</div>
+      </div>
+      <div class="step">
+        <p><strong>Write the lean <code>SKILL.md</code>.</strong> Purpose, inputs, steps, output format, self-check and a pointer to each file, in that order. Here it is in full, 55 lines with the frontmatter. Notice that the history survived only as reasons ("a missing timeline was the most common complaint").</p>
+        <div class="prompt-box good"><span class="label">★ Step 3 · the new client-brief/SKILL.md, shown in full (constructed)</span>---
+name: client-brief
+description: Drafts a two-page client project brief from intake notes: objectives, scope, deliverables, timeline and open questions. Use when a new engagement starts and someone asks for a project brief, a scoping brief or a brief for the client.
+---
+
+# Client brief
+
+## Purpose
+Turn intake notes from a won engagement into a two-page brief the client
+can approve. This skill scopes work already agreed; it never prices it.
+
+## Inputs to ask for
+- Intake notes. If missing, ask for them; do not draft from memory.
+- Client name. If the notes do not state it, ask.
+- Start date and deadline. If either is missing, ask; do not estimate.
+- Audience: client-facing (default) or internal. State which in the brief.
+
+## Steps
+1. Read the intake notes end to end before writing anything.
+2. List the client's objectives in their own words, at most five.
+3. Write scope as in-scope and out-of-scope lists.
+4. Before writing, read references/house-style.md for spelling, dates
+   and banned words.
+5. Draft the brief in the output format below.
+6. If unsure about tone, read references/brief-examples.md and match
+   the closest example. Do not copy its content.
+7. Run the self-check. Fix and re-run until it passes.
+
+## Output format
+# Project brief: [client name]
+## Objectives
+## Scope
+### In scope
+### Out of scope
+## Deliverables
+## Timeline
+(one row per milestone: date, milestone, owner)
+## Open questions
+(each question names who must answer it)
+
+## Self-check before returning
+Copy this list into your answer and tick each item:
+- [ ] Ran scripts/check_brief.py on the draft; it printed OK
+- [ ] Every objective appears in the intake notes
+- [ ] Timeline present (a missing timeline was the most common
+      client complaint)
+- [ ] Every open question names who must answer it
+- [ ] No fee, rate or price anywhere (pricing is agreed separately,
+      and a number in a brief reads as a commitment)
+If any item fails, fix that section and run the check again.
+
+## Files
+- references/house-style.md: spelling, dates, banned words (step 4)
+- references/brief-examples.md: three past briefs, for tone (step 6)
+- scripts/check_brief.py: section and timeline check (self-check)</div>
+      </div>
+      <div class="step">
+        <p><strong>Give the big reference file a table of contents.</strong> <code>brief-examples.md</code> is about 260 lines, well over 100, so it opens with a table of contents. A step that reads only the top of the file still learns what is in it.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · references/brief-examples.md, the first lines (constructed)</span># Brief examples
+
+Three approved briefs, for tone and level of detail only.
+Do not reuse their content.
+
+## Contents
+1. Halden Water: network resilience review (client-facing, 2 pages)
+2. Norbury Council: service redesign scoping (client-facing, 2 pages)
+3. Fenwick: internal market-entry brief (internal, 1 page)
+
+## 1. Halden Water: network resilience review
+...</div>
+      </div>
+      <div class="step">
+        <p><strong>Write the check script's contract before its code.</strong> Say what it reads, what it checks and exactly what it prints, so the assistant knows how to act on every result. This is the specification for <code>scripts/check_brief.py</code>; we describe it here and have not run it, so no output below is a real result.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · the contract for scripts/check_brief.py (constructed)</span>READS     the draft brief, as a Markdown file path
+CHECKS    1. all six headings present: Objectives, Scope, Deliverables,
+             Timeline, Open questions, and the title line
+          2. Timeline has at least one dated row
+          3. every Open questions line names an owner ("- Who: ...")
+          4. no currency symbol or the words fee, rate, price
+PRINTS    one line per failure, naming the section, e.g.
+            missing: Open questions
+          or the single word OK when every check passes
+EXIT      0 on OK, 1 on any failure
+NEVER     edits the draft; fixing is the assistant's job (step 7)</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>Delete the history, keep the reasons.</strong> The 80 lines of "what went wrong last year" felt like institutional memory, but every run paid for them. What was worth keeping fit in two clauses on the checklist. If the story matters to people, put it in your team's notes; the assistant needs the rule and its reason, not the anecdote.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 4</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Pick your longest skill and count its lines.</strong> Then mark every block with the six labels from step 2. Write down how many lines each label holds.</li>
+      <li><strong>Check for two jobs.</strong> If its output format switches on the kind of request, write the two descriptions you would give the two skills it should become.</li>
+      <li><strong>Add an inputs section and a self-check</strong> to one skill. Every input gets a rule (ask, default or stop); every check item must be something you could verify yourself.</li>
+      <li><strong>Move one block of reference material out</strong> to a file one level deep, with a pointer that says which step reads it. Add a table of contents if the file is over 100 lines.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 3 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · A skill writes meeting minutes and also synthesises research interviews. What is the main reason to split it in two?</p>
+      <button class="qopt" type="button">A · The specification limits each skill to one output format</button>
+      <button class="qopt" type="button">B · Its description has to name both jobs, so it shares words with both jobs' neighbours and pulls requests that belong elsewhere, or loses its own</button>
+      <button class="qopt" type="button">C · Two short files always cost fewer tokens than one long one</button>
+      <button class="qopt" type="button">D · Assistants can only follow one numbered list per skill</button>
+      <p class="qwhy">One job per skill is a routing rule. On the session 4 bench (a modelled stand-in, not a real assistant), splitting the combined skill took right outcomes from 54 to 55 and request 15 found its skill.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · The lean client-brief skill fires on a request. Which of its files are in the assistant's context right after it fires?</p>
+      <button class="qopt" type="button">A · SKILL.md, both reference files and the script's code</button>
+      <button class="qopt" type="button">B · Nothing until the assistant reaches step 1</button>
+      <button class="qopt" type="button">C · Only the name and description, as before it fired</button>
+      <button class="qopt" type="button">D · The SKILL.md body; a reference file loads only when a step reads it, and the script contributes only its output when it runs</button>
+      <p class="qwhy">Level 2 is the body, loaded on firing. Level 3 is everything else, loaded on demand; a script's code never enters the context, only what it prints.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Why write the self-check into the skill instead of reviewing the output yourself?</p>
+      <button class="qopt" type="button">A · It runs on every brief, before anything goes back, and its verifiable items catch the omissions a reader notices too late</button>
+      <button class="qopt" type="button">B · A skill without a self-check fails the specification's validation</button>
+      <button class="qopt" type="button">C · It makes the skill fire more often</button>
+      <button class="qopt" type="button">D · It removes the need to test the skill</button>
+      <p class="qwhy">The self-check is a feedback loop inside the skill: validate, fix, repeat. It does not replace testing the skill itself, which is session 5.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Agent Skills specification</span><span class="note">agentskills.io: keep the main SKILL.md under 500 lines, body under 5,000 tokens recommended, file references one level deep; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic, Skill authoring best practices</span><span class="note">Concise bodies and "the context window is a public good", degrees of freedom, workflows and checklists, template and examples patterns, feedback loops, scripts whose output only enters context, tables of contents over 100 lines, time-sensitive text, consistent terms; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">OpenAI, Build skills (Codex and ChatGPT)</span><span class="note">Keep each skill focused on one job; full SKILL.md loads only when selected; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">AGENTS.md (agents.md)</span><span class="note">Always-loaded project instructions, Agentic AI Foundation under the Linux Foundation, nearest file wins; named for the skill-or-instructions choice only, taught in Learn Codex session 3</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Claude Code skills docs</span><span class="note">In a session only descriptions load and the full content loads when invoked; the 500-line guidance on this page comes from the spec and the authoring guide; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Prompt technique and SOP to skill</span><span class="note">Linked, not retaught: Learn Prompt Engineering, and Learn Claude session 3</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Pemberton &amp; Thistle</span><span class="note">Constructed example; the bloated skill, its line counts, the lean rewrite and the script contract are invented for teaching</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>One job</b><span>If the output format switches on the kind of request, it is two skills sharing a folder.</span></div>
+      <div class="cheat-item"><b>Five sections</b><span>Purpose, inputs to ask for, numbered steps, output format, self-check before returning.</span></div>
+      <div class="cheat-item"><b>Inputs</b><span>Every input gets a rule: ask, use a stated default, or stop. Never a plausible guess.</span></div>
+      <div class="cheat-item"><b>Self-check</b><span>Verifiable items only. Deterministic checks go in a script; only its output enters context.</span></div>
+      <div class="cheat-item"><b>The limits</b><span>SKILL.md under 500 lines, body under 5,000 tokens, references one level deep, contents over 100 lines.</span></div>
+      <div class="cheat-item"><b>Edit test</b><span>Would a capable colleague get this wrong without the line? If not, cut it. If yes, add the reason.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>Pemberton &amp; Thistle's library now has descriptions that say what and when, and bodies that do one job each. Session 4 puts the whole library on the bench: 60 requests, a ladder of description rungs, the keyword-stuffing trap and a near-duplicate that breaks things, scored live in the page.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 3 of 6 · learn-skills-library-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="02-a-description-it-can-find.html">← Prev: A description the assistant can find</a> &nbsp;·&nbsp; <a href="04-the-skill-routing-bench.html">Next: The skill-routing bench →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=2"></script>
+</body>
+</html>

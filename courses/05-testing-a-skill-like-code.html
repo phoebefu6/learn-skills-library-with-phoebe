@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- social:start -->
+<meta name="description" content="Session 5 of 6. Testing a skill like code: should-fire and should-not-fire trigger tests, near-miss negatives, runs per query, a fixed held-out split, golden outputs with assertions, regression after every edit, and testing the test against the passing state.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Learn with Phoebe">
+<meta property="og:title" content="Testing a skill like code - learn skills library with phoebe">
+<meta property="og:description" content="Session 5 of 6. Trigger tests with near-miss negatives, held-out sets, golden-output assertions and regression runs, with a 12-case test set run live against a router.">
+<meta property="og:url" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/courses/05-testing-a-skill-like-code.html">
+<meta property="og:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Testing a skill like code - learn skills library with phoebe">
+<meta name="twitter:description" content="Session 5 of 6. Should fire, should not fire, re-run everything after every edit.">
+<meta name="twitter:image" content="https://phoebefu6.github.io/learn-skills-library-with-phoebe/assets/og-cover.png">
+<!-- social:end -->
+<title>Session 5 · Testing a skill like code - learn skills library with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=2">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-skills-library-with-phoebe</a> / Session 5 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Your Own Skills Library with Phoebe · Session 5 of 6</div>
+    <h1>Testing a skill <span class="accent">like code</span></h1>
+    <p class="sub">Session 4 measured a whole library at once. Tonight we test one skill the way an engineer tests a function: a fixed set of requests that should fire it, a set of near-misses that should not, a held-out set you never tune on, checks on what the skill actually writes, and one habit that catches the bugs nobody aimed at: re-run everything after every edit.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Stretch</span>
+      <span class="chip audience">Builders and knowledge workers with too many saved prompts</span>
+      <span class="chip audience">Anyone who edits skills other people rely on</span>
+      <span class="chip time">45 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-18 · Trigger tests, held-out sets, regression</span>
+      <span class="a3" style="flex:5">18-40 · Build-along: a 12-case test set</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Where we start</h2>
+    </div>
+    <p class="lede">A skill has two ways to fail. It can fail to load, or load for the wrong request: that is a <em>trigger</em> failure, and the description is where you fix it. Or it can load and then write something wrong: that is an <em>output</em> failure, and the body is where you fix it. Both are testable with the same discipline as code: write the cases down before you edit, run all of them, and keep the ones that matter forever. Our running case is the Constructed Pemberton &amp; Thistle example, an invented four-person consultancy, and tonight its <code>meeting-minutes</code> skill gets a test suite.</p>
+
+    <div class="legend">
+      <span class="pill">🎫 Clear all three quiz questions to stamp your passport</span>
+      <span class="pill">Live = presented in the 45 minutes</span>
+      <span class="pill">Self-study = the full depth, after class</span>
+      <span class="pill">★ Build-along = do it yourself, in the page</span>
+    </div>
+
+    <div class="callout win">
+      <p><strong>★ What you walk out with tonight.</strong> A 12-case trigger test set for Pemberton &amp; Thistle's <code>meeting-minutes</code> skill (constructed): six requests that should fire it and six near-misses that should not, each run against the router with the real result printed, plus three golden-output assertions and a regression habit you can copy onto any skill you own.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-1">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers trigger tests</span>
+      <h2>Should fire, should not fire</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">A trigger test is a request plus one expected answer: this skill fires, or it does not. The open format's guide on optimizing descriptions asks for about 20 such queries, 8 to 10 of each kind, and says the most valuable negatives are near-misses: requests that share the skill's words but need something else. Below is the Constructed Pemberton &amp; Thistle example, 12 cases for <code>meeting-minutes</code>, each routed by the bench's stand-in router.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 384" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed test set of 12 requests for meeting-minutes on rung split of the stand-in router. Should fire, six: Brightlane notes to minutes fires meeting-minutes at 4.39; recording with actions and owners fires at 5.64; who owns each next step fires nothing, top 1.18 under the 1.20 line; minutes please fires nothing, top 1.09; Norbury board long notes fires at 4.30; tidy Corvel kickoff notes fires at 2.03. Should not fire, six: interview transcripts go to interview-synthesis 3.28; workshop agenda to workshop-pack 3.61; book a meeting room fires meeting-minutes 2.27, a false fire; summarise an article fires nothing, top 0.00, a weak negative; exec summary to exec-summary 4.82; staff survey responses to survey-analysis 2.21.">
+        <defs>
+          <filter id="s5aSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="51" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s5aAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s5aL { font: 600 11px Inter, sans-serif; fill: #22260F; }
+          .s5aS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s5aA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s5aR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s5aN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s5aA" x="30" y="40">SHOULD FIRE MEETING-MINUTES (6)</text>
+        <text class="s5aA" x="456" y="40">SHOULD NOT FIRE IT (6)</text>
+
+        <g filter="url(#s5aSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="842" cy="30" r="9"/>
+          <path d="M849 37 L858 46"/>
+
+          <rect x="30" y="58" width="206" height="40" rx="8" transform="rotate(-0.6 133 78)" fill="#FFFFFF"/>
+          <rect x="30" y="106" width="206" height="40" rx="8" transform="rotate(0.5 133 126)" fill="#FFFFFF"/>
+          <rect x="30" y="154" width="206" height="40" rx="8" transform="rotate(-0.4 133 174)" fill="#FFFFFF"/>
+          <rect x="30" y="202" width="206" height="40" rx="8" transform="rotate(0.6 133 222)" fill="#FFFFFF"/>
+          <rect x="30" y="250" width="206" height="40" rx="8" transform="rotate(-0.5 133 270)" fill="#FFFFFF"/>
+          <rect x="30" y="298" width="206" height="40" rx="8" transform="rotate(0.4 133 318)" fill="#FFFFFF"/>
+
+          <rect x="276" y="58" width="160" height="40" rx="8" transform="rotate(0.5 356 78)" fill="#E4B437"/>
+          <rect x="276" y="106" width="160" height="40" rx="8" transform="rotate(-0.5 356 126)" fill="#E4B437"/>
+          <rect x="276" y="154" width="160" height="40" rx="8" transform="rotate(0.4 356 174)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="276" y="202" width="160" height="40" rx="8" transform="rotate(-0.6 356 222)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="276" y="250" width="160" height="40" rx="8" transform="rotate(0.5 356 270)" fill="#E4B437"/>
+          <rect x="276" y="298" width="160" height="40" rx="8" transform="rotate(-0.4 356 318)" fill="#E4B437"/>
+
+          <rect x="456" y="58" width="206" height="40" rx="8" transform="rotate(0.5 559 78)" fill="#F4F6E2"/>
+          <rect x="456" y="106" width="206" height="40" rx="8" transform="rotate(-0.5 559 126)" fill="#F4F6E2"/>
+          <rect x="456" y="154" width="206" height="40" rx="8" transform="rotate(0.4 559 174)" fill="#F4F6E2"/>
+          <rect x="456" y="202" width="206" height="40" rx="8" transform="rotate(-0.6 559 222)" fill="#FFFFFF" stroke-dasharray="6 5"/>
+          <rect x="456" y="250" width="206" height="40" rx="8" transform="rotate(0.5 559 270)" fill="#F4F6E2"/>
+          <rect x="456" y="298" width="206" height="40" rx="8" transform="rotate(-0.4 559 318)" fill="#F4F6E2"/>
+
+          <rect x="702" y="58" width="160" height="40" rx="8" transform="rotate(-0.5 782 78)" fill="#FFFFFF"/>
+          <rect x="702" y="106" width="160" height="40" rx="8" transform="rotate(0.5 782 126)" fill="#FFFFFF"/>
+          <rect x="702" y="154" width="160" height="40" rx="8" transform="rotate(-0.4 782 174)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="702" y="202" width="160" height="40" rx="8" transform="rotate(0.6 782 222)" fill="#FFFFFF"/>
+          <rect x="702" y="250" width="160" height="40" rx="8" transform="rotate(-0.5 782 270)" fill="#FFFFFF"/>
+          <rect x="702" y="298" width="160" height="40" rx="8" transform="rotate(0.4 782 318)" fill="#FFFFFF"/>
+
+          <path d="M240 78 L272 78" marker-end="url(#s5aAr)"/>
+          <path d="M240 126 L272 126" marker-end="url(#s5aAr)"/>
+          <path d="M240 174 L272 174" marker-end="url(#s5aAr)"/>
+          <path d="M240 222 L272 222" marker-end="url(#s5aAr)"/>
+          <path d="M240 270 L272 270" marker-end="url(#s5aAr)"/>
+          <path d="M240 318 L272 318" marker-end="url(#s5aAr)"/>
+          <path d="M666 78 L698 78" marker-end="url(#s5aAr)"/>
+          <path d="M666 126 L698 126" marker-end="url(#s5aAr)"/>
+          <path d="M666 174 L698 174" marker-end="url(#s5aAr)"/>
+          <path d="M666 222 L698 222" marker-end="url(#s5aAr)"/>
+          <path d="M666 270 L698 270" marker-end="url(#s5aAr)"/>
+          <path d="M666 318 L698 318" marker-end="url(#s5aAr)"/>
+        </g>
+
+        <text class="s5aL" x="42" y="75">Brightlane notes to minutes</text>
+        <text class="s5aS" x="42" y="90">direct, names a client</text>
+        <text class="s5aL" x="42" y="123">recording: actions + owners</text>
+        <text class="s5aS" x="42" y="138">direct, lists the outputs</text>
+        <text class="s5aL" x="42" y="171">who owns each next step?</text>
+        <text class="s5aS" x="42" y="186">indirect, no key nouns</text>
+        <text class="s5aL" x="42" y="219">minutes please</text>
+        <text class="s5aS" x="42" y="234">terse, nothing attached</text>
+        <text class="s5aL" x="42" y="267">Norbury board, long notes</text>
+        <text class="s5aS" x="42" y="282">long, with full context</text>
+        <text class="s5aL" x="42" y="315">tidy Corvel kickoff notes</text>
+        <text class="s5aS" x="42" y="330">paraphrased</text>
+
+        <text class="s5aL" x="288" y="75">meeting-minutes</text>
+        <text class="s5aS" x="288" y="90" style="fill:#22260F">4.39 · fires</text>
+        <text class="s5aL" x="288" y="123">meeting-minutes</text>
+        <text class="s5aS" x="288" y="138" style="fill:#22260F">5.64 · fires</text>
+        <text class="s5aR" x="288" y="171">no skill fires</text>
+        <text class="s5aS" x="288" y="186">top 1.18, line is 1.20</text>
+        <text class="s5aR" x="288" y="219">no skill fires</text>
+        <text class="s5aS" x="288" y="234">top 1.09</text>
+        <text class="s5aL" x="288" y="267">meeting-minutes</text>
+        <text class="s5aS" x="288" y="282" style="fill:#22260F">4.30 · fires</text>
+        <text class="s5aL" x="288" y="315">meeting-minutes</text>
+        <text class="s5aS" x="288" y="330" style="fill:#22260F">2.03 · fires</text>
+
+        <text class="s5aL" x="468" y="75">interview transcripts</text>
+        <text class="s5aS" x="468" y="90">near-miss: transcripts</text>
+        <text class="s5aL" x="468" y="123">workshop agenda, exercises</text>
+        <text class="s5aS" x="468" y="138">near-miss: workshop</text>
+        <text class="s5aL" x="468" y="171">book a meeting room</text>
+        <text class="s5aS" x="468" y="186">near-miss: meeting, call</text>
+        <text class="s5aL" x="468" y="219">summarise an article</text>
+        <text class="s5aS" x="468" y="234">weak: shares no words</text>
+        <text class="s5aL" x="468" y="267">exec summary of a report</text>
+        <text class="s5aS" x="468" y="282">near-miss: summary</text>
+        <text class="s5aL" x="468" y="315">staff survey responses</text>
+        <text class="s5aS" x="468" y="330">near-miss: responses</text>
+
+        <text class="s5aL" x="714" y="75">interview-synthesis</text>
+        <text class="s5aS" x="714" y="90">3.28 · not minutes</text>
+        <text class="s5aL" x="714" y="123">workshop-pack</text>
+        <text class="s5aS" x="714" y="138">3.61 · not minutes</text>
+        <text class="s5aR" x="714" y="171">meeting-minutes</text>
+        <text class="s5aS" x="714" y="186">2.27 · false fire</text>
+        <text class="s5aL" x="714" y="219">no skill fires</text>
+        <text class="s5aS" x="714" y="234">top 0.00</text>
+        <text class="s5aL" x="714" y="267">exec-summary</text>
+        <text class="s5aS" x="714" y="282">4.82 · not minutes</text>
+        <text class="s5aL" x="714" y="315">survey-analysis</text>
+        <text class="s5aS" x="714" y="330">2.21 · not minutes</text>
+
+        <text class="s5aN" x="30" y="364">Constructed Pemberton &amp; Thistle test set, stand-in BM25 router, rung split. Your numbers will differ.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the near-miss "book a meeting room" is the case that caught a real fault; the article request, sharing no words, could never have</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Two kinds of trigger test<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Should-trigger cases</strong> check that the skill is found when it is needed. Vary them the way real people vary: the guide asks for different phrasing, more and less explicit requests, more and less detail, and simple against complex asks. "Minutes please" and a long paragraph of context about the Norbury board are both real requests for the same skill.</p>
+        <p><strong>Should-not-trigger cases</strong> check that the skill stays quiet when another skill, or no skill, owns the request. A test set with only positives is like a smoke detector you only ever test with smoke: it tells you nothing about false alarms.</p>
+        <p>The open format's guide suggests about 20 queries, 8 to 10 of each kind. Codex's skills guide gives the same advice in one line: test prompts against the description. We use 12 tonight so every case fits on one screen.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Near-misses are the valuable negatives<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A near-miss shares the skill's vocabulary but needs a different job done. For <code>meeting-minutes</code>, that is interview transcripts (a neighbour's job), workshop preparation (another neighbour), or booking a meeting room (no skill at all). These are the requests a description can genuinely confuse.</p>
+        <p>A weak negative shares nothing: "summarise this article about AI in local government" scored 0.00 for every skill in the figure. It passes, and it will pass after any edit you make to <code>meeting-minutes</code>, which means it cannot tell you anything. Spend your negative slots on requests that could plausibly go wrong.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Runs per query and trigger rate<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A language model is nondeterministic: the same request can load a skill on one run and not the next. The open format's guide therefore runs each query several times, three to start, and records a <strong>trigger rate</strong>: the share of runs in which the skill fired. A should-trigger case passes if its rate is above a threshold (the guide uses 0.5), and a should-not-trigger case passes if its rate is below it.</p>
+        <p>The bench router is a modelled stand-in, BM25 keyword scoring, not a language model. It is deterministic, so one run per request is enough on the bench. A real assistant needs the repeats, and a case sitting near the threshold (like the 1.18 against a 1.20 line above) is exactly the case whose rate will wobble between runs.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Weak and strong negatives.</strong> The open format's guide on optimizing descriptions works its advice through a CSV-analysis skill and makes the same distinction: a negative that obviously has nothing to do with the skill tests nothing, while one that shares its keywords but needs something else is where the description earns its keep. The guide's own phrase for the useful kind is near-misses, and it calls them the most valuable negatives in the set.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-2">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers held-out sets and golden outputs</span>
+      <h2>Tune on some, check on the rest</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">Two separate questions need two separate kinds of evidence. Does the description route well on requests you have not seen? For that, hold some requests back and never tune on them. Does the skill, once loaded, write what it should? For that, keep a few golden cases with assertions that read the output. The Constructed Pemberton &amp; Thistle example below grades one golden case twice: with the skill, and without it.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 474" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Constructed, illustrative example, not run. One golden case: the prompt write up the Norbury board notes as minutes, with a notes file of 6 attendees, 2 decisions and 3 actions, is run with the meeting-minutes skill and without it. With the skill: a decisions section with 2 items, 3 actions each with owner and date, 6 attendees. Without: a prose summary, 1 of 3 actions dated, 5 attendees. Assertion 1, every action has an owner and a date: pass with, fail without. Assertion 2, each decision under a Decisions heading: pass with, fail without. Assertion 3, attendees match the notes: pass with, fail without. A draft check, mentions Norbury Council, passes in both and should be removed or replaced.">
+        <defs>
+          <filter id="s5bSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <pattern id="s5bHc" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(-38)"><line x1="0" y1="0" x2="0" y2="7" stroke="#5E6B00" stroke-width="1" opacity=".5"/></pattern>
+          <marker id="s5bAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s5bH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s5bL { font: 600 11px Inter, sans-serif; fill: #22260F; }
+          .s5bS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s5bA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s5bR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s5bN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s5bA" x="30" y="30">ONE GOLDEN CASE, RUN TWICE (CONSTRUCTED, ILLUSTRATIVE, NOT RUN)</text>
+
+        <g filter="url(#s5bSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="44" width="820" height="50" rx="10" transform="rotate(0.2 440 69)" fill="url(#s5bHc)"/>
+          <rect x="30" y="120" width="360" height="100" rx="10" transform="rotate(-0.4 210 170)" fill="#FFFFFF"/>
+          <rect x="410" y="120" width="210" height="100" rx="10" transform="rotate(0.5 515 170)" fill="#E4B437"/>
+          <rect x="640" y="120" width="210" height="100" rx="10" transform="rotate(-0.5 745 170)" fill="#FFFFFF"/>
+          <path d="M515 96 L515 114" marker-end="url(#s5bAr)"/>
+          <path d="M745 96 L745 114" marker-end="url(#s5bAr)"/>
+
+          <rect x="30" y="240" width="360" height="40" rx="8" transform="rotate(0.4 210 260)" fill="#F4F6E2"/>
+          <rect x="410" y="240" width="210" height="40" rx="8" transform="rotate(-0.5 515 260)" fill="#FFFFFF"/>
+          <rect x="640" y="240" width="210" height="40" rx="8" transform="rotate(0.5 745 260)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="30" y="290" width="360" height="40" rx="8" transform="rotate(-0.4 210 310)" fill="#F4F6E2"/>
+          <rect x="410" y="290" width="210" height="40" rx="8" transform="rotate(0.5 515 310)" fill="#FFFFFF"/>
+          <rect x="640" y="290" width="210" height="40" rx="8" transform="rotate(-0.5 745 310)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="30" y="340" width="360" height="40" rx="8" transform="rotate(0.4 210 360)" fill="#F4F6E2"/>
+          <rect x="410" y="340" width="210" height="40" rx="8" transform="rotate(-0.5 515 360)" fill="#FFFFFF"/>
+          <rect x="640" y="340" width="210" height="40" rx="8" transform="rotate(0.5 745 360)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="30" y="390" width="360" height="40" rx="8" transform="rotate(-0.4 210 410)" fill="#FFFFFF" stroke-dasharray="6 5"/>
+          <rect x="410" y="390" width="210" height="40" rx="8" transform="rotate(0.5 515 410)" fill="#FFFFFF" stroke-dasharray="6 5"/>
+          <rect x="640" y="390" width="210" height="40" rx="8" transform="rotate(-0.5 745 410)" fill="#FFFFFF" stroke-dasharray="6 5"/>
+          <path d="M862 150 L862 190"/>
+          <path d="M856 184 L862 192 L868 184"/>
+        </g>
+
+        <rect x="42" y="52" width="796" height="34" rx="6" fill="#FFFFFF"/>
+        <text class="s5bL" x="54" y="73">Prompt: write up the Norbury board notes as minutes · file: board-notes.txt (6 attendees, 2 decisions, 3 actions)</text>
+
+        <text class="s5bH" x="44" y="144">How the grading reads it</text>
+        <text class="s5bS" x="44" y="164">Each assertion reads both outputs and records</text>
+        <text class="s5bS" x="44" y="180">pass or fail with concrete evidence: a count,</text>
+        <text class="s5bS" x="44" y="196">a quote, a missing heading.</text>
+
+        <text class="s5bH" x="424" y="144">With meeting-minutes</text>
+        <text class="s5bS" x="424" y="164" style="fill:#22260F">Decisions section: 2 items</text>
+        <text class="s5bS" x="424" y="180" style="fill:#22260F">Actions: 3, owner + date each</text>
+        <text class="s5bS" x="424" y="196" style="fill:#22260F">Attendees: 6 listed</text>
+
+        <text class="s5bH" x="654" y="144">Without (baseline)</text>
+        <text class="s5bS" x="654" y="164">Prose summary, no sections</text>
+        <text class="s5bS" x="654" y="180">Actions: 3, only 1 dated</text>
+        <text class="s5bS" x="654" y="196">Attendees: 5 listed</text>
+
+        <text class="s5bL" x="44" y="257">1 · Every action has an owner and a date</text>
+        <text class="s5bS" x="44" y="272">evidence: count actions missing either</text>
+        <text class="s5bL" x="424" y="257">pass</text>
+        <text class="s5bS" x="424" y="272">3 of 3 complete</text>
+        <text class="s5bR" x="654" y="257">fail</text>
+        <text class="s5bS" x="654" y="272">2 of 3 have no date</text>
+
+        <text class="s5bL" x="44" y="307">2 · Each decision sits under a Decisions heading</text>
+        <text class="s5bS" x="44" y="322">evidence: quote both decisions</text>
+        <text class="s5bL" x="424" y="307">pass</text>
+        <text class="s5bS" x="424" y="322">2 of 2 quoted</text>
+        <text class="s5bR" x="654" y="307">fail</text>
+        <text class="s5bS" x="654" y="322">no Decisions heading</text>
+
+        <text class="s5bL" x="44" y="357">3 · Attendees match the notes, none invented</text>
+        <text class="s5bS" x="44" y="372">evidence: compare against the 6 names</text>
+        <text class="s5bL" x="424" y="357">pass</text>
+        <text class="s5bS" x="424" y="372">6 of 6</text>
+        <text class="s5bR" x="654" y="357">fail</text>
+        <text class="s5bS" x="654" y="372">5 of 6, one dropped</text>
+
+        <text class="s5bL" x="44" y="407">Draft check: mentions Norbury Council</text>
+        <text class="s5bS" x="44" y="422">passes in both: remove or replace it</text>
+        <text class="s5bL" x="424" y="407">pass</text>
+        <text class="s5bS" x="424" y="422">always</text>
+        <text class="s5bL" x="654" y="407">pass</text>
+        <text class="s5bS" x="654" y="422">always</text>
+
+        <text class="s5bN" x="30" y="456">Constructed Pemberton &amp; Thistle example: outputs and results are illustrative, not run. Your numbers will differ.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - an assertion earns its place by separating the two runs; one that passes in both measures nothing the skill adds</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Train and validation<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Every time you edit a description to fix a failing request, you fit the description to that request. Do it often enough and the description passes your whole test set while doing no better on requests you have never seen. That is overfitting, and code testers know it as "teaching to the test".</p>
+        <p>The open format's guide splits trigger queries into a <strong>train</strong> set of about 60% that you tune on and a <strong>validation</strong> set of about 40% that you only check, keeps the split fixed across iterations, and picks the best description by validation pass rate, not train pass rate. It also warns against adding specific keywords lifted from failed queries, since that is the fastest way to overfit, and notes that about five iterations is usually enough.</p>
+        <p>The bench in session 4 did exactly this: 40 tuning requests, 20 held out. Pemberton &amp; Thistle's rung 4 library (constructed) scored 37 of 40 on tuning and 18 of 20 on the held-out set. The held-out number is the one to quote.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Golden outputs and assertions<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The open format's guide on evaluating output quality defines a test case as a prompt, an expected output and, optionally, input files, kept in <code>evals/evals.json</code>. Start with two or three cases. Run each one <strong>with the skill and without it</strong> (or against the previous version), because a skill only earns its description if the output is better with it.</p>
+        <p>Assertions come after the first run, once you have seen what the outputs actually look like. Good assertions are verifiable ("every action has an owner and a date"), not vague ("the minutes are good") and not brittle ("the third line says Priya"). Grading needs concrete evidence: the count, the quote, the missing heading.</p>
+        <p>The guide frames the result as a <strong>benchmark delta</strong>: what the skill costs (time, tokens) against what it buys (pass rate). General evaluation methods, graders and rubrics are taught in <a href="https://phoebefu6.github.io/learn-ai-evals-with-phoebe/">Learn AI Evals</a>.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Anthropic: build evaluations first<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Anthropic's skill authoring best practices put evaluations before documentation: "Build three scenarios" that show where the assistant fails without the skill, and the authoring checklist asks for "At least three evaluations created". The same page advises testing with Haiku, Sonnet and Opus, since what is enough guidance for one model may be too little or too much for another.</p>
+        <p>That page also says there is not currently a built-in way to run these evaluations. The Claude Code skills docs have since described a skill-creator plugin that tunes descriptions with should-trigger and should-not-trigger prompts, runs blind A/B comparisons between versions and benchmarks a skill with and without it, and they describe evals for plugins too. Tooling moves fast here; the habit (cases first, baseline second, edit third) does not.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>Delete the assertions that cannot fail.</strong> The open format's evaluation guide is blunt about it: "Remove or replace assertions that always pass in both configurations." An assertion that passes with the skill and without it, like the Norbury Council check in the figure, makes the pass rate look healthy while measuring nothing the skill contributes.</p>
+    </div>
+  </section>
+
+  <section class="section" id="part-3">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers regression after an edit and testing against the passing state</span>
+      <h2>Re-run everything after every edit</h2>
+      <span class="tag concept">5 min live</span>
+    </div>
+    <p class="lede">In a library, every description competes with every other one, so an edit to one skill moves the odds for every request. The fix you aimed at is rarely the only thing that changes. The figure is real bench output on the Constructed Pemberton &amp; Thistle library, going from rung 2 to rung 3 of session 4's ladder.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bench canon, rung 2 to rung 3, stand-in BM25 router on a constructed library. The edit adds a Do not use for line to every skill; all 60 requests are re-run and diffed. Request 54, book a meeting room, was aimed at: before it fired notes-and-interviews at 1.24, after no skill fires, the intended fix. Request 42, fix the spelling and tone, not aimed at: before wrong skill invoice-chaser 1.24, after no skill fires at 0.98, now a miss. Request 38, short version of final report, not aimed at: before exec-summary 1.30, right; after invoice-chaser 1.23, a new misroute. Request 53, the time in Singapore, not aimed at: before no skill fires with top 1.19, right; after newsletter fires at 1.23, a new false fire.">
+        <defs>
+          <filter id="s5cSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="57" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+          <marker id="s5cAr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#22260F" stroke-width="1.6" stroke-linecap="round"/></marker>
+        </defs>
+        <style>
+          .s5cH { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s5cL { font: 600 11px Inter, sans-serif; fill: #22260F; }
+          .s5cS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s5cA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s5cR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s5cN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <text class="s5cA" x="30" y="30">ONE EDIT, THE WHOLE SET RE-RUN (BENCH CANON, CONSTRUCTED LIBRARY)</text>
+
+        <g filter="url(#s5cSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="44" width="300" height="60" rx="10" transform="rotate(-0.5 180 74)" fill="#F4F6E2"/>
+          <rect x="378" y="44" width="200" height="60" rx="10" transform="rotate(0.6 478 74)" fill="#FFFFFF"/>
+          <rect x="620" y="44" width="230" height="60" rx="10" transform="rotate(-0.5 735 74)" fill="#FFFFFF"/>
+          <path d="M334 74 L372 74" marker-end="url(#s5cAr)"/>
+          <path d="M582 74 L614 74" marker-end="url(#s5cAr)"/>
+          <path d="M735 108 L735 134" marker-end="url(#s5cAr)"/>
+
+          <rect x="30" y="140" width="820" height="30" rx="6" transform="rotate(0.1 440 155)" fill="#F4F6E2"/>
+
+          <rect x="30" y="180" width="300" height="40" rx="8" transform="rotate(0.4 180 200)" fill="#FFFFFF"/>
+          <rect x="340" y="180" width="250" height="40" rx="8" transform="rotate(-0.4 465 200)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="600" y="180" width="250" height="40" rx="8" transform="rotate(0.4 725 200)" fill="#FFFFFF"/>
+
+          <rect x="30" y="228" width="300" height="40" rx="8" transform="rotate(-0.4 180 248)" fill="#FFFFFF"/>
+          <rect x="340" y="228" width="250" height="40" rx="8" transform="rotate(0.4 465 248)" fill="#FEF2F2" stroke="#991B1B"/>
+          <rect x="600" y="228" width="250" height="40" rx="8" transform="rotate(-0.4 725 248)" fill="#FEF2F2" stroke="#991B1B"/>
+
+          <rect x="30" y="276" width="300" height="40" rx="8" transform="rotate(0.4 180 296)" fill="#FFFFFF"/>
+          <rect x="340" y="276" width="250" height="40" rx="8" transform="rotate(-0.4 465 296)" fill="#FFFFFF"/>
+          <rect x="600" y="276" width="250" height="40" rx="8" transform="rotate(0.4 725 296)" fill="#FEF2F2" stroke="#991B1B"/>
+
+          <rect x="30" y="324" width="300" height="40" rx="8" transform="rotate(-0.4 180 344)" fill="#E4B437"/>
+          <rect x="340" y="324" width="250" height="40" rx="8" transform="rotate(0.4 465 344)" fill="#FFFFFF"/>
+          <rect x="600" y="324" width="250" height="40" rx="8" transform="rotate(-0.4 725 344)" fill="#FEF2F2" stroke="#991B1B"/>
+        </g>
+
+        <text class="s5cH" x="44" y="68">The edit, rung 2 to rung 3</text>
+        <text class="s5cS" x="44" y="88">a Do not use for line on every skill</text>
+        <text class="s5cH" x="392" y="68">Re-run all 60</text>
+        <text class="s5cS" x="392" y="88">not just the 6 false fires</text>
+        <text class="s5cH" x="634" y="68">Diff every row</text>
+        <text class="s5cS" x="634" y="88">before against after</text>
+
+        <text class="s5cA" x="42" y="160">REQUEST</text>
+        <text class="s5cA" x="352" y="160">RUNG 2, BEFORE</text>
+        <text class="s5cA" x="612" y="160">RUNG 3, AFTER</text>
+
+        <text class="s5cL" x="42" y="197">#54 book a meeting room for Thursday</text>
+        <text class="s5cS" x="42" y="212">aimed at: yes</text>
+        <text class="s5cR" x="352" y="197">notes-and-interviews 1.24</text>
+        <text class="s5cS" x="352" y="212">fired on a none</text>
+        <text class="s5cL" x="612" y="197">no skill fires</text>
+        <text class="s5cS" x="612" y="212">the intended fix</text>
+
+        <text class="s5cL" x="42" y="245">#42 fix the spelling and tone</text>
+        <text class="s5cS" x="42" y="260">aimed at: no</text>
+        <text class="s5cR" x="352" y="245">invoice-chaser 1.24</text>
+        <text class="s5cS" x="352" y="260">wrong skill</text>
+        <text class="s5cR" x="612" y="245">no skill fires, top 0.98</text>
+        <text class="s5cS" x="612" y="260">now a miss</text>
+
+        <text class="s5cL" x="42" y="293">#38 short version of our final report</text>
+        <text class="s5cS" x="42" y="308">aimed at: no</text>
+        <text class="s5cL" x="352" y="293">exec-summary 1.30</text>
+        <text class="s5cS" x="352" y="308">right skill</text>
+        <text class="s5cR" x="612" y="293">invoice-chaser 1.23</text>
+        <text class="s5cS" x="612" y="308">new misroute, from "final notice"</text>
+
+        <text class="s5cL" x="42" y="341">#53 what's the time in Singapore?</text>
+        <text class="s5cS" x="42" y="356" style="fill:#22260F">aimed at: no</text>
+        <text class="s5cL" x="352" y="341">no skill fires, top 1.19</text>
+        <text class="s5cS" x="352" y="356">right, should not fire</text>
+        <text class="s5cR" x="612" y="341">newsletter 1.23</text>
+        <text class="s5cS" x="612" y="356">new false fire</text>
+
+        <text class="s5cN" x="30" y="388">False fires fell 6 to 3 overall, yet rows nobody aimed at broke. Stand-in BM25 router, not a real assistant.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the edit fixed what it aimed at and quietly broke the Singapore request, which only a full re-run would show</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Regression: the row nobody touched<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>On rung 3 of the bench, Pemberton &amp; Thistle (constructed) added a "Do not use for" line to every description to stop six false fires. Overall, false fires fell from 6 to 3. But request #53, "what's the time in Singapore right now?", which had correctly fired nothing (top score 1.19, just under the line), started firing <code>newsletter</code> at 1.23. The newsletter's new line is about client emails and has nothing to do with time; the request flipped because the newsletter description says "when it is time to write", and every score in the library moved when the descriptions grew.</p>
+        <p>The lesson carries straight over to a real assistant, where the router is a language model and the coupling is harder to see, not easier: <strong>re-run the whole set after every edit</strong>, not just the cases you meant to fix. The cases you did not think about are the ones regression tests exist for.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Test the test against the passing state<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A test that can never pass, or can never fail, looks exactly like a test that is working. The weak negative in Part 1 is one example: it passes whatever you do to the description. The always-passing assertion in Part 2 is another.</p>
+        <p>So check every test against a known state. Each case should pass on a description you know is good and fail on one you know is bad. The bench engine's own self-test does this: one property, that each skill's own "what" text routes to itself, holds on the real router; with a planted fault (the router picks the lowest score instead of the highest) the same property breaks on all 19 skills. If the planted fault had left it passing, the self-test would have been measuring nothing.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Version comparison<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The open format's evaluation guide lets the baseline be the previous version of the skill instead of no skill at all. That turns every edit into a comparison: same cases, old version against new. To make that possible, snapshot the skill folder before you edit (a copy, or a commit if it lives in version control), and keep the test cases next to it so they travel together.</p>
+        <p>The Claude Code docs describe the skill-creator plugin running blind A/B comparisons between two versions. Whatever the tooling, the discipline is the one software teams use: never ship an edit you have not compared against the version it replaces.</p>
+      </div>
+    </details>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p><strong>When a skill triggers too often.</strong> Claude Code's troubleshooting for an over-eager skill says to make the description more specific, or to set <code>disable-model-invocation: true</code> so only you can call it. Making it more specific is an edit, and every edit is a reason to re-run the full set: a sharper description for one skill changes the competition for all of them.</p>
+    </div>
+  </section>
+
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Build-along</span>
+      <h2>A 12-case trigger test set</h2>
+      <span class="tag demo">★ 22 min · everyone builds</span>
+    </div>
+    <p class="lede">We write a test set for Pemberton &amp; Thistle's <code>meeting-minutes</code> skill (Constructed Pemberton &amp; Thistle example) on the bench's "split" rung, where it became its own skill. Six requests should fire it and six near-misses should not. None of them is from session 4's sixty; they are new. Every result below is what the stand-in router actually printed, and not all of them pass.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 528" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pass and fail grid for 12 constructed trigger tests on meeting-minutes, stand-in router rung split. Should fire: 1 Brightlane notes, meeting-minutes 4.39, pass. 2 steering group recording, 5.64, pass. 3 what did we decide in the Fenwick call, no skill fires top 1.18, fail. 4 minutes please, no skill fires top 1.09, fail. 5 Norbury board long notes, 4.30, pass. 6 tidy Corvel kickoff notes, 2.03, pass. Should not fire: 7 interview transcripts, interview-synthesis 3.28, pass. 8 Ostrander workshop, workshop-pack 3.61, pass. 9 book a meeting room for the client call, meeting-minutes 2.27, fail. 10 summarise an article, no skill fires 0.00, pass. 11 executive summary, exec-summary 4.82, pass. 12 staff survey responses, survey-analysis 2.21, pass. Should fire 4 of 6, should not fire 5 of 6, total 9 of 12.">
+        <defs>
+          <filter id="s5dSk" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="59" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+        </defs>
+        <style>
+          .s5dL { font: 600 11px Inter, sans-serif; fill: #22260F; }
+          .s5dS { font: 400 11px Inter, sans-serif; fill: #555A40; }
+          .s5dA { font: 700 11px Inter, sans-serif; fill: #5E6B00; }
+          .s5dR { font: 800 11px Inter, sans-serif; fill: #991B1B; }
+          .s5dV { font: 800 12px Inter, sans-serif; fill: #22260F; }
+          .s5dN { font: 400 12px Inter, sans-serif; fill: #555A40; }
+        </style>
+
+        <g filter="url(#s5dSk)" fill="none" stroke="#22260F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="30" y="50" width="820" height="28" rx="6" transform="rotate(0.1 440 64)" fill="#F4F6E2"/>
+          <rect x="30" y="86" width="820" height="26" rx="6" transform="rotate(-0.2 440 99)" fill="#FFFFFF"/>
+          <rect x="30" y="116" width="820" height="26" rx="6" transform="rotate(0.2 440 129)" fill="#FFFFFF"/>
+          <rect x="30" y="146" width="820" height="26" rx="6" transform="rotate(-0.2 440 159)" fill="#FFFFFF"/>
+          <rect x="30" y="176" width="820" height="26" rx="6" transform="rotate(0.2 440 189)" fill="#FFFFFF"/>
+          <rect x="30" y="206" width="820" height="26" rx="6" transform="rotate(-0.2 440 219)" fill="#FFFFFF"/>
+          <rect x="30" y="236" width="820" height="26" rx="6" transform="rotate(0.2 440 249)" fill="#FFFFFF"/>
+          <rect x="30" y="266" width="820" height="26" rx="6" transform="rotate(-0.2 440 279)" fill="#F4F6E2"/>
+          <rect x="30" y="296" width="820" height="26" rx="6" transform="rotate(0.2 440 309)" fill="#F4F6E2"/>
+          <rect x="30" y="326" width="820" height="26" rx="6" transform="rotate(-0.2 440 339)" fill="#F4F6E2"/>
+          <rect x="30" y="356" width="820" height="26" rx="6" transform="rotate(0.2 440 369)" fill="#F4F6E2"/>
+          <rect x="30" y="386" width="820" height="26" rx="6" transform="rotate(-0.2 440 399)" fill="#F4F6E2"/>
+          <rect x="30" y="416" width="820" height="26" rx="6" transform="rotate(0.2 440 429)" fill="#F4F6E2"/>
+          <rect x="30" y="452" width="820" height="34" rx="8" transform="rotate(-0.2 440 469)" fill="#E4B437"/>
+          <path d="M14 92 L14 258"/>
+          <path d="M14 272 L14 438" stroke-dasharray="6 5"/>
+        </g>
+
+        <text class="s5dA" x="42" y="68">#</text>
+        <text class="s5dA" x="72" y="68">REQUEST (SHORTENED)</text>
+        <text class="s5dA" x="432" y="68">EXPECTED</text>
+        <text class="s5dA" x="572" y="68">ROUTER PRINTED</text>
+        <text class="s5dA" x="762" y="68">RESULT</text>
+
+        <text class="s5dS" x="42" y="103">1</text>
+        <text class="s5dL" x="72" y="103">Brightlane catch-up notes into minutes</text>
+        <text class="s5dS" x="432" y="103">should fire</text>
+        <text class="s5dL" x="572" y="103">meeting-minutes 4.39</text>
+        <rect x="762" y="89" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="103" text-anchor="middle">pass</text>
+
+        <text class="s5dS" x="42" y="133">2</text>
+        <text class="s5dL" x="72" y="133">steering group recording: action items + owners</text>
+        <text class="s5dS" x="432" y="133">should fire</text>
+        <text class="s5dL" x="572" y="133">meeting-minutes 5.64</text>
+        <rect x="762" y="119" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="133" text-anchor="middle">pass</text>
+
+        <text class="s5dS" x="42" y="163">3</text>
+        <text class="s5dL" x="72" y="163">what did we decide in the Fenwick call?</text>
+        <text class="s5dS" x="432" y="163">should fire</text>
+        <text class="s5dR" x="572" y="163">none fires (top 1.18)</text>
+        <rect x="762" y="149" width="76" height="20" rx="10" fill="#FEF2F2" stroke="#991B1B" stroke-width="1.5"/>
+        <text class="s5dR" x="800" y="163" text-anchor="middle">fail</text>
+
+        <text class="s5dS" x="42" y="193">4</text>
+        <text class="s5dL" x="72" y="193">minutes please</text>
+        <text class="s5dS" x="432" y="193">should fire</text>
+        <text class="s5dR" x="572" y="193">none fires (top 1.09)</text>
+        <rect x="762" y="179" width="76" height="20" rx="10" fill="#FEF2F2" stroke="#991B1B" stroke-width="1.5"/>
+        <text class="s5dR" x="800" y="193" text-anchor="middle">fail</text>
+
+        <text class="s5dS" x="42" y="223">5</text>
+        <text class="s5dL" x="72" y="223">Norbury board notes, long, with full context</text>
+        <text class="s5dS" x="432" y="223">should fire</text>
+        <text class="s5dL" x="572" y="223">meeting-minutes 4.30</text>
+        <rect x="762" y="209" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="223" text-anchor="middle">pass</text>
+
+        <text class="s5dS" x="42" y="253">6</text>
+        <text class="s5dL" x="72" y="253">tidy the meeting notes from the Corvel kickoff</text>
+        <text class="s5dS" x="432" y="253">should fire</text>
+        <text class="s5dL" x="572" y="253">meeting-minutes 2.03</text>
+        <rect x="762" y="239" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="253" text-anchor="middle">pass</text>
+
+        <text class="s5dS" x="42" y="283">7</text>
+        <text class="s5dL" x="72" y="283">four interview transcripts, recurring themes</text>
+        <text class="s5dS" x="432" y="283">should not fire</text>
+        <text class="s5dL" x="572" y="283">interview-synthesis 3.28</text>
+        <rect x="762" y="269" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="283" text-anchor="middle">pass</text>
+
+        <text class="s5dS" x="42" y="313">8</text>
+        <text class="s5dL" x="72" y="313">agenda and exercises for the Ostrander workshop</text>
+        <text class="s5dS" x="432" y="313">should not fire</text>
+        <text class="s5dL" x="572" y="313">workshop-pack 3.61</text>
+        <rect x="762" y="299" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="313" text-anchor="middle">pass</text>
+
+        <text class="s5dS" x="42" y="343">9</text>
+        <text class="s5dL" x="72" y="343">book a meeting room for the client call Friday</text>
+        <text class="s5dS" x="432" y="343">should not fire</text>
+        <text class="s5dR" x="572" y="343">meeting-minutes 2.27</text>
+        <rect x="762" y="329" width="76" height="20" rx="10" fill="#FEF2F2" stroke="#991B1B" stroke-width="1.5"/>
+        <text class="s5dR" x="800" y="343" text-anchor="middle">fail</text>
+
+        <text class="s5dS" x="42" y="373">10</text>
+        <text class="s5dL" x="72" y="373">summarise this article about AI in government</text>
+        <text class="s5dS" x="432" y="373">should not fire</text>
+        <text class="s5dL" x="572" y="373">none fires (top 0.00)</text>
+        <rect x="762" y="359" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="373" text-anchor="middle">pass</text>
+
+        <text class="s5dS" x="42" y="403">11</text>
+        <text class="s5dL" x="72" y="403">executive summary of the attached report</text>
+        <text class="s5dS" x="432" y="403">should not fire</text>
+        <text class="s5dL" x="572" y="403">exec-summary 4.82</text>
+        <rect x="762" y="389" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="403" text-anchor="middle">pass</text>
+
+        <text class="s5dS" x="42" y="433">12</text>
+        <text class="s5dL" x="72" y="433">staff survey responses: what are people saying?</text>
+        <text class="s5dS" x="432" y="433">should not fire</text>
+        <text class="s5dL" x="572" y="433">survey-analysis 2.21</text>
+        <rect x="762" y="419" width="76" height="20" rx="10" fill="#FFFFFF" stroke="#5E6B00" stroke-width="1.5"/>
+        <text class="s5dA" x="800" y="433" text-anchor="middle">pass</text>
+
+        <text class="s5dV" x="42" y="474">Should fire: 4 of 6 pass · should not fire: 5 of 6 pass · total 9 of 12 pass</text>
+
+        <text class="s5dN" x="30" y="510">Constructed test set, stand-in BM25 router, rung split, firing line 1.20. Your numbers will differ.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - three fails, and each one asks a different question: is the test wrong, or is the description?</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step">
+        <p><strong>Copy the description under test.</strong> This is the <code>meeting-minutes</code> description on the "split" rung of the bench, verbatim: the "what + when" text followed by its "Do not use for" line. A test set always belongs to one exact version of the text.</p>
+        <div class="prompt-box good"><span class="label">★ Step 1 · meeting-minutes, as the bench has it (constructed)</span>Turns a meeting recording or rough notes into minutes: attendees,
+decisions, action items with owners and dates. Use when someone shares
+a call recording or meeting notes and asks for minutes or actions.
+Do not use for research transcripts, themes or quotes
+(interview-synthesis).</div>
+      </div>
+      <div class="step">
+        <p><strong>Write six should-fire cases.</strong> Vary them on purpose: a direct ask, one that lists the outputs, an indirect one that never says "minutes", a terse one, a long one with real context, and a paraphrase. Type each one into the try widget below and watch which skill fires; then type your own.</p>
+        <div class="skl-bench" data-mode="try" data-rung="split" data-q="what did we decide in the Fenwick call and who owns each next step?"></div>
+      </div>
+      <div class="step">
+        <p><strong>Write six should-not-fire near-misses.</strong> Pick requests a neighbour owns or that share the skill's words: interview transcripts (<code>interview-synthesis</code>), workshop preparation (<code>workshop-pack</code>), booking a meeting room, summarising an article, an executive summary of a report, survey responses. A should-not-fire case passes when <code>meeting-minutes</code> stays quiet, whether a neighbour fires or nothing does.</p>
+      </div>
+      <div class="step">
+        <p><strong>Run every case and write down what the router printed.</strong> We ran each request with the bench's command-line twin on the split rung; these are its outputs, not estimates.</p>
+        <div class="prompt-box good"><span class="label">★ Step 4 · the 12 cases, as the router printed them</span>#  EXPECTED     REQUEST                                              FIRES (TOP SCORE)
+1  should fire  can you turn my rough notes from the Brightlane
+                catch-up into minutes                                meeting-minutes 4.39
+2  should fire  recording of today's steering group attached, I
+                need the action items with owners and dates          meeting-minutes 5.64
+3  should fire  what did we decide in the Fenwick call and who
+                owns each next step?                                 none (meeting-minutes 1.18)
+4  should fire  minutes please                                       none (meeting-minutes 1.09)
+5  should fire  Norbury Council project board met this afternoon,
+                six attendees, we agreed to move the deadline and
+                Priya takes the data request; here are my scribbled
+                notes, write them up as minutes with actions         meeting-minutes 4.30
+6  should fire  tidy up the meeting notes from the Corvel kickoff
+                so I can send them round                             meeting-minutes 2.03
+                                                                     (slide-polish 1.60 second)
+7  should not   I've got four interview transcripts from Halden
+                Water staff, find the recurring themes               interview-synthesis 3.28
+8  should not   prepare the agenda and exercises for the Ostrander
+                Group workshop                                       workshop-pack 3.61
+9  should not   book a meeting room for the client call on Friday    meeting-minutes 2.27
+10 should not   summarise this article about AI in local government  none (0.00)
+11 should not   write an executive summary of the attached 40-page
+                report                                               exec-summary 4.82
+12 should not   the staff survey responses are in, what are people
+                saying?                                              survey-analysis 2.21
+
+Score: should fire 4 of 6, should not fire 5 of 6, total 9 of 12.
+(constructed test set on a stand-in router; your numbers will differ)</div>
+      </div>
+      <div class="step">
+        <p><strong>Read every failure and decide who is wrong: the test or the description.</strong> Three cases failed, and each needs a different answer.</p>
+        <div class="prompt-box good"><span class="label">★ Step 5 · the three failures, read one by one</span>#3  "what did we decide ... who owns each next step?"   none, top 1.18
+    The test is right: people really ask this way. The description says
+    "decisions" and "owners"; the request says "decide" and "owns", and
+    this keyword router does not match them. Do NOT paste "decide" and
+    "next step" into the description: that overfits to one failed query.
+    Describe the intent in general terms instead, then check the held-out
+    cases. A language model would likely bridge these words; the bench
+    cannot, so treat this as a direction, not a forecast.
+
+#4  "minutes please"   none, top 1.09
+    Probably the test is wrong. Two words with nothing attached give any
+    router too little to go on, and the open format's guide notes agents
+    often skip skills for simple one-step requests. Rewrite the case with
+    the material a real request carries, or keep it as an explicit-call
+    case: someone who wants exactly this types /meeting-minutes.
+
+#9  "book a meeting room for the client call on Friday"   meeting-minutes 2.27
+    The description is wrong. It shares "meeting" and "call" with the
+    request. Session 4's "book a meeting room for Thursday at 2" scores
+    only 1.09 here; adding "client call" pushed it over the line. Fix:
+    add specificity about what the skill does not do, e.g. "Do not use
+    for booking rooms or scheduling meetings." Then re-run all 12, not
+    just #9 (Part 3).
+
+Also note #10 passed at 0.00 for every skill: a weak negative. Swap it for
+a request that shares the skill's words. And #6 passed with slide-polish
+only 0.43 behind ("tidy"): a narrow margin to watch after every edit.</div>
+      </div>
+      <div class="step">
+        <p><strong>Add three golden-output assertions.</strong> Trigger tests say the skill loaded; these say it did the job. Write them after a first run, as verifiable checks with evidence. The case and assertions below are constructed and have not been run.</p>
+        <div class="prompt-box good"><span class="label">★ Step 6 · one golden case, three assertions (constructed, not run)</span>CASE        prompt: "write up the Norbury board notes as minutes"
+            files:  board-notes.txt (6 attendees, 2 decisions, 3 actions)
+            expected: minutes with Attendees, Decisions and Actions
+
+ASSERT 1    Every action item names one owner and one date.
+            evidence: count action lines missing either (expect 0)
+ASSERT 2    Both decisions in the notes appear under a Decisions heading.
+            evidence: quote each decision and the heading it sits under
+ASSERT 3    The attendee list matches the 6 names in the notes; none added.
+            evidence: list any name present in one but not the other
+
+RUN         with the skill, and without it, as the baseline.
+DROP        any assertion that passes in both runs.</div>
+      </div>
+      <div class="step">
+        <p><strong>Save it as the regression suite.</strong> Keep the 12 cases and the golden case in the skill's folder, with the split fixed (for example, cases 1 to 8 for tuning and 9 to 12 held out), and the date of the description they were run against. From now on, every edit to any skill in the library is followed by a full run of every suite.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <p><strong>A failing test is information, not a verdict.</strong> Before you change a description, ask whether the test describes a request a real person would send. If not, fix the test. If so, fix the description in general terms, then re-run everything. The two failures you get wrong are fixing a test that was right, and stuffing a description to pass one case.</p>
+    </div>
+  </section>
+
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Before session 6</h2>
+      <span class="tag exercise">30 min</span>
+    </div>
+    <ol>
+      <li><strong>Write a 12-case trigger set for one skill you own.</strong> Six should fire, varied in phrasing, explicitness and detail; six near-misses taken from the jobs of its closest neighbours. Strike any negative that shares no words with the skill.</li>
+      <li><strong>Run every case three times in your real assistant</strong> and record the trigger rate for each. Mark the cases whose rate changes between runs: they sit close to the line and will move first after an edit.</li>
+      <li><strong>Fix a split and keep it.</strong> Choose which cases you tune on and which you only check, write it down, and report the held-out pass rate when you tell anyone how good the skill is.</li>
+      <li><strong>Write two or three golden cases with assertions,</strong> run each with and without the skill, and delete any assertion that passes in both runs. Then make one small edit to the description and re-run everything.</li>
+    </ol>
+  </section>
+
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions</h2>
+    </div>
+    <p>Clear all three and session 5 gets stamped in your passport.</p>
+
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · You have one slot left for a should-not-fire case for <code>meeting-minutes</code>. Which request tells you the most?</p>
+      <button class="qopt" type="button">A · "Summarise this article about AI in local government"</button>
+      <button class="qopt" type="button">B · "Book a meeting room for the client call on Friday"</button>
+      <button class="qopt" type="button">C · "Write a haiku about autumn"</button>
+      <button class="qopt" type="button">D · "What is 15 percent of 340?"</button>
+      <p class="qwhy">A near-miss shares the skill's words but needs something else. On the bench this one fired <code>meeting-minutes</code> at 2.27 and exposed a real fault; the article request scored 0.00 for every skill and could never fail.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="3">
+      <p class="qtext">2 · Why keep some requests held out instead of tuning the description on all of them?</p>
+      <button class="qopt" type="button">A · Held-out requests are harder, so they make the skill look more robust</button>
+      <button class="qopt" type="button">B · Assistants cache tuning requests and route them faster</button>
+      <button class="qopt" type="button">C · The specification limits a test set to 40 requests</button>
+      <button class="qopt" type="button">D · A description edited while looking at requests fits those requests; only ones you never tuned on estimate how it does on new requests</button>
+      <p class="qwhy">Tuning fits the description to what you can see. The bench's rung 4 library scored 37 of 40 on tuning and 18 of 20 held out; the held-out number is the honest one to quote.</p>
+    </div>
+
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Why check each test against a known-good and a known-bad version before trusting it?</p>
+      <button class="qopt" type="button">A · A test that cannot fail, or cannot pass, looks just like one that works; only a known state shows it measures something</button>
+      <button class="qopt" type="button">B · Because known-good descriptions are required by the specification</button>
+      <button class="qopt" type="button">C · To make the pass rate higher before reporting it</button>
+      <button class="qopt" type="button">D · It is only needed for golden outputs, never for trigger tests</button>
+      <p class="qwhy">The bench's self-test holds on the real router and breaks on all 19 skills when a fault is planted (lowest score instead of highest). A check that survived the planted fault would have been measuring nothing.</p>
+    </div>
+
+    <p class="quiz-score"></p>
+  </section>
+
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Sources covered</span>
+      <h2>What this session teaches, and where it came from</h2>
+    </div>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">agentskills.io: Optimizing skill descriptions</span><span class="note">Should and should-not trigger queries, about 20 with 8-10 each, near-miss negatives, 3 runs per query and a 0.5 trigger-rate threshold, a fixed 60/40 split, no keywords from failed queries; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">agentskills.io: Evaluating skill output quality</span><span class="note">Test cases in evals/evals.json, start with 2-3, with-skill against without-skill or previous version, assertions after the first run, evidence-based grading, benchmark delta, remove always-passing assertions; read at source</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Anthropic skill authoring best practices</span><span class="note">Build evaluations first, three scenarios, at least three evaluations, test with Haiku, Sonnet and Opus; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Claude Code skills docs and OpenAI Codex skills docs</span><span class="note">skill-creator plugin (description tuning, blind A/B, with and without benchmark); troubleshooting for skills that trigger too often; Codex: test prompts against the description; read at source 2026-11-25</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">The routing bench and the 12-case test set</span><span class="note">Constructed library, requests and test set; BM25 is a modelled stand-in for a language-model router; every score was printed by the bench's own engine</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">General evaluation methods</span><span class="note">Graders, rubrics and eval design in general are taught in Learn AI Evals; named here only where they meet skills</span></div>
+    </div>
+    <p class="mono" style="margin-top:14px">Every fact on this page, and its verification tier, is recorded in the course's source map.</p>
+  </section>
+
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 5 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Two failures</b><span>Trigger failures live in the description; output failures live in the body. Test both.</span></div>
+      <div class="cheat-item"><b>Both directions</b><span>Should fire and should not fire, about half each. Vary phrasing, detail and directness.</span></div>
+      <div class="cheat-item"><b>Near-misses</b><span>Negatives that share the skill's words. A negative that shares nothing can never fail.</span></div>
+      <div class="cheat-item"><b>Held out</b><span>Fix a split, tune on one part, quote the other. Never paste a failed query's keywords in.</span></div>
+      <div class="cheat-item"><b>Golden outputs</b><span>Two or three cases, run with and without the skill. Verifiable assertions with evidence; drop ones that pass in both.</span></div>
+      <div class="cheat-item"><b>Regression</b><span>Any edit moves every request. Re-run everything, and check each test fails on a known-bad version.</span></div>
+    </div>
+  </section>
+
+  <div class="callout next">
+    <span class="nx-pill">Next session</span>
+    <p>A tested skill still ages. Session 6 is upkeep: finding overlap before it misroutes, catching descriptions that drift from what the skill now does, counting what a growing library costs in context, and retiring a skill cleanly, closed with a quarterly review of Pemberton &amp; Thistle's whole library scored on the bench.</p>
+  </div>
+
+  <footer class="pagefoot">
+    <span>Session 5 of 6 · learn-skills-library-with-phoebe · by Phoebe Fu &nbsp;·&nbsp; 📚 <a href="https://phoebefu6.github.io/learn-with-phoebe/">Learn with Phoebe ↗</a></span>
+    <span><a href="04-the-skill-routing-bench.html">← Prev: The skill-routing bench</a> &nbsp;·&nbsp; <a href="06-upkeep-overlap-drift-cost.html">Next: Upkeep: overlap, drift, token cost, retirement →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/skl-sample.js?v=1"></script>
+<script src="../assets/skl-live.js?v=2"></script>
+<script src="../assets/app.js?v=2"></script>
+</body>
+</html>
